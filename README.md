@@ -18,4 +18,8 @@ The ssb link for this repo is:
 ```
     ssb://%MkBUFeRs7fTN2lAUXuYYaK3i9ln29vBisvJnhEcx4KA=.sha256
 ```
+or via http:
+```
+    http://localhost:7718/%25MkBUFeRs7fTN2lAUXuYYaK3i9ln29vBisvJnhEcx4KA%3D.sha256
+```
 This should in theory be private to me.    
