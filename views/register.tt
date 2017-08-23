@@ -1,9 +1,13 @@
 % my ($h) = @_;
 
     <h1>Register</h1>
+    % if ($h<registered>) {
+      <p>You are registered</p>
+    % } else {
     <div>
       <form method="post">
         <input type="submit" value="Register">
       </form>
     </div>
+    % }
 

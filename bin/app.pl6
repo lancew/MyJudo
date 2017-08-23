@@ -45,7 +45,7 @@ get '/register' => sub {
 
 
 post '/register' => sub {
-    template 'register.tt';
+    template 'register.tt', {registered => 1};
 }
 prefix '/user' => sub {
     get "/:user" => sub ($user){

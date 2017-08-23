@@ -2,7 +2,7 @@ use v6.c;
 use Test;
 use Bailador::Test;
 
-plan 1;
+plan 4;
 
 %*ENV<P6W_CONTAINER> = 'Bailador::Test';
 %*ENV<BAILADOR_APP_ROOT> = $*CWD.absolute;
