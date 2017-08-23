@@ -1,0 +1,9 @@
+% my ($h) = @_;
+
+    <h1>Register</h1>
+    <div>
+      <form method="post">
+        <input type="submit" value="Register">
+      </form>
+    </div>
+

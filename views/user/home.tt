@@ -1,0 +1,28 @@
+% my ($h) = @_;
+
+<h1>Home Page for <%= $h<user_name> %></h1>
+
+<h2>Statistics</h2>
+<table>
+    <tr>
+      <td>Sessions</td><td>10</td>
+    </tr>
+    <tr>
+      <td>Hours</td><td>130</td>
+    </tr>
+    <tr>
+      <td>First Session</td><td>20-08-2017</td>
+    </tr>
+    <tr>
+      <td>Last Session</td><td>20-08-2017</td>
+    </tr>
+</table>
+
+<h2>Techniques</h2>
+<table>
+    <% for ( ['Ippon Seoi Nage', 5],['Taio Toshi',8],['Uchi Mata',3]) { %>
+    <tr>
+      <td><%= $_[0] %></td><td><%= $_[1] %></td>
+    </tr>
+    <% } %>
+</table>

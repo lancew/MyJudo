@@ -1,0 +1,9 @@
+% my ($h) = @_;
+
+    <h1>Login</h1>
+    <div>
+      <form method="post">
+        <input type="submit" value="Login">
+      </form>
+    </div>
+
