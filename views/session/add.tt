@@ -1,0 +1,10 @@
+% my ($h) = @_;
+% my $data = $h.<user_data>;
+
+    <h1>Add a session for <%= $data.<user_name> %></h1>
+    <div>
+      <form method="post">
+        % say $h.perl;
+        <input type="submit" value="Add">
+      </form>
+    </div>

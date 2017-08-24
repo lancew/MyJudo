@@ -11,7 +11,6 @@ static-dir / (.+) / => 'static/';
 # lwtest01
 # 9JKP@jd$nrkXsP%Byv4HD
 
-
 get '/' => sub {
         my $session = session;        
         if ($session<user>:exists ) { redirect '/user/' ~ $session<user> }
@@ -43,7 +42,6 @@ get '/register' => sub {
     template 'register.tt';
 }
 
-
 post '/register' => sub {
     template 'register.tt', {registered => 1};
 }
@@ -56,6 +54,24 @@ prefix '/user' => sub {
         redirect '/' unless $user_data;
 
         template 'user/home.tt', { user_data => $user_data }; 
+    }
+}
+
+prefix '/session' => sub {
+    get "/add" => sub {
+        my $session = session;
+        redirect '/' unless $session<user>:exists;
+
+        my $user_data = get_user_data( username => $session<user> );
+        template 'session/add.tt', { user_data => $user_data }; 
+    }
+    post "/add" => sub {
+        my $session = session;
+        redirect '/' unless $session<user>:exists;
+
+        # Next add actual logic to add a session
+
+        redirect "/user/$session<user>";
     }
 }
 
