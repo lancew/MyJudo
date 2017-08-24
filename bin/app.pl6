@@ -52,8 +52,27 @@ prefix '/user' => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists && $session<user> eq $user;
 
-            template 'user/home.tt', { user_name => $session<user> }; 
+        my $user_data = get_user_data( username => $session<user> );
+        redirect '/' unless $user_data;
+
+        template 'user/home.tt', { user_data => $user_data }; 
     }
 }
+
+sub get_user_data(:$username) {
+        return { 
+            first_session => Date.new('2015-12-24').Date,
+            hours     => 122,
+            latest_session => Date.new('2016-12-24').Date,
+            sessions  => 22,
+            techniques => [
+                { name => 'Seoi Nage', sessions => '10'},
+                { name => 'Taio Toshi', sessions => '9'},
+                { name => 'O Soto Gari', sessions => '8'},
+                { name => 'Yoko Shiho Gatame', sessions => '55'},
+            ],
+            user_name => $username,
+         };
+    }
 
 baile();

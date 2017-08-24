@@ -23,6 +23,12 @@
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+         <li class="nav-item">
+            <a class="nav-link" href="/register">
+              <i class="fa fa-sign-out" aria-hidden="true"></i>
+              Register
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="/login">
               <i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -33,12 +39,6 @@
             <a class="nav-link" href="/logout">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
               Logout
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">
-              <i class="fa fa-sign-out" aria-hidden="true"></i>
-              Register
             </a>
           </li>
         </ul>

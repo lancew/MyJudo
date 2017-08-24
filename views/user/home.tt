@@ -1,28 +1,29 @@
 % my ($h) = @_;
+% my $data = $h.<user_data>;
 
-<h1>Home Page for <%= $h<user_name> %></h1>
+<h1>Home Page for <%= $data.<user_name> %></h1>
 
 <h2>Statistics</h2>
 <table>
     <tr>
-      <td>Sessions</td><td>10</td>
+      <td>Sessions</td><td><%= $data.<sessions> %></td>
     </tr>
     <tr>
-      <td>Hours</td><td>130</td>
+      <td>Hours</td><td><%= $data.<hours> %></td>
     </tr>
     <tr>
-      <td>First Session</td><td>20-08-2017</td>
+      <td>First Session</td><td><%= $data.<first_session> %></td>
     </tr>
     <tr>
-      <td>Last Session</td><td>20-08-2017</td>
+      <td>Last Session</td><td><%= $data.<latest_session> %></td>
     </tr>
 </table>
 
 <h2>Techniques</h2>
 <table>
-    <% for ( ['Ippon Seoi Nage', 5],['Taio Toshi',8],['Uchi Mata',3]) { %>
+    % for @($data<techniques>) -> %waza  {
     <tr>
-      <td><%= $_[0] %></td><td><%= $_[1] %></td>
+      <td><%= %waza<name> %></td><td><%= %waza<sessions> %></td>
     </tr>
-    <% } %>
+    % } 
 </table>

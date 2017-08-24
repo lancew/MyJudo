@@ -50,4 +50,3 @@ subtest {
     is-deeply %data<response>[0], 200;
     is %data<err>, '';
 }, '/register';
-
