@@ -1,6 +1,10 @@
 use v6.c;
 use Bailador;
 
+use lib 'lib';
+use Judo;
+use MyJudo;
+
 my $version = '0.0.1';
 config.cookie-expiration = 60 * 5; # 5minutes
 config.hmac-key = 'lance-key';
@@ -50,7 +54,7 @@ prefix '/user' => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists && $session<user> eq $user;
 
-        my $user_data = get_user_data( username => $session<user> );
+        my $user_data = MyJudo.get_user_data( user_name => $session<user> );
         redirect '/' unless $user_data;
 
         template 'user/home.tt', { user_data => $user_data }; 
@@ -62,7 +66,7 @@ prefix '/session' => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists;
 
-        my $user_data = get_user_data( username => $session<user> );
+        my $user_data = MyJudo.get_user_data( user_name => $session<user> );
         template 'session/add.tt', { user_data => $user_data }; 
     }
     post "/add" => sub {
@@ -75,20 +79,5 @@ prefix '/session' => sub {
     }
 }
 
-sub get_user_data(:$username) {
-        return { 
-            first_session => Date.new('2015-12-24').Date,
-            hours     => 122,
-            latest_session => Date.new('2016-12-24').Date,
-            sessions  => 22,
-            techniques => [
-                { name => 'Seoi Nage', sessions => '10'},
-                { name => 'Taio Toshi', sessions => '9'},
-                { name => 'O Soto Gari', sessions => '8'},
-                { name => 'Yoko Shiho Gatame', sessions => '55'},
-            ],
-            user_name => $username,
-         };
-    }
 
 baile();
