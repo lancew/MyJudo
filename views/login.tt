@@ -3,6 +3,8 @@
     <h1>Login</h1>
     <div>
       <form method="post">
+        <p><input type="text" name="login" value="" placeholder="Username or Email"></p>
+        <p><input type="password" name="password" value="" placeholder="Password"></p>
         <input type="submit" value="Login">
       </form>
     </div>

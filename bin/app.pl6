@@ -4,6 +4,7 @@ use Bailador;
 use lib 'lib';
 use Judo;
 use MyJudo;
+use DBIish;
 
 my $version = '0.0.1';
 config.cookie-expiration = 60 * 5; # 5minutes
@@ -27,8 +28,24 @@ get '/login' => sub {
 }
 
 post '/login' => sub {
-    my $session = session;
-    $session<user> = 'lancew';
+    my %params = request.params;
+    if ( %params<login> && %params<password> ) {
+        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+
+        my $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT 1
+              FROM users
+             WHERE user_name = ?
+               AND password_hash = ?
+        STATEMENT
+
+        $sth.execute(%params<login>, %params<password>);
+        my @rows = $sth.allrows();
+        if (@rows.elems) {
+            my $session = session;
+            $session<user> = 'lancew';
+        }
+    }
     redirect '/';
 }
 

@@ -1,7 +1,12 @@
 unit class MyJudo;
 
+use DBIish;
 
 method get_user_data(:$user_name) {
+
+        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+
+
         my $user := {
             first_session => Date.new('2015-12-24').Date,
             hours     => 122,
