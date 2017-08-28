@@ -1,32 +1,38 @@
-% my ($h) = @_;
-% my $data = $h.<user_data>;
+% my (%h) = @_;
+% my %data = %h<user_data>;
+% my %waza = %h<waza>;
 
-<h1>Home Page for <%= $data.<user_name> %></h1>
+<h1>Home Page for <%= %data<user_name> %></h1>
 
 <h2>Statistics</h2>
 <table>
     <tr>
       <td>
-       Sessions</td><td><%= $data.<sessions> %>
+       Sessions</td><td><%= %data<sessions> %>
        <a href="/session/add"><i class="fa fa-plus" aria-hidden="true"></i></a>
        </td>
     </tr>
     <tr>
-      <td>Hours</td><td><%= $data.<hours> %></td>
+      <td>Hours</td><td><%= %data<hours> %></td>
     </tr>
     <tr>
-      <td>First Session</td><td><%= $data.<first_session> %></td>
+      <td>First Session</td><td><%= %data<first_session> %></td>
     </tr>
     <tr>
-      <td>Last Session</td><td><%= $data.<latest_session> %></td>
+      <td>Last Session</td><td><%= %data<latest_session> %></td>
     </tr>
 </table>
 
-<h2>Techniques</h2>
+<h2>Techniques (<%= %waza<kanji> %>)</h2>
 <table>
-    % for @($data<techniques>) -> %waza  {
-    <tr>
-      <td><%= %waza<name> %></td><td><%= %waza<sessions> %></td>
-    </tr>
-    % } 
+   % for @(%data<techniques>) -> %tech {
+         <tr>
+           <td>
+             <%= %tech<name> %>(<%= %waza<nage-waza><te-waza>{lc %tech<name>}<kanji> %>)
+           </td>
+           <td>
+             <%= %tech<sessions> %>
+           </td>
+         </tr>
+   % }
 </table>

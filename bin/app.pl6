@@ -16,7 +16,7 @@ static-dir / (.+) / => 'static/';
 # 9JKP@jd$nrkXsP%Byv4HD
 
 get '/' => sub {
-        my $session = session;        
+        my $session = session;
         if ($session<user>:exists ) { redirect '/user/' ~ $session<user> }
 
         template 'index.tt';
@@ -37,7 +37,7 @@ get '/logout' => sub {
 }
 
 post '/logout' => sub {
-    my $session = session;  
+    my $session = session;
     session-delete;
     redirect '/';
 }
@@ -57,7 +57,12 @@ prefix '/user' => sub {
         my $user_data = MyJudo.get_user_data( user_name => $session<user> );
         redirect '/' unless $user_data;
 
-        template 'user/home.tt', { user_data => $user_data }; 
+        my $waza = Judo.waza();
+
+        template 'user/home.tt', {
+            user_data => $user_data,
+            waza => $waza,
+            };
     }
 }
 
@@ -67,7 +72,10 @@ prefix '/session' => sub {
         redirect '/' unless $session<user>:exists;
 
         my $user_data = MyJudo.get_user_data( user_name => $session<user> );
-        template 'session/add.tt', { user_data => $user_data }; 
+
+        template 'session/add.tt', {
+            user_data => $user_data,
+             };
     }
     post "/add" => sub {
         my $session = session;
