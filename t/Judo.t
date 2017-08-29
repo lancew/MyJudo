@@ -8,7 +8,7 @@ subtest {
     my %waza = Judo.waza;
     subtest {
         is %waza<nage-waza>.keys,
-            'ashi-waza koshi-waza yoko-sutemi-waza kanji te-waza ma-sutemi-waza',
+            'kanji te-waza',
             'All Nage waza keys present';
 
         subtest {

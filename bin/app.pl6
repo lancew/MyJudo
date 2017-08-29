@@ -35,7 +35,7 @@ post '/login' => sub {
         my $sth = $dbh.prepare(q:to/STATEMENT/);
             SELECT 1
               FROM users
-             WHERE user_name = ?
+             WHERE username = ?
                AND password_hash = ?
         STATEMENT
 
@@ -43,7 +43,7 @@ post '/login' => sub {
         my @rows = $sth.allrows();
         if (@rows.elems) {
             my $session = session;
-            $session<user> = 'lancew';
+            $session<user> = %params<login>;
         }
     }
     redirect '/';
@@ -64,7 +64,40 @@ get '/register' => sub {
 }
 
 post '/register' => sub {
-    template 'register.tt', {registered => 1};
+    my %params = request.params;
+    redirect '/' unless %params;
+    
+    if (%params<passwordsignup> eq %params<passwordsignup_confirm>) {
+        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+
+        my $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT 1
+              FROM users
+             WHERE username = ?
+           STATEMENT
+
+        $sth.execute(%params<usernamesignup>); 
+        
+        my @rows = $sth.allrows();
+        if (@rows.elems) {
+            return 'User Name Taken';
+        }     
+
+        $sth = $dbh.prepare(q:to/STATEMENT/);
+            INSERT INTO users
+                (username,password_hash)
+                VALUES (?,?)
+           STATEMENT
+
+        $sth.execute(%params<usernamesignup>,%params<passwordsignup>);
+
+        my $session = session;
+        $session<user> = %params<usernamesignup>;
+
+        redirect '/';
+        exit;
+    }
+    redirect '/register';
 }
 prefix '/user' => sub {
     get "/:user" => sub ($user){
@@ -83,22 +116,37 @@ prefix '/user' => sub {
     }
 }
 
-prefix '/session' => sub {
+prefix '/training_session' => sub {
     get "/add" => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists;
 
         my $user_data = MyJudo.get_user_data( user_name => $session<user> );
+        my $waza = Judo.waza();
 
         template 'session/add.tt', {
             user_data => $user_data,
-             };
+            waza => $waza,
+        };
     }
     post "/add" => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists;
 
         # Next add actual logic to add a session
+        my %params = request.params;
+        say %params.perl;
+
+        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+
+        my $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT 1
+              FROM users
+             WHERE user_name = ?
+               AND password_hash = ?
+        STATEMENT
+
+        $sth.execute(%params<login>, %params<password>);        
 
         redirect "/user/$session<user>";
     }

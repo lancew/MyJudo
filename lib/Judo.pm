@@ -25,5 +25,6 @@ method waza () {
         },
 
     }
+    
     return %waza;
 }

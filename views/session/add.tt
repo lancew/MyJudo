@@ -1,10 +1,20 @@
-% my ($h) = @_;
-% my $data = $h.<user_data>;
+% my (%h) = @_;
+% my %data = %h<user_data>;
+% my %waza = %h<waza>;
+% say %waza.perl;
 
-    <h1>Add a session for <%= $data.<user_name> %></h1>
+    <h1>Add a session for <%= %data<user_name> %></h1>
     <div>
       <form method="post">
-        % say $h.perl;
+        <input type="date" name ="session-date" id="session_data">
+        
+        <h2>Nage-Waza</h2>
+          <h3>Te-waza</h3>
+            <ul>
+              % for @(%waza<nage-waza><te-waza>.values) -> %t {
+                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %>
+              % }
+            </ul>
         <input type="submit" value="Add">
       </form>
     </div>
