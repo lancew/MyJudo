@@ -4,6 +4,7 @@ use Bailador;
 use lib 'lib';
 use Judo;
 use MyJudo;
+use Crypt::Bcrypt;
 use DBIish;
 
 my $version = '0.0.1';
@@ -33,17 +34,20 @@ post '/login' => sub {
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
         my $sth = $dbh.prepare(q:to/STATEMENT/);
-            SELECT 1
+            SELECT password_hash
               FROM users
              WHERE username = ?
-               AND password_hash = ?
         STATEMENT
 
-        $sth.execute(%params<login>, %params<password>);
-        my @rows = $sth.allrows();
-        if (@rows.elems) {
-            my $session = session;
-            $session<user> = %params<login>;
+        $sth.execute(%params<login>);
+        my $row = $sth.row();
+        say $row.perl;
+        
+        if (my $hash = $row[0]) {
+            if ( bcrypt-match(%params<password>, $hash) ) {
+                my $session = session;
+                $session<user> = %params<login>;
+            }
         }
     }
     redirect '/';
@@ -89,7 +93,8 @@ post '/register' => sub {
                 VALUES (?,?)
            STATEMENT
 
-        $sth.execute(%params<usernamesignup>,%params<passwordsignup>);
+        my $hash = bcrypt-hash(%params<passwordsignup>);
+        $sth.execute(%params<usernamesignup>,$hash);
 
         my $session = session;
         $session<user> = %params<usernamesignup>;
