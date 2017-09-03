@@ -35,8 +35,8 @@ method get_user_data(:$user_name) {
             %user<sessions>  = 22;
             %user<techniques> = [
                 { name => 'Seoi-nage', sessions => '10'},
-                { name => 'Taio-toshi', sessions => '15'},
-                { name => 'Uchi-mata', sessions => '32'},
+                { name => 'Tai-otoshi', sessions => '5'},
+                { name => 'Kata-guruma', sessions => '2'},
             ];
             %user<user_name> = $user_name;
         

@@ -21,6 +21,16 @@ method waza () {
                         name => 'Seoi-otoshi',
                         kanji => '背負落',
                     },
+                    tai-otoshi => {
+                        number => 4,
+                        name => 'Tai-otoshi',
+                        kanji => '体落',
+                    },
+                    kata-guruma => {
+                        number => 5,
+                        name => 'Kata-guruma',
+                        kanji => '肩車',
+                    },
                 },
         },
 

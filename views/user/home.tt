@@ -27,7 +27,7 @@
 <table>
   % for @(%data<techniques>) -> %tech {
     <tr>
-      <td><%= %tech<name> %></td>
+      <td><%= %tech<name> %> (<%= %waza<nage-waza><te-waza>{lc %tech<name>}<kanji> %>)</td>
       <td><%= %tech<sessions> %></td>
     </tr>
   % }
