@@ -41,8 +41,7 @@ post '/login' => sub {
 
         $sth.execute(%params<login>);
         my $row = $sth.row();
-        say $row.perl;
-        
+
         if (my $hash = $row[0]) {
             if ( bcrypt-match(%params<password>, $hash) ) {
                 my $session = session;
@@ -139,14 +138,48 @@ prefix '/training_session' => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists;
 
-        # Next add actual logic to add a session
+        my $user_data = MyJudo.get_user_data( user_name => $session<user> );
+
         my %params = request.params;
-        
+
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
         # Add logic for inserting into DB.
 
-        redirect "/user/$session<user>";
+        my $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT id
+              FROM sessions
+             WHERE user_id = ?
+               AND date = ?
+            STATEMENT
+
+        $sth.execute($user_data<id>, %params<session-date>);
+
+        my @rows = $sth.allrows();
+        if (!@rows.elems) {
+            # No matching session(s) so add one
+
+            $sth = $dbh.prepare(q:to/STATEMENT/);
+                INSERT INTO sessions
+                  (date, user_id, techniques)
+                  VALUES (?,?,?)
+            STATEMENT
+
+            my @techniques;
+            my $date = %params<session-date>:delete;
+            for %params.kv -> $k, $v {
+                @techniques.push(lc $k);
+            }
+
+            $sth.execute(
+                %params<session-date>,
+                $user_data<id>,
+                @techniques.join(',')
+            );
+        } else {
+            return 'session exists';
+        }
+        redirect '/';
     }
 }
 

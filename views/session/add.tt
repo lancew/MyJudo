@@ -1,14 +1,13 @@
 % my (%h) = @_;
 % my %data = %h<user_data>;
 % my %waza = %h<waza>;
-% say %waza.perl;
 
     <h1>Add a session for <%= %data<user_name> %></h1>
     <div>
       <form method="post">
-        <input type="date" name ="session-date" id="session_data">
-        
-        <h2>Nage-Waza</h2>
+        <input type="date" name ="session-date" id="session-date" value ="<%= Date.new(DateTime.now) %>">
+
+        <h2>Nage-Waza (<%= %waza<nage-waza><kanji> %>)</h2>
           <h3>Te-waza</h3>
             <ul>
               % for @(%waza<nage-waza><te-waza>.values) -> %t {

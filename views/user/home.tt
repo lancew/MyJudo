@@ -9,7 +9,7 @@
     <tr>
       <td>
        Sessions</td><td><%= %data<sessions> %>
-       <a href="/training_session/add"><i class="fa fa-plus" aria-hidden="true"></i></a>
+       <a href="/training_session/add"><i class="fa fa-plus" aria-hidden="true"></i>ADD A SESSION</a>
        </td>
     </tr>
     <tr>
