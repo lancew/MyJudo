@@ -26,19 +26,24 @@ method get_user_data(:$user_name) {
         STATEMENT
 
         $sth.execute(%user<id>);
-        my @sessions = $sth.allrows(:array-of-hash);	
+        my @sessions = $sth.allrows(:array-of-hash);
 
-        # Temporary Data        
+        my %techniques;
+        for @sessions -> %session {
+
+           my @techniques = %session<techniques>.split(',');
+           for @techniques -> $waza {
+               %techniques{$waza}++;
+           }
+        }
+
+        # Temporary Data
             %user<first_session> = Date.new('2015-12-24').Date;
             %user<hours>     = 1.5 * @sessions.elems;
             %user<latest_session> = Date.new('2016-12-24').Date;
             %user<sessions>  = @sessions.elems;
-            %user<techniques> = [
-                { name => 'Seoi-nage', sessions => '10'},
-                { name => 'Tai-otoshi', sessions => '5'},
-                { name => 'Kata-guruma', sessions => '2'},
-            ];
+            %user<techniques> = item %techniques;
             %user<user_name> = $user_name;
-        
+
          return %user;
     }

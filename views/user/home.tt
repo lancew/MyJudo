@@ -25,10 +25,10 @@
 
 <h2>Techniques (<%= %waza<kanji> %>)</h2>
 <table>
-  % for @(%data<techniques>) -> %tech {
+  % for %data<techniques>.kv -> $name, $number {
     <tr>
-      <td><%= %tech<name> %> (<%= %waza<nage-waza><te-waza>{lc %tech<name>}<kanji> %>)</td>
-      <td><%= %tech<sessions> %></td>
+      <td><%= $name %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> %>)</td>
+      <td><%= $number %></td>
     </tr>
   % }
 </table>
