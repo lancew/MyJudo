@@ -26,13 +26,13 @@ method get_user_data(:$user_name) {
         STATEMENT
 
         $sth.execute(%user<id>);
-        my @rows = $sth.allrows(:array-of-hash);
-     
+        my @sessions = $sth.allrows(:array-of-hash);	
+
         # Temporary Data        
             %user<first_session> = Date.new('2015-12-24').Date;
-            %user<hours>     = 122;
+            %user<hours>     = 1.5 * @sessions.elems;
             %user<latest_session> = Date.new('2016-12-24').Date;
-            %user<sessions>  = 22;
+            %user<sessions>  = @sessions.elems;
             %user<techniques> = [
                 { name => 'Seoi-nage', sessions => '10'},
                 { name => 'Tai-otoshi', sessions => '5'},
