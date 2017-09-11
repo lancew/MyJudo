@@ -152,7 +152,6 @@ prefix '/training_session' => sub {
              WHERE user_id = ?
                AND date = ?
             STATEMENT
-
         $sth.execute($user_data<id>, %params<session-date>);
 
         my @rows = $sth.allrows();
@@ -172,7 +171,7 @@ prefix '/training_session' => sub {
             }
 
             $sth.execute(
-                %params<session-date>,
+                $date,
                 $user_data<id>,
                 @techniques.join(',')
             );
