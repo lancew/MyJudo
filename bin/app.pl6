@@ -13,10 +13,6 @@ config.hmac-key = 'lance-key';
 
 static-dir / (.+) / => 'static/';
 
-# MongoDB credentials:
-# lwtest01
-# 9JKP@jd$nrkXsP%Byv4HD
-
 get '/' => sub {
         my $session = session;
         if ($session<user>:exists ) { redirect '/user/' ~ $session<user> }
