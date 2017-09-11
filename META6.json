@@ -1,0 +1,18 @@
+{
+    "perl" : "6.c",
+    "name" : "MyJudo",
+    "version" : "0.1.0",
+    "description" : "Judo training tracker website",
+    "authors" : [ "Lance WIcks" ],
+    "license" : "Artistic-2.0",
+    "provides" : {
+        "MyJudo" : "lib/MyJudo.pm"
+    },
+    "depends" : [
+        "DBIish",
+        "Bailador",
+        "Crypt::Bcrypt",
+    ],
+    "resources" : [ ],
+    "source-url" : "git://github.com/lancew/MyJudo.git"
+}
