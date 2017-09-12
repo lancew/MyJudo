@@ -7,5 +7,5 @@ install:
   - rakudobrew build-zef
   - zef install --debug DBIish
   - zef install --debug Bailador
-  - zef intsall --debug Crypt::Bcrypt
+  - zef install --debug Crypt::Bcrypt
 
