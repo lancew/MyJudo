@@ -4,6 +4,7 @@ use DBIish;
 
 method get_user_data(:$user_name) {
         my %user;
+
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
         my $sth = $dbh.prepare(q:to/STATEMENT/);
@@ -11,7 +12,6 @@ method get_user_data(:$user_name) {
               FROM users
              WHERE username = ?
         STATEMENT
-
 
         $sth.execute($user_name);
         my %row = $sth.row(:hash);

@@ -13,7 +13,7 @@ subtest {
 
         subtest {
             is %waza<nage-waza><te-waza>.keys,
-            'seoi-otoshi seoi-nage ippon-seoi-nage',
+            'seoi-otoshi tai-otoshi seoi-nage ippon-seoi-nage kata-guruma',
             'All Te-Waza techniques present';
             done-testing;
         }, 'te-waza';
