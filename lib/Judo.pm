@@ -87,58 +87,58 @@ method waza () {
                         kanji => '小内返'
                     },
                 },
-                        koshi-waza => {
-            uki-goshi => {
-                number => 1,
-                name => "Uki-goshi",
-                kanji =>"",
-            },
-            o-goshi => {
-                number => 2,
-                name => "O-goshi",
-                kanji =>"",
-            },
-            koshi-guruma => {
-                number => 3,
-                name => "Koshi-guruma",
-                kanji =>"",
-            },
-            tsurikomi-goshi => {
-                number => 4,
-                name => "Tsurikomi-goshi",
-                kanji =>"",
-            },
-            sode-tsurikomi-goshi => {
-                number => 5,
-                name => "Sode-tsurikomi-goshi",
-                kanji =>"",
-            },
-            harai-goshi => {
-                number => 6,
-                name => "Harai-goshi",
-                kanji =>"",
-            },
-            tsuri-goshi => {
-                number => 7,
-                name => "Tsuri-goshi",
-                kanji =>"",
-            },
-            hane-goshi => {
-                number => 8,
-                name => "Hane-goshi",
-                kanji =>"",
-            },
-            utsuri-goshi => {
-                number => 9,
-                name => "Utsuri-goshi",
-                kanji =>"",
-            },
-            ushiro-goshi => {
-                number => 10,
-                name => "Ushiro-goshi",
-                kanji =>"",
-            },
-        },
+                koshi-waza => {
+                    uki-goshi => {
+                        number => 1,
+                        name => "Uki-goshi",
+                        kanji =>"浮腰",
+                    },
+                    o-goshi => {
+                        number => 2,
+                        name => "O-goshi",
+                        kanji =>"大腰",
+                    },
+                    koshi-guruma => {
+                        number => 3,
+                        name => "Koshi-guruma",
+                        kanji =>"腰車",
+                    },
+                    tsurikomi-goshi => {
+                        number => 4,
+                        name => "Tsurikomi-goshi",
+                        kanji =>"釣込腰",
+                    },
+                    sode-tsurikomi-goshi => {
+                        number => 5,
+                        name => "Sode-tsurikomi-goshi",
+                        kanji =>"袖釣込腰",
+                    },
+                    harai-goshi => {
+                        number => 6,
+                        name => "Harai-goshi",
+                        kanji =>"払腰",
+                    },
+                    tsuri-goshi => {
+                        number => 7,
+                        name => "Tsuri-goshi",
+                        kanji =>"釣腰",
+                    },
+                    hane-goshi => {
+                        number => 8,
+                        name => "Hane-goshi",
+                        kanji =>"跳腰",
+                    },
+                    utsuri-goshi => {
+                        number => 9,
+                        name => "Utsuri-goshi",
+                        kanji =>"移腰",
+                    },
+                    ushiro-goshi => {
+                        number => 10,
+                        name => "Ushiro-goshi",
+                        kanji =>"後腰",
+                    },
+                },
         },
 
 
