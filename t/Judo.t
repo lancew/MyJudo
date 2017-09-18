@@ -9,7 +9,7 @@ subtest {
     
     subtest {
         is %waza<nage-waza>.keys,
-            'koshi-waza kanji te-waza',
+            'ashi-waza koshi-waza kanji te-waza',
             'All Nage waza keys present';
 
         subtest {
@@ -25,6 +25,14 @@ subtest {
             'All Koshi-Waza techniques present';
             done-testing;
         }, 'koshi-waza';
+
+        subtest {
+            is %waza<nage-waza><ashi-waza>.keys,
+            'uchi-mata-gaeshi ashi-guruma o-soto-gari hiza-guruma o-soto-gaeshi ko-soto-gari hane-goshi-gaeshi o-soto-otoshi o-soto-guruma ko-soto-gake uchi-mata okuri-ashi-harai o-uchi-gari sasae-tsurikomi-ashi harai-goshi-gaeshi o-uchi-gaeshi ko-uchi-gari tsubame-gaeshi o-guruma harai-tsurikomi-ashi de-ashi-harai',
+            'All Ashi-Waza techniques present';
+            done-testing;
+        }, 'ashi-waza';
+
         done-testing;
     }
 
