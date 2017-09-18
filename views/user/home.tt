@@ -13,14 +13,13 @@
        </td>
     </tr>
     <tr>
-      <td>Hours</td><td><%= %data<hours> %></td>
-    </tr>
-    <tr>
-      <td>First Session</td><td><%= %data<first_session> %></td>
-    </tr>
-    <tr>
-      <td>Last Session</td><td><%= %data<latest_session> %></td>
-    </tr>
+     <td>
+      <h2>Kano Number</h2>
+      <p>The Kano number is a representation of how far sperated you are from the founder of Judo Jigoro Kano.</p>
+      <p>A number of one means you trained directly under Professor Kano, a 2 would mean you trained under some who trained with Professor Kano.</p>
+      <p> Your Kano numer is: .... Not yet calculated</p>
+     </td>
+    </tr> 
 </table>
 
 <h2>Techniques (<%= %waza<kanji> %>)</h2>

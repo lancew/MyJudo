@@ -38,9 +38,6 @@ method get_user_data(:$user_name) {
         }
 
         # Temporary Data
-            %user<first_session> = Date.new('2015-12-24').Date;
-            %user<hours>     = 1.5 * @sessions.elems;
-            %user<latest_session> = Date.new('2016-12-24').Date;
             %user<sessions>  = @sessions.elems;
             %user<techniques> = item %techniques;
             %user<user_name> = $user_name;
