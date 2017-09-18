@@ -9,7 +9,7 @@ subtest {
     
     subtest {
         is %waza<nage-waza>.keys,
-            'ashi-waza koshi-waza kanji te-waza',
+            'ashi-waza koshi-waza kanji te-waza ma-sutemi-waza',
             'All Nage waza keys present';
 
         subtest {

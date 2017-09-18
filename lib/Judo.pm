@@ -246,6 +246,34 @@ method waza () {
                         kanji => '内股返',
                     },
                 },
+                ma-sutemi-waza => {
+                    tomoe-nage => {
+                        number => 1,
+                        name => 'Tomoe-nage',
+                        kanji => '巴投',
+                    },
+                    sumi-gaeshi => {
+                        number => 2,
+                        name => 'Sumi-gaeshi',
+                        kanji => '隅返',
+                    }, 
+                    hikikomi-gaeshi => {
+                        number => 3,
+                        name => 'Hikikomi-gaeshi',
+                        kanji => '引込返',
+                    },
+                    tawara-gaeshi => {
+                        number => 4,
+                        name => 'Tawara-gaeshi',
+                        kanji => '俵返',
+                    },
+                    ura-nage => {
+                        number => 5,
+                        name => 'Ura-nage',
+                        kanji => '裏投',
+                    },
+                },
+
 
         },
 
