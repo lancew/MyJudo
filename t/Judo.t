@@ -6,9 +6,10 @@ use Judo;
 
 subtest {
     my %waza = Judo.waza;
+    
     subtest {
         is %waza<nage-waza>.keys,
-            'kanji te-waza',
+            'koshi-waza kanji te-waza',
             'All Nage waza keys present';
 
         subtest {
@@ -20,7 +21,7 @@ subtest {
 
         subtest {
             is %waza<nage-waza><koshi-waza>.keys,
-            'uki-goshi o-goshi koshi-guruma tsurikomi-goshi sode-tsurikomi-goshi harai-goshi tsuri-goshi hane-goshi utsuri-goshi ushiro-goshi',
+            'sode-tsurikomi-goshi ushiro-goshi utsuri-goshi tsuri-goshi tsurikomi-goshi uki-goshi harai-goshi hane-goshi koshi-guruma o-goshi',
             'All Koshi-Waza techniques present';
             done-testing;
         }, 'koshi-waza';

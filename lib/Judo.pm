@@ -87,7 +87,60 @@ method waza () {
                         kanji => '小内返'
                     },
                 },
+                        koshi-waza => {
+            uki-goshi => {
+                number => 1,
+                name => "Uki-goshi",
+                kanji =>"",
+            },
+            o-goshi => {
+                number => 2,
+                name => "O-goshi",
+                kanji =>"",
+            },
+            koshi-guruma => {
+                number => 3,
+                name => "Koshi-guruma",
+                kanji =>"",
+            },
+            tsurikomi-goshi => {
+                number => 4,
+                name => "Tsurikomi-goshi",
+                kanji =>"",
+            },
+            sode-tsurikomi-goshi => {
+                number => 5,
+                name => "Sode-tsurikomi-goshi",
+                kanji =>"",
+            },
+            harai-goshi => {
+                number => 6,
+                name => "Harai-goshi",
+                kanji =>"",
+            },
+            tsuri-goshi => {
+                number => 7,
+                name => "Tsuri-goshi",
+                kanji =>"",
+            },
+            hane-goshi => {
+                number => 8,
+                name => "Hane-goshi",
+                kanji =>"",
+            },
+            utsuri-goshi => {
+                number => 9,
+                name => "Utsuri-goshi",
+                kanji =>"",
+            },
+            ushiro-goshi => {
+                number => 10,
+                name => "Ushiro-goshi",
+                kanji =>"",
+            },
         },
+        },
+
 
     }
     
