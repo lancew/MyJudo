@@ -46,6 +46,14 @@
             </ul>
           </td>
 
+          <td>
+          <h3>Yoko-sutemi-waza</h3>
+            <ul>
+              % for @(%waza<nage-waza><yoko-sutemi-waza>.values) -> %t {
+                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji> %>)
+              % }
+            </ul>
+          </td>
 
           </tr>
           </table>

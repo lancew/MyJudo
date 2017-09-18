@@ -273,6 +273,89 @@ method waza () {
                         kanji => '裏投',
                     },
                 },
+                yoko-sutemi-waza =>{
+                    yoko-otoshi => {
+                        number => 1,
+                        name => 'Yoko-otoshi',
+                        kanji => '横落',
+                    },
+                    tani-otoshi => {
+                        number => 2,
+                        name => 'Tani-otoshi',
+                        kanji => '谷落',
+                    },
+                    hane-makikomi => {
+                        number => 3,
+                        name => 'Hane-makikomi',
+                        kanji => '跳巻込',
+                    },
+                    soto-makikomi => {
+                        number => 4,
+                        name => 'Soto-makikomi',
+                        kanji => '外巻込',
+                    },
+                    uchi-makikomi => {
+                        number => 5,
+                        name => 'Uchi-makikomi',
+                        kanji => '内巻込',
+                    },
+                    uki-waza => {
+                        number => 6,
+                        name => 'Uki-waza',
+                        kanji => '浮技',
+                    },
+                    yoko-wakare => {
+                        number => 7,
+                        name => 'Yoko-wakare',
+                        kanji => '横分',
+                    },
+                    yoko-guruma => {
+                        number => 8,
+                        name => 'Yoko-guruma',
+                        kanji => '横車',
+                    },
+                    yoko-gake => {
+                        number => 9,
+                        name => 'Yoko-gake',
+                        kanji => '横掛',
+                    },
+                    daki-wakare => {
+                        number => 10,
+                        name => 'Daki-wakare',
+                        kanji => '抱分',
+                    },
+                    o-soto-makikomi => {
+                        number => 11,
+                        name => 'O-soto-makikomi',
+                        kanji => '大外巻込',
+                    },
+                    uchi-mata-makikomi => {
+                        number => 12,
+                        name => 'Uchi-mata-makikomi',
+                        kanji => '内股巻込',
+                    },
+                    harai-makikomi => {
+                        number => 13,
+                        name => 'Harai-makikomi',
+                        kanji => '払巻込',
+                    },
+                    ko-uchi-makikomi => {
+                        number => 14,
+                        name => 'Ko-uchi-makikomi',
+                        kanji => '小内巻込',
+                    },
+                    kani-basami => {
+                        number => 15,
+                        name => 'Kani-basami',
+                        kanji => '蟹挟',
+                    },
+                    kawazu-gake => {
+                        number => 16,
+                        name => 'Kawazu-gake',
+                        kanji => '河津掛',
+                    },
+
+                },
 
 
         },
