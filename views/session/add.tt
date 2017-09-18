@@ -8,12 +8,28 @@
         <input type="date" name ="session-date" id="session-date" value ="<%= Date.new(DateTime.now) %>">
 
         <h2>Nage-Waza (<%= %waza<nage-waza><kanji> %>)</h2>
+          <table>
+          <tr>
+          <td>
           <h3>Te-waza</h3>
             <ul>
               % for @(%waza<nage-waza><te-waza>.values) -> %t {
-                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %>
+                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji>)
               % }
             </ul>
+          </td>
+
+          <td>
+          <h3>Koshi-waza</h3>
+            <ul>
+              % for @(%waza<nage-waza><koshi-waza>.values) -> %t {
+                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji>)
+              % }
+            </ul>
+          </td>
+
+          </tr>
+          </table>
         <input type="submit" value="Add">
       </form>
     </div>
