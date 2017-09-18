@@ -18,6 +18,12 @@ subtest {
             done-testing;
         }, 'te-waza';
 
+        subtest {
+            is %waza<nage-waza><koshi-waza>.keys,
+            'uki-goshi o-goshi koshi-guruma tsurikomi-goshi sode-tsurikomi-goshi harai-goshi tsuri-goshi hane-goshi utsuri-goshi ushiro-goshi',
+            'All Koshi-Waza techniques present';
+            done-testing;
+        }, 'koshi-waza';
         done-testing;
     }
 
