@@ -14,7 +14,7 @@
           <h3>Te-waza</h3>
             <ul>
               % for @(%waza<nage-waza><te-waza>.values) -> %t {
-                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji>)
+                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji> %>)
               % }
             </ul>
           </td>
@@ -23,7 +23,7 @@
           <h3>Koshi-waza</h3>
             <ul>
               % for @(%waza<nage-waza><koshi-waza>.values) -> %t {
-                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji>)
+                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji> %>)
               % }
             </ul>
           </td>

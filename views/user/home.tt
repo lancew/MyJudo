@@ -27,7 +27,7 @@
 <table>
   % for %data<techniques>.kv -> $name, $number {
     <tr>
-      <td><%= $name %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> %>)</td>
+      <td><%= $name %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> %>)</td>
       <td><%= $number %></td>
     </tr>
   % }
