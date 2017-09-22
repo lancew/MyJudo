@@ -37,10 +37,10 @@ method get_user_data(:$user_name) {
            }
         }
 
-        %techniques = %techniques.sort( { $^a.value } );
+        %techniques = %techniques.sort( { .value } );
         # Temporary Data
             %user<sessions>  = @sessions.elems;
-            %user<techniques> = item %techniques.sort( { $^a.value } );
+            %user<techniques> = item %techniques;
             %user<user_name> = $user_name;
 
          return %user;
