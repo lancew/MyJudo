@@ -25,7 +25,7 @@
 
 <h2>Techniques (<%= %waza<kanji> %>)</h2>
 <table>
-  % for %data<techniques>.kv -> $name, $number {
+  % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
     <tr>
       <td><%= $name %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> || %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> %>)</td>
       <td><%= $number %></td>

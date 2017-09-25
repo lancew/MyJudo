@@ -37,7 +37,6 @@ method get_user_data(:$user_name) {
            }
         }
 
-        %techniques = %techniques.sort( { .value } );
         # Temporary Data
             %user<sessions>  = @sessions.elems;
             %user<techniques> = item %techniques;
