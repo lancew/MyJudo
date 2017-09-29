@@ -94,8 +94,8 @@ post '/register' => sub {
         my $session = session;
         $session<user> = %params<usernamesignup>;
 
-        redirect '/';
-        exit;
+        redirect '/login';
+        return;
     }
     redirect '/register';
 }
