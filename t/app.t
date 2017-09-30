@@ -9,7 +9,7 @@ plan 4;
 my $app = EVALFILE "bin/app.pl6";
 
 subtest {
-    plan 5;
+    plan 4;
     my %data = run-psgi-request($app, 'GET', '/');
     my $html = %data<response>[2];
     %data<response>[2] = '';
@@ -17,7 +17,6 @@ subtest {
     is %data<err>, '', 'No errors';
     like $html, rx:s/Register/;
     like $html, rx:s/Login/;
-    like $html, rx:s/Logout/;
 }, '/';
 
 subtest {
