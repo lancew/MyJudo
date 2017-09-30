@@ -8,9 +8,10 @@
 <table>
     <tr>
       <td>
-       Sessions</td><td><%= %data<sessions> %>
-       <br />
+       <p>Sessions</td><td><%= %data<sessions> %></p>
+       <p>
        <a href="/training_session/add"><i class="fa fa-plus" aria-hidden="true"></i>ADD A SESSION</a>
+       </p>
        </td>
     </tr>
     <tr>
@@ -20,7 +21,18 @@
       <p>A number of one means you trained directly under Professor Kano, a 2 would mean you trained under some who trained with Professor Kano.</p>
       <p> Your Kano number is: .... Not yet calculated</p>
      </td>
-    </tr> 
+    </tr>
+</table>
+
+<h2>Sensei/Instructors/Coaches</h2>
+<a href="/sensei/add"><i class="fa fa-plus" aria-hidden="true"></i>ADD A SENSEI</a>
+<table>
+   % for @(%data<sensei>) -> %sensei {
+     <tr>
+        <td><%= %sensei<given_name> %></td>
+        <td><%= %sensei<family_name> %></td>
+     </tr>
+   % }
 </table>
 
 <h2>Techniques (<%= %waza<kanji> %>)</h2>

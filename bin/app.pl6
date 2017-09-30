@@ -8,7 +8,7 @@ use Crypt::Bcrypt;
 use DBIish;
 
 my $version = '0.0.1';
-config.cookie-expiration = 60 * 5; # 5minutes
+
 config.hmac-key = 'lance-key';
 
 static-dir / (.+) / => 'static/';
@@ -30,7 +30,7 @@ post '/login' => sub {
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
         my $sth = $dbh.prepare(q:to/STATEMENT/);
-            SELECT password_hash
+            SELECT password_hash,id
               FROM users
              WHERE username = ?
         STATEMENT
@@ -42,6 +42,7 @@ post '/login' => sub {
             if ( bcrypt-match(%params<password>, $hash) ) {
                 my $session = session;
                 $session<user> = %params<login>;
+                $session<user_id> = $row[1];
             }
         }
     }
@@ -65,8 +66,8 @@ get '/register' => sub {
 post '/register' => sub {
     my %params = request.params;
     redirect '/' unless %params;
-
     if (%params<passwordsignup> eq %params<passwordsignup_confirm>) {
+
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
         my $sth = $dbh.prepare(q:to/STATEMENT/);
@@ -117,6 +118,89 @@ prefix '/user' => sub {
     }
 }
 
+prefix '/sensei' => sub {
+    get '/add' => sub {
+        my $session = session;
+        redirect '/' unless $session<user>:exists;
+
+        template 'sensei/add.tt';
+    }
+    post '/add' => sub {
+        my $session = session;
+        redirect '/' unless $session<user>:exists;
+
+        my %params = request.params;
+        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+
+        my $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT 1
+              FROM sensei
+             WHERE family_name = ?
+               AND given_name = ?
+            STATEMENT
+        $sth.execute(%params<family_name>.tc, %params<given_name>.tc);
+
+        my @rows = $sth.allrows();
+        if (!@rows.elems) {
+            # No matching session(s) so add one
+
+            $sth = $dbh.prepare(q:to/STATEMENT/);
+                INSERT INTO sensei
+                  (family_name, given_name)
+                  VALUES (?,?)
+            STATEMENT
+
+            $sth.execute(
+                %params<family_name>.tc,
+                %params<given_name>.tc
+            );
+        }
+
+        # TODO: Check that we have not added this sensei for the user already
+
+        $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT *
+              FROM sensei
+             WHERE family_name = ?
+               AND given_name = ?
+        STATEMENT
+
+        $sth.execute(
+            %params<family_name>.tc,
+            %params<given_name>.tc
+        );
+
+        my %sensei = $sth.row(:hash);
+        warn %sensei.perl;
+
+        $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT 1
+              FROM users_sensei
+             WHERE sensei_id = ?
+               AND user_id =?
+        STATEMENT
+        $sth.execute(
+            %sensei<id>,
+            $session<user_id>
+        );
+        @rows = $sth.allrows();
+
+        unless ( @rows ) {
+            $sth = $dbh.prepare(q:to/STATEMENT/);
+                INSERT INTO users_sensei
+                            (user_id, sensei_id )
+                       VALUES (?, ?)
+            STATEMENT
+            $sth.execute(
+                $session<user_id>,
+                %sensei.<id>
+            );
+        }
+
+        redirect '/'; # this will return us to home via another redirect.
+    }
+}
+
 prefix '/training_session' => sub {
     get "/add" => sub {
         my $session = session;
@@ -125,7 +209,7 @@ prefix '/training_session' => sub {
         my $user_data = MyJudo.get_user_data( user_name => $session<user> );
         my $waza = Judo.waza();
 
-        template 'session/add.tt', {
+        template 'session/added.tt', {
             user_data => $user_data,
             waza => $waza,
         };

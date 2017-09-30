@@ -1,0 +1,19 @@
+<h1>Add your Sensei</h1>
+<h2>Add your instructor/coach</h2>
+<p>
+On this page add the sensei that you consider substantial influences in your
+Judo development. Typically this will be a small number of sensei that have
+shaped you strongly; your main coach from the day you started for example.
+</p>
+
+<form method="post">
+    Family name:
+    <input type="text" id="family_name" name="family_name">
+
+    <br />
+
+    Given name:
+    <input type="text" id="given_name" name="given_name">
+
+    <input type="submit" value="Add">
+</form>
