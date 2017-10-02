@@ -7,53 +7,27 @@
       <form method="post">
         <input type="date" name ="session-date" id="session-date" value ="<%= Date.new(DateTime.now) %>">
 
+
         <h2>Nage-Waza (<%= %waza<nage-waza><kanji> %>)</h2>
-          <table>
+          <table class="table">
           <tr>
+        % my @groups = 'te-waza', 'koshi-waza', 'ashi-waza', 'ma-sutemi-waza', 'yoko-sutemi-waza';
+        % for @groups -> $group {
           <td>
-          <h3>Te-waza</h3>
-            <ul>
-              % for @(%waza<nage-waza><te-waza>.values) -> %t {
-                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji> %>)
+          <h3><%= $group.tc %></h3>
+            <ul class="list-group">
+              % for @(%waza<nage-waza>{$group}.values) -> %t {
+                  <li class="list-group-item">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>">
+                      <%= %t<name> %> (<%= %t<kanji> %>)
+                    </label>
+                  </div>
               % }
             </ul>
           </td>
-
-          <td>
-          <h3>Koshi-waza</h3>
-            <ul>
-              % for @(%waza<nage-waza><koshi-waza>.values) -> %t {
-                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji> %>)
-              % }
-            </ul>
-          </td>
-
-          <td>
-          <h3>Ashi-waza</h3>
-            <ul>
-              % for @(%waza<nage-waza><ashi-waza>.values) -> %t {
-                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji> %>)
-              % }
-            </ul>
-          </td>
-
-          <td>
-          <h3>Ma-sutemi-waza</h3>
-            <ul>
-              % for @(%waza<nage-waza><ma-sutemi-waza>.values) -> %t {
-                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji> %>)
-              % }
-            </ul>
-          </td>
-
-          <td>
-          <h3>Yoko-sutemi-waza</h3>
-            <ul>
-              % for @(%waza<nage-waza><yoko-sutemi-waza>.values) -> %t {
-                  <li> <input type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>"> <%= %t<name> %> (<%= %t<kanji> %>)
-              % }
-            </ul>
-          </td>
+        % }
 
           </tr>
           </table>
