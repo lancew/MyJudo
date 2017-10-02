@@ -1,4 +1,4 @@
-MyJudo
+MyJudo   [![Build Status](https://travis-ci.org/lancew/MyJudo.svg?branch=master)](https://travis-ci.org/lancew/MyJudo)
 
 This is an experiemntal website using Rakudo (Rakudobrew) Perl6 and Bailador.
 
