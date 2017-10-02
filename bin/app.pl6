@@ -209,7 +209,7 @@ prefix '/training_session' => sub {
         my $user_data = MyJudo.get_user_data( user_name => $session<user> );
         my $waza = Judo.waza();
 
-        template 'session/added.tt', {
+        template 'session/add.tt', {
             user_data => $user_data,
             waza => $waza,
         };
