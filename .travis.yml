@@ -9,3 +9,6 @@ install:
   - zef install --debug Bailador
   - zef install --debug Crypt::Bcrypt
 
+matrix:
+  allow_failures:
+  - perl6: latest
