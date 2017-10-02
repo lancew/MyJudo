@@ -50,10 +50,6 @@ post '/login' => sub {
 }
 
 get '/logout' => sub {
-    template 'logout.tt';
-}
-
-post '/logout' => sub {
     my $session = session;
     session-delete;
     redirect '/';

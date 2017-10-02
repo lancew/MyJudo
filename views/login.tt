@@ -1,11 +1,11 @@
 % my ($h) = @_;
 
     <h1>Login</h1>
-    <div>
+    <div class="wrapper">
       <form method="post">
-        <p><input type="text" name="login" value="" placeholder="Username or Email" autofocus></p>
-        <p><input type="password" name="password" value="" placeholder="Password"></p>
-        <input type="submit" value="Login">
+        <p><input class="form-control" type="text" name="login" value="" placeholder="Username or Email" autofocus></p>
+        <p><input class="form-control" type="password" name="password" value="" placeholder="Password"></p>
+        <input type="submit" value="Login" class="btn btn-primary">
       </form>
     </div>
 
