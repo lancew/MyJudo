@@ -1,0 +1,5 @@
+CREATE TABLE users (id integer primary key, username varchar(128), password_hash text not null);
+CREATE TABLE sessions (id integer primary key, date text, user_id integer, techniques text);
+CREATE TABLE sensei (id integer primary key, family_name text, given_name text, their_sensei integer);
+CREATE TABLE users_sensei (id integer primary key, user_id integer, sensei_id integer);
+CREATE TABLE sensei_sensei (id integer primary key, child_sensei_id integer, parent_sensei_id integer);
