@@ -33,7 +33,7 @@ subtest {
     my %data = run-psgi-request($app, 'GET', '/logout');
     my $html = %data<response>[2];
     %data<response>[2] = '';
-    is-deeply %data<response>[0], 200;
+    is-deeply %data<response>[0], 302;
     is %data<err>, '';
 }, '/logout';
 
