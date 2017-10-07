@@ -14,8 +14,22 @@
 <table class="table">
    % for @(%data<sensei>) -> %sensei {
      <tr>
-        <td><%= %sensei<given_name> %></td>
-        <td><%= %sensei<family_name> %></td>
+        <td><%= %sensei<given_name> %> <%= %sensei<family_name> %></td>
+     </tr>
+   % }
+</table>
+
+<h2>Sensei in your "Family Tree"</h2>
+<table class="table">
+   % for @(%data<tree>) -> %sensei {
+     <tr>
+        <td>
+           % for @(%sensei.values) -> %coach {
+             % for @(%coach.keys) -> $coach {
+               <%= $coach %>,
+              % }
+           % }
+        </td>
      </tr>
    % }
 </table>
