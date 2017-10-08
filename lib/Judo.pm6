@@ -359,7 +359,61 @@ method waza () {
 
 
         },
-
+        katame-waza => {
+            kanji => '固技',
+            osaekomi-waza =>{
+                kesa-gatame => {
+                       number => 1,
+                        name => 'Kesa-gatame',
+                        kanji => '袈裟固',
+                },
+                kuzure-kesa-gatame => {
+                       number => 2,
+                        name => 'Kuzure-kesa-gatame',
+                        kanji => '崩袈裟固',
+                },
+                ushiro-kesa-gatame => {
+                       number => 3,
+                        name => 'Ushiro-kesa-gatame',
+                        kanji => '後袈裟固',
+                },
+                kata-gatame => {
+                       number => 4,
+                        name => 'Kata-gatame',
+                        kanji => '肩固',
+                },
+                kami-shiho-gatame => {
+                       number => 5,
+                        name => 'Kami-shiho-gatame',
+                        kanji => '上四方固',
+                },
+                kuzure-kami-shiho-gatame => {
+                       number => 6,
+                        name => 'Kuzure-kami-shiho-gatame',
+                        kanji => '崩上四方固',
+                },
+                yoko-shiho-gatame => {
+                       number => 7,
+                        name => 'Yoko-shiho-gatame',
+                        kanji => '横四方固',
+                },
+                tate-shiho-gatame => {
+                       number => 8,
+                        name => 'Tate-shiho-gatame',
+                        kanji => '縦四方固',
+                },
+                uki-gatame => {
+                       number => 9,
+                        name => 'Uki-gatame',
+                        kanji => '浮固',
+                },
+                ura-gatame => {
+                       number => 10,
+                        name => 'Ura-gatame',
+                        kanji => '裏固',
+                },
+            },
+        },
 
     }
     
