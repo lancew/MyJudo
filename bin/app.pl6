@@ -9,8 +9,19 @@ use DBIish;
 
 my $version = '0.0.1';
 
+# SSL serving config
+#config.default-command      = 'ogre';
+#config.tls-mode             = True;
+#config.tls-config           = (
+#    certificate-file => '/root/dehydrated/certs/myjudo.net/cert.pem',
+#    private-key-file => '/root/dehydrated/certs/myjudo.net/privkey.pem',
+#);
+
 config.hmac-key = 'lance-key';
 
+# Serve the challenge for letsencrypt SSL:
+#        https://github.com/lukas2511/dehydrated
+static-dir '/.well-known/acme-challenge/' => '/var/www/dehydrated/';
 static-dir / (.+) / => 'static/';
 
 get '/' => sub {
