@@ -1,8 +1,8 @@
 MyJudo   [![Build Status](https://travis-ci.org/lancew/MyJudo.svg?branch=master)](https://travis-ci.org/lancew/MyJudo) [![Kritika Analysis Status](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/status.svg)](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/)
 
-This is an experiemntal website using Rakudo (Rakudobrew) Perl6 and Bailador.
+This is an experimental website using Rakudo (Rakudobrew) Perl6 and Bailador.
 
-You can start the site locally with: 
+You can start the site locally with:
 ```
 bailador watch bin/app.pl6
 ```
@@ -12,14 +12,10 @@ You can run tests with:
  prove -lv --exec perl6 t
 ```
 
-I am currently exploring using git-ssb to host the development of this
-so bear with me. :-)
-The ssb link for this repo is: 
-```
-    ssb://%MkBUFeRs7fTN2lAUXuYYaK3i9ln29vBisvJnhEcx4KA=.sha256
-```
-or via http:
-```
-    http://localhost:7718/%25MkBUFeRs7fTN2lAUXuYYaK3i9ln29vBisvJnhEcx4KA%3D.sha256
-```
-This should in theory be private to me.    
+Currently running at http://myjudo.net
+
+This app is serving as basis for my November 2017 workshop at the London Perl Workshop on Bailador:
+
+http://act.yapc.eu/lpw2017/talk/7213
+
+
