@@ -256,7 +256,7 @@ method waza () {
                         number => 2,
                         name => 'Sumi-gaeshi',
                         kanji => '隅返',
-                    }, 
+                    },
                     hikikomi-gaeshi => {
                         number => 3,
                         name => 'Hikikomi-gaeshi',
@@ -413,9 +413,124 @@ method waza () {
                         kanji => '裏固',
                 },
             },
+            shime-waza => {
+                nami-juji-jime => {
+                    number => 1,
+                    name => 'Nami-juji-jime',
+                    kanji => '並十字絞',
+
+                },
+                gyaku-juji-jime => {
+                    number => 2,
+                    name => 'Gyaku-juji-jime',
+                    kanji => '逆十字絞',
+                },
+                kata-juji-jime => {
+                    number => 3,
+                    name => 'Kata-juji-jime',
+                    kanji => '片十字絞',
+                },
+                hadaka-jime => {
+                    number => 4,
+                    name => 'Hadaka-jime',
+                    kanji => '裸絞',
+                },
+                okuri-eri-jime => {
+                    number => 5,
+                    name => 'Okuri-eri-jime',
+                    kanji => '送襟絞',
+                },
+                kataha-jime => {
+                    number => 6,
+                    name => 'Kataha-jime',
+                    kanji => '片羽絞',
+                },
+                katate-jime => {
+                    number => 7,
+                    name => 'Katate-jime',
+                    kanji => '片手絞',
+                },
+                ryote-jime => {
+                    number => 8,
+                    name => 'Ryote-jime',
+                    kanji => '両手絞',
+                },
+                sode-guruma-jime => {
+                    number => 9,
+                    name => 'Sode-guruma-jime',
+                    kanji => '袖車絞',
+                },
+                tsukkomi-jime => {
+                    number => 10,
+                    name => 'Tsukkomi-jime',
+                    kanji => '突込絞',
+                },
+                sankaku-jime => {
+                    number => 11,
+                    name => 'Sankaku-jime',
+                    kanji => '三角絞',
+                },
+                do-jime => {
+                    number => 12,
+                    name => 'Do-jime',
+                    kanji => '胴絞',
+                },
+            },
+            kansetsu-waza => {
+                ude-garami => {
+                    number => 1,
+                    name => 'Ude-garami',
+                    kanji => '腕緘',
+                },
+                ude-hishigi-juji-gatame => {
+                    number => 2,
+                    name => 'Ude-hishigi-juji-gatame',
+                    kanji => '腕挫十字固',
+                },
+                ude-hishigi-ude-gatame => {
+                    number => 3,
+                    name => 'Ude-hishigi-ude-gatame',
+                    kanji => '腕挫腕固',
+                },
+                ude-hishigi-hiza-gatame => {
+                    number => 4,
+                    name => 'Ude-hishigi-hiza-gatame',
+                    kanji => '腕挫膝固',
+                },
+                ude-hishigi-waki-gatame => {
+                    number => 5,
+                    name => 'Ude-hishigi-waki-gatame',
+                    kanji => '腕挫腋固',
+                },
+                ude-hishigi-hara-gatame => {
+                    number => 6,
+                    name => 'Ude-hishigi-hara-gatame',
+                    kanji => '腕挫腹固',
+                },
+                ude-hishigi-ashi-gatame => {
+                    number => 7,
+                    name => 'Ude-hishigi-hara-gatame',
+                    kanji => '腕挫脚固',
+                },
+                ude-hishigi-te-gatame => {
+                    number => 8,
+                    name => 'Ude-hishigi-te-gatame',
+                    kanji => '腕挫手固',
+                },
+                ude-hishigi-sankaku-gatame => {
+                    number => 9,
+                    name => 'Ude-hishigi-sankaku-gatame',
+                    kanji => '腕挫三角固',
+                },
+                ashi-garami => {
+                    number => 10,
+                    name => 'Ashi-garame',
+                    kanji => '足緘',
+                },
+            },
         },
 
     }
-    
+
     return %waza;
 }
