@@ -37,7 +37,7 @@
            </td> 
           </tr>
           <tr>
-        % my @groups = 'osaekomi-waza';
+        % @groups = 'osaekomi-waza', 'shime-waza', 'kansetsu-waza';
         % for @groups -> $group {
           <td>
           <h3><%= $group.tc %></h3>

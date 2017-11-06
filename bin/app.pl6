@@ -21,7 +21,7 @@ config.hmac-key = 'lance-key';
 
 # Serve the challenge for letsencrypt SSL:
 #        https://github.com/lukas2511/dehydrated
-static-dir '/.well-known/acme-challenge/' => '/var/www/dehydrated/';
+# static-dir '/.well-known/acme-challenge/' => '/var/www/dehydrated/';
 static-dir / (.+) / => 'static/';
 
 get '/' => sub {
