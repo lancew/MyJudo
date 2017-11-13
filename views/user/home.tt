@@ -4,6 +4,38 @@
 
 <h1>Home Page for <%= %data<user_name> %></h1>
 
+<h2>Statistics</h2>
+<table class="table">
+    <tr>
+      <td>
+       <p>Sessions</td>
+      <td>
+        This month: <%= %data<sessions_this_month> %>
+        Total: <%= %data<sessions> %><br />
+      </td>
+    </tr>
+    <tr>
+      <td>
+       <p>
+       <a href="/training_session/add"><i class="fa fa-plus" aria-hidden="true"></i>ADD A SESSION</a>
+       </p>
+       </td>
+       <td></td>
+    </tr>
+</table>
+
+<h2>Techniques (<%= %waza<kanji> %>)</h2>
+<table class="table table-striped">
+  <tbody>
+  % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+    <tr>
+      <td><%= $name %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> || %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> %>)</td>
+      <td><%= $number %></td>
+    </tr>
+  % }
+  </tbody>
+</table>
+
 <h2>Kano Number</h2>
 <p>The Kano number is a representation of how far seperated you are from the founder of Judo Jigoro Kano.</p>
 <p>A number of one means you trained directly under Professor Kano, a 2 would mean you trained under some who trained with Professor Kano.</p>
@@ -34,33 +66,3 @@
    % }
 </table>
 
-<h2>Statistics</h2>
-<table class="table">
-    <tr>
-      <td>
-       <p>Sessions</td>
-      <td>
-        <%= %data<sessions> %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-       <p>
-       <a href="/training_session/add"><i class="fa fa-plus" aria-hidden="true"></i>ADD A SESSION</a>
-       </p>
-       </td>
-       <td></td>
-    </tr>
-</table>
-
-<h2>Techniques (<%= %waza<kanji> %>)</h2>
-<table class="table table-striped">
-  <tbody>
-  % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
-    <tr>
-      <td><%= $name %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> || %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> %>)</td>
-      <td><%= $number %></td>
-    </tr>
-  % }
-  </tbody>
-</table>

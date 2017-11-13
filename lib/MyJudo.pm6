@@ -30,12 +30,30 @@ method get_user_data(:$user_name) {
 
         my %techniques;
         for @sessions -> %session {
-
            my @techniques = %session<techniques>.split(',');
            for @techniques -> $waza {
                %techniques{$waza}++;
            }
         }
+
+	$sth = $dbh.prepare(q:to/STATEMENT/);
+	   SELECT *
+	     FROM sessions
+	    WHERE user_id = ?
+	      AND date >= ?
+	STATEMENT      
+	my $start_of_month = Date.today.year ~ '-' ~ Date.today.month ~ '-01';
+        $sth.execute(%user<id>, $start_of_month);
+        my @sessions_this_month = $sth.allrows(:array-of-hash);
+	my %techniques_this_month;
+        for @sessions_this_month -> %session {
+           my @techniques = %session<techniques>.split(',');
+           for @techniques -> $waza {
+               %techniques_this_month{$waza}++;
+           }
+        }
+
+
 
         $sth = $dbh.prepare(q:to/STATEMENT/);
             SELECT *
@@ -90,7 +108,9 @@ method get_user_data(:$user_name) {
 
         # Temporary Data
             %user<sessions>  = @sessions.elems;
+	    %user<sessions_this_month> = @sessions_this_month.elems;
             %user<techniques> = item %techniques;
+            %user<techniques_this_month> = item %techniques_this_month;
             %user<user_name> = $user_name;
             %user<sensei> = item @sensei;
             %user<tree> = item %tree;
