@@ -60,8 +60,10 @@
 
       <div class="starter-template">
         <h1>My-Judo</h1>
-
-        <%= $h %>
+	<div>
+	  <p />
+          <%= $h %>
+        </div> 
       </div>
 
     </div><!-- /.container -->
