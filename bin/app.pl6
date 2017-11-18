@@ -38,23 +38,13 @@ get '/login' => sub {
 post '/login' => sub {
     my %params = request.params;
     if ( %params<login> && %params<password> ) {
-        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
-        my $sth = $dbh.prepare(q:to/STATEMENT/);
-            SELECT password_hash,id
-              FROM users
-             WHERE username = ?
-        STATEMENT
-
-        $sth.execute(%params<login>);
-        my $row = $sth.row();
-
-        if (my $hash = $row[0]) {
-            if ( bcrypt-match(%params<password>, $hash) ) {
+        my $user_id = MyJudo.valid_user_credentials(user_name => %params<login>, password => %params<password>);
+        
+        if ($user_id) {
                 my $session = session;
                 $session<user> = %params<login>;
-                $session<user_id> = $row[1];
-            }
+                $session<user_id> = $user_id;
         }
     }
     redirect '/';

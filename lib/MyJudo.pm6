@@ -3,6 +3,26 @@ unit class MyJudo;
 use Crypt::Bcrypt;
 use DBIish;
 
+method valid_user_credentials(:$user_name, :$password) {
+    my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+
+    my $sth = $dbh.prepare(q:to/STATEMENT/);
+        SELECT password_hash,id
+            FROM users
+            WHERE username = ?
+    STATEMENT
+
+    $sth.execute($user_name);
+    my $row = $sth.row();
+
+    if (my $hash = $row[0]) {
+        if ( bcrypt-match($password, $hash) ) {
+            return $row[1];
+        }
+    }
+    return 0;
+}
+
 method add_new_user(:$user_name, :$password) {
     my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
     my $sth = $dbh.prepare(q:to/STATEMENT/);
