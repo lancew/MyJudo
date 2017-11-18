@@ -3,9 +3,9 @@ unit class MyJudo;
 use Crypt::Bcrypt;
 use DBIish;
 
-method valid_user_credentials(:$user_name, :$password) {
-    my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
+method valid_user_credentials(:$user_name, :$password) {
     my $sth = $dbh.prepare(q:to/STATEMENT/);
         SELECT password_hash,id
             FROM users
@@ -24,7 +24,6 @@ method valid_user_credentials(:$user_name, :$password) {
 }
 
 method add_new_user(:$user_name, :$password) {
-    my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
     my $sth = $dbh.prepare(q:to/STATEMENT/);
         INSERT INTO users
             (username,password_hash)
@@ -36,8 +35,6 @@ method add_new_user(:$user_name, :$password) {
 }
 
 method is_username_taken(:$user_name) {
-        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
-
         my $sth = $dbh.prepare(q:to/STATEMENT/);
             SELECT 1
               FROM users
@@ -56,8 +53,6 @@ method is_username_taken(:$user_name) {
 
 method get_user_data(:$user_name) {
         my %user;
-
-        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
         my $sth = $dbh.prepare(q:to/STATEMENT/);
             SELECT id,username
