@@ -2,6 +2,25 @@ unit class MyJudo;
 
 use DBIish;
 
+method is_username_taken(:$user_name) {
+        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+
+        my $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT 1
+              FROM users
+             WHERE username = ?
+           STATEMENT
+
+        $sth.execute($user_name);
+
+        my @rows = $sth.allrows();
+        if (@rows.elems) {
+            return 1;
+        }    
+
+        return 0;
+}
+
 method get_user_data(:$user_name) {
         my %user;
 
@@ -117,3 +136,4 @@ method get_user_data(:$user_name) {
 
          return %user;
     }
+

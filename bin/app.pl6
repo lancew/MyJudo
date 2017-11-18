@@ -75,22 +75,12 @@ post '/register' => sub {
     redirect '/' unless %params;
     if (%params<passwordsignup> eq %params<passwordsignup_confirm>) {
 
+        my $is_username_taken = MyJudo.is_username_taken( user_name => %params<usernamesignup>);
+
+        return 'Username is taken' if $is_username_taken;
+
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
-
         my $sth = $dbh.prepare(q:to/STATEMENT/);
-            SELECT 1
-              FROM users
-             WHERE username = ?
-           STATEMENT
-
-        $sth.execute(%params<usernamesignup>);
-
-        my @rows = $sth.allrows();
-        if (@rows.elems) {
-            return 'User Name Taken';
-        }
-
-        $sth = $dbh.prepare(q:to/STATEMENT/);
             INSERT INTO users
                 (username,password_hash)
                 VALUES (?,?)
