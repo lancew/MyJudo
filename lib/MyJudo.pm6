@@ -51,6 +51,62 @@ method is_username_taken(:$user_name) {
         return 0;
 }
 
+method get_sensei_by_name(:$family_name, :$given_name){
+    my $sth = $dbh.prepare(q:to/STATEMENT/);
+            SELECT *
+              FROM sensei
+             WHERE family_name = ?
+               AND given_name = ?
+            STATEMENT
+
+        $sth.execute($family_name.tc, $given_name.tc);
+
+        return $sth.row(:hash);
+}
+
+method add_sensei (:$family_name, :$given_name) {
+    my $sth = $dbh.prepare(q:to/STATEMENT/);
+        INSERT INTO sensei
+            (family_name, given_name)
+            VALUES (?,?)
+    STATEMENT
+
+    $sth.execute(
+        $family_name.tc,
+        $given_name.tc
+    );
+}
+
+method is_user_linked_to_sensei (:$user_id, :$sensei_id) {
+    my $sth = $dbh.prepare(q:to/STATEMENT/);
+        SELECT 1
+          FROM users_sensei
+         WHERE user_id = ?
+           AND sensei_id = ?
+    STATEMENT
+
+    $sth.execute(
+        $user_id, $sensei_id
+    );       
+
+    my @rows = $sth.allrows();
+    if (@rows.elems) {
+        return 1;
+    }    
+
+    return 0;
+}
+
+method link_user_to_sensei (:$user_id, :$sensei_id) {
+    my $sth = $dbh.prepare(q:to/STATEMENT/);
+            INSERT INTO users_sensei
+              (user_id,sensei_id)
+              VALUES (?,?)
+            STATEMENT
+
+    $sth.execute($user_id, $sensei_id);
+}
+
 method get_user_data(:$user_name) {
         my %user;
 
@@ -155,7 +211,7 @@ method get_user_data(:$user_name) {
 
         # Temporary Data
             %user<sessions>  = @sessions.elems;
-	    %user<sessions_this_month> = @sessions_this_month.elems;
+	        %user<sessions_this_month> = @sessions_this_month.elems;
             %user<techniques> = item %techniques;
             %user<techniques_this_month> = item %techniques_this_month;
             %user<user_name> = $user_name;

@@ -112,71 +112,37 @@ prefix '/sensei' => sub {
         redirect '/' unless $session<user>:exists;
 
         my %params = request.params;
-        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
-        my $sth = $dbh.prepare(q:to/STATEMENT/);
-            SELECT 1
-              FROM sensei
-             WHERE family_name = ?
-               AND given_name = ?
-            STATEMENT
-        $sth.execute(%params<family_name>.tc, %params<given_name>.tc);
+        my $sensei = MyJudo.get_sensei_by_name(
+            family_name => %params<given_name>,
+            given_name  => %params<family_name>,
+        );
 
-        my @rows = $sth.allrows();
-        if (!@rows.elems) {
-            # No matching session(s) so add one
+        if ( ! $sensei ) {
+            $sensei = MyJudo.add_sensei(
+                family_name => %params<given_name>,
+                given_name  => %params<family_name>,
+            );
 
-            $sth = $dbh.prepare(q:to/STATEMENT/);
-                INSERT INTO sensei
-                  (family_name, given_name)
-                  VALUES (?,?)
-            STATEMENT
 
-            $sth.execute(
-                %params<family_name>.tc,
-                %params<given_name>.tc
+            $sensei = MyJudo.get_sensei_by_name(
+                family_name => %params<given_name>,
+                given_name  => %params<family_name>,
             );
         }
+ 
+        if ( $sensei ) {
+            my $user_is_linked_to_sensei = MyJudo.is_user_linked_to_sensei(
+                user_id => $session<user_id>, 
+                sensei_id => $sensei<id>, 
+            ); 
 
-        # TODO: Check that we have not added this sensei for the user already
-
-        $sth = $dbh.prepare(q:to/STATEMENT/);
-            SELECT *
-              FROM sensei
-             WHERE family_name = ?
-               AND given_name = ?
-        STATEMENT
-
-        $sth.execute(
-            %params<family_name>.tc,
-            %params<given_name>.tc
-        );
-
-        my %sensei = $sth.row(:hash);
-        warn %sensei.perl;
-
-        $sth = $dbh.prepare(q:to/STATEMENT/);
-            SELECT 1
-              FROM users_sensei
-             WHERE sensei_id = ?
-               AND user_id =?
-        STATEMENT
-        $sth.execute(
-            %sensei<id>,
-            $session<user_id>
-        );
-        @rows = $sth.allrows();
-
-        unless ( @rows ) {
-            $sth = $dbh.prepare(q:to/STATEMENT/);
-                INSERT INTO users_sensei
-                            (user_id, sensei_id )
-                       VALUES (?, ?)
-            STATEMENT
-            $sth.execute(
-                $session<user_id>,
-                %sensei.<id>
-            );
+            if ( ! $user_is_linked_to_sensei ) {
+                MyJudo.link_user_to_sensei( 
+                    user_id => $session<user_id>, 
+                    sensei_id => $sensei<id> 
+                );
+            }
         }
 
         redirect '/'; # this will return us to home via another redirect.
