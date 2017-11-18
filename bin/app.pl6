@@ -9,6 +9,10 @@ use DBIish;
 
 my $version = '0.0.1';
 
+my $mj = MyJudo.new(
+    dbh => DBIish.connect("SQLite", :database<db/myjudo.db>), 
+);
+
 # SSL serving config
 #config.default-command      = 'ogre';
 #config.tls-mode             = True;
@@ -39,7 +43,7 @@ post '/login' => sub {
     my %params = request.params;
     if ( %params<login> && %params<password> ) {
 
-        my $user_id = MyJudo.valid_user_credentials(
+        my $user_id = $mj.valid_user_credentials(
             user_name => %params<login>,
             password => %params<password>
         );
@@ -68,10 +72,10 @@ post '/register' => sub {
     redirect '/' unless %params;
     if (%params<passwordsignup> eq %params<passwordsignup_confirm>) {
 
-        my $is_username_taken = MyJudo.is_username_taken( user_name => %params<usernamesignup>);
+        my $is_username_taken = $mj.is_username_taken( user_name => %params<usernamesignup>);
         return 'Username is taken' if $is_username_taken;
 
-        MyJudo.add_new_user( user_name => %params<usernamesignup>, password => %params<passwordsignup> );
+        $mj.add_new_user( user_name => %params<usernamesignup>, password => %params<passwordsignup> );
 
 
         my $session = session;
@@ -87,7 +91,7 @@ prefix '/user' => sub {
         my $session = session();
         redirect '/' unless $session<user>:exists && $session<user> eq $user;
 
-        my %user_data = MyJudo.get_user_data( user_name => $session<user> );
+        my %user_data = $mj.get_user_data( user_name => $session<user> );
 
         redirect '/' unless %user_data;
 
@@ -113,32 +117,32 @@ prefix '/sensei' => sub {
 
         my %params = request.params;
 
-        my $sensei = MyJudo.get_sensei_by_name(
+        my $sensei = $mj.get_sensei_by_name(
             family_name => %params<given_name>,
             given_name  => %params<family_name>,
         );
 
         if ( ! $sensei ) {
-            $sensei = MyJudo.add_sensei(
+            $sensei = $mj.add_sensei(
                 family_name => %params<given_name>,
                 given_name  => %params<family_name>,
             );
 
 
-            $sensei = MyJudo.get_sensei_by_name(
+            $sensei = $mj.get_sensei_by_name(
                 family_name => %params<given_name>,
                 given_name  => %params<family_name>,
             );
         }
  
         if ( $sensei ) {
-            my $user_is_linked_to_sensei = MyJudo.is_user_linked_to_sensei(
+            my $user_is_linked_to_sensei = $mj.is_user_linked_to_sensei(
                 user_id => $session<user_id>, 
                 sensei_id => $sensei<id>, 
             ); 
 
             if ( ! $user_is_linked_to_sensei ) {
-                MyJudo.link_user_to_sensei( 
+                $mj.link_user_to_sensei( 
                     user_id => $session<user_id>, 
                     sensei_id => $sensei<id> 
                 );
@@ -154,7 +158,7 @@ prefix '/training_session' => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists;
 
-        my $user_data = MyJudo.get_user_data( user_name => $session<user> );
+        my $user_data = $mj.get_user_data( user_name => $session<user> );
         my $waza = Judo.waza();
 
         template 'session/add.tt', {
@@ -166,7 +170,7 @@ prefix '/training_session' => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists;
 
-        my $user_data = MyJudo.get_user_data( user_name => $session<user> );
+        my $user_data = $mj.get_user_data( user_name => $session<user> );
 
         my %params = request.params;
 

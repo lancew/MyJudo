@@ -2,12 +2,28 @@ use v6.c;
 use Test;
 
 use lib 'lib';
+use DBIish;
 use MyJudo;
 
-my $mj = MyJudo.new;
+my $mj = MyJudo.new(
+    dbh => DBIish.connect("SQLite", :database<db/test.db>)
+);
 
-can-ok $mj, 'add_new_user';
-can-ok $mj, 'get_user_data';
-can-ok $mj, 'is_username_taken';
+my $sth = $mj.dbh.prepare('DELETE FROM users');
+$sth.execute;
+
+$mj.add_new_user(
+    user_name => 'test',
+    password  => 'secret',
+);
+
+$sth = $mj.dbh.prepare('SELECT id,username from users');
+$sth.execute;
+my %user = $sth.row(:hash);
+
+is %user, {
+    id => 1,
+    username => 'test',
+}, 'New user is added';
 
 done-testing;

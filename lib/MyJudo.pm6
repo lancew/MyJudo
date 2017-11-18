@@ -3,10 +3,10 @@ unit class MyJudo;
 use Crypt::Bcrypt;
 use DBIish;
 
-my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+has $.dbh is rw;
 
 method valid_user_credentials(:$user_name, :$password) {
-    my $sth = $dbh.prepare(q:to/STATEMENT/);
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
         SELECT password_hash,id
             FROM users
             WHERE username = ?
@@ -24,7 +24,7 @@ method valid_user_credentials(:$user_name, :$password) {
 }
 
 method add_new_user(:$user_name, :$password) {
-    my $sth = $dbh.prepare(q:to/STATEMENT/);
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
         INSERT INTO users
             (username,password_hash)
             VALUES (?,?)
@@ -35,7 +35,7 @@ method add_new_user(:$user_name, :$password) {
 }
 
 method is_username_taken(:$user_name) {
-        my $sth = $dbh.prepare(q:to/STATEMENT/);
+        my $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT 1
               FROM users
              WHERE username = ?
@@ -52,7 +52,7 @@ method is_username_taken(:$user_name) {
 }
 
 method get_sensei_by_name(:$family_name, :$given_name){
-    my $sth = $dbh.prepare(q:to/STATEMENT/);
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT *
               FROM sensei
              WHERE family_name = ?
@@ -65,7 +65,7 @@ method get_sensei_by_name(:$family_name, :$given_name){
 }
 
 method add_sensei (:$family_name, :$given_name) {
-    my $sth = $dbh.prepare(q:to/STATEMENT/);
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
         INSERT INTO sensei
             (family_name, given_name)
             VALUES (?,?)
@@ -78,7 +78,7 @@ method add_sensei (:$family_name, :$given_name) {
 }
 
 method is_user_linked_to_sensei (:$user_id, :$sensei_id) {
-    my $sth = $dbh.prepare(q:to/STATEMENT/);
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
         SELECT 1
           FROM users_sensei
          WHERE user_id = ?
@@ -98,7 +98,7 @@ method is_user_linked_to_sensei (:$user_id, :$sensei_id) {
 }
 
 method link_user_to_sensei (:$user_id, :$sensei_id) {
-    my $sth = $dbh.prepare(q:to/STATEMENT/);
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
             INSERT INTO users_sensei
               (user_id,sensei_id)
               VALUES (?,?)
@@ -110,7 +110,7 @@ method link_user_to_sensei (:$user_id, :$sensei_id) {
 method get_user_data(:$user_name) {
         my %user;
 
-        my $sth = $dbh.prepare(q:to/STATEMENT/);
+        my $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT id,username
               FROM users
              WHERE username = ?
@@ -122,7 +122,7 @@ method get_user_data(:$user_name) {
         %user<id> = %row<id>;
         %user<user_name> = %row<username>;
 
-        $sth = $dbh.prepare(q:to/STATEMENT/);
+        $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT *
               FROM sessions
              WHERE user_id = ?
@@ -139,7 +139,7 @@ method get_user_data(:$user_name) {
            }
         }
 
-	$sth = $dbh.prepare(q:to/STATEMENT/);
+	$sth = $.dbh.prepare(q:to/STATEMENT/);
 	   SELECT *
 	     FROM sessions
 	    WHERE user_id = ?
@@ -158,7 +158,7 @@ method get_user_data(:$user_name) {
 
 
 
-        $sth = $dbh.prepare(q:to/STATEMENT/);
+        $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT *
               FROM sensei
               JOIN users_sensei ON sensei.id = users_sensei.sensei_id
@@ -168,13 +168,13 @@ method get_user_data(:$user_name) {
         $sth.execute(%user<id>);
         my @sensei = $sth.allrows(:array-of-hash);
 
-        my $sensei_get = $dbh.prepare(q:to/STATEMENT/);
+        my $sensei_get = $.dbh.prepare(q:to/STATEMENT/);
             SELECT *
               FROM sensei
              WHERE id = ?
         STATEMENT
 
-        $sth = $dbh.prepare(q:to/STATEMENT/);
+        $sth = $.dbh.prepare(q:to/STATEMENT/);
             WITH CTE AS
             (
             SELECT parent_sensei_id
