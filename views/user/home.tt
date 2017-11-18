@@ -10,7 +10,7 @@
       <td>
        <p>Sessions</td>
       <td>
-        This month: <%= %data<sessions_this_month> %>
+        This month: <%= %data<sessions_this_month> %><br />
         Total: <%= %data<sessions> %><br />
       </td>
     </tr>

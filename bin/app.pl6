@@ -39,7 +39,10 @@ post '/login' => sub {
     my %params = request.params;
     if ( %params<login> && %params<password> ) {
 
-        my $user_id = MyJudo.valid_user_credentials(user_name => %params<login>, password => %params<password>);
+        my $user_id = MyJudo.valid_user_credentials(
+            user_name => %params<login>,
+            password => %params<password>
+        );
         
         if ($user_id) {
                 my $session = session;
