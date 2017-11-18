@@ -6,6 +6,8 @@ use MyJudo;
 
 my $mj = MyJudo.new;
 
+can-ok $mj, 'add_new_user';
 can-ok $mj, 'get_user_data';
+can-ok $mj, 'is_username_taken';
 
 done-testing;

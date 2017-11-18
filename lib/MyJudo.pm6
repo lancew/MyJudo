@@ -1,6 +1,19 @@
 unit class MyJudo;
 
+use Crypt::Bcrypt;
 use DBIish;
+
+method add_new_user(:$user_name, :$password) {
+    my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
+    my $sth = $dbh.prepare(q:to/STATEMENT/);
+        INSERT INTO users
+            (username,password_hash)
+            VALUES (?,?)
+        STATEMENT
+
+    my $hash = bcrypt-hash($password);
+    $sth.execute($user_name,$hash);
+}
 
 method is_username_taken(:$user_name) {
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);

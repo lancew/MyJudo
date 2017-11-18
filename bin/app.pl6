@@ -76,18 +76,10 @@ post '/register' => sub {
     if (%params<passwordsignup> eq %params<passwordsignup_confirm>) {
 
         my $is_username_taken = MyJudo.is_username_taken( user_name => %params<usernamesignup>);
-
         return 'Username is taken' if $is_username_taken;
 
-        my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
-        my $sth = $dbh.prepare(q:to/STATEMENT/);
-            INSERT INTO users
-                (username,password_hash)
-                VALUES (?,?)
-           STATEMENT
+        MyJudo.add_new_user( user_name => %params<usernamesignup>, password => %params<passwordsignup> );
 
-        my $hash = bcrypt-hash(%params<passwordsignup>);
-        $sth.execute(%params<usernamesignup>,$hash);
 
         my $session = session;
         $session<user> = %params<usernamesignup>;
