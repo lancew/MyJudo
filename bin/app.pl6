@@ -86,6 +86,20 @@ post '/register' => sub {
     }
     redirect '/register';
 }
+
+prefix '/admin' => sub {
+    get '/dashboard' => sub {
+        my $session = session;
+        redirect '/' unless $session<user>:exists;
+        
+        my %dashboard_data = $mj.get_admin_dashboard_data;
+        template 'admin/dashboard.tt', {
+            dashboard_data => %dashboard_data,
+            waza => Judo.waza(),
+        };
+    }
+}
+
 prefix '/user' => sub {
     get "/:user" => sub ($user){
         my $session = session();

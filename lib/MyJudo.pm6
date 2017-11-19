@@ -107,6 +107,41 @@ method link_user_to_sensei (:$user_id, :$sensei_id) {
     $sth.execute($user_id, $sensei_id);
 }
 
+method get_admin_dashboard_data {
+    my %data;
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+        SELECT id
+          FROM users
+        STATEMENT
+    $sth.execute();
+
+    my @rows = $sth.allrows();
+    %data<total_users> = @rows.elems;
+
+    $sth = $.dbh.prepare(q:to/STATEMENT/);
+        SELECT *
+          FROM sessions
+        STATEMENT  
+    $sth.execute();
+
+    @rows = $sth.allrows(:array-of-hash);
+    %data<total_sessions> = @rows.elems;
+
+    my $total_techniques = 0;
+    my %techniques;
+    for @rows -> %session {
+        my @techniques = %session<techniques>.split(',');
+        for @techniques -> $waza {
+            $total_techniques++;
+            %techniques{$waza}++;
+        }
+    }
+    %data<total_techniques> = $total_techniques;
+    %data<techniques> = %techniques;
+    return %data;
+}
+
+
 method get_user_data(:$user_name) {
         my %user;
 
