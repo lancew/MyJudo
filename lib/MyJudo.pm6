@@ -5,24 +5,6 @@ use DBIish;
 
 has $.dbh is rw;
 
-method valid_user_credentials(:$user_name, :$password) {
-    my $sth = $.dbh.prepare(q:to/STATEMENT/);
-        SELECT password_hash,id
-            FROM users
-            WHERE username = ?
-    STATEMENT
-
-    $sth.execute($user_name);
-    my $row = $sth.row();
-
-    if (my $hash = $row[0]) {
-        if ( bcrypt-match($password, $hash) ) {
-            return $row[1];
-        }
-    }
-    return 0;
-}
-
 method add_new_user(:$user_name, :$password) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
         INSERT INTO users
@@ -32,36 +14,6 @@ method add_new_user(:$user_name, :$password) {
 
     my $hash = bcrypt-hash($password);
     $sth.execute($user_name,$hash);
-}
-
-method is_username_taken(:$user_name) {
-        my $sth = $.dbh.prepare(q:to/STATEMENT/);
-            SELECT 1
-              FROM users
-             WHERE username = ?
-           STATEMENT
-
-        $sth.execute($user_name);
-
-        my @rows = $sth.allrows();
-        if (@rows.elems) {
-            return 1;
-        }    
-
-        return 0;
-}
-
-method get_sensei_by_name(:$family_name, :$given_name){
-    my $sth = $.dbh.prepare(q:to/STATEMENT/);
-            SELECT *
-              FROM sensei
-             WHERE family_name = ?
-               AND given_name = ?
-            STATEMENT
-
-        $sth.execute($family_name.tc, $given_name.tc);
-
-        return $sth.row(:hash);
 }
 
 method add_sensei (:$family_name, :$given_name) {
@@ -75,36 +27,6 @@ method add_sensei (:$family_name, :$given_name) {
         $family_name.tc,
         $given_name.tc
     );
-}
-
-method is_user_linked_to_sensei (:$user_id, :$sensei_id) {
-    my $sth = $.dbh.prepare(q:to/STATEMENT/);
-        SELECT 1
-          FROM users_sensei
-         WHERE user_id = ?
-           AND sensei_id = ?
-    STATEMENT
-
-    $sth.execute(
-        $user_id, $sensei_id
-    );       
-
-    my @rows = $sth.allrows();
-    if (@rows.elems) {
-        return 1;
-    }    
-
-    return 0;
-}
-
-method link_user_to_sensei (:$user_id, :$sensei_id) {
-    my $sth = $.dbh.prepare(q:to/STATEMENT/);
-            INSERT INTO users_sensei
-              (user_id,sensei_id)
-              VALUES (?,?)
-            STATEMENT
-
-    $sth.execute($user_id, $sensei_id);
 }
 
 method get_admin_dashboard_data {
@@ -141,6 +63,18 @@ method get_admin_dashboard_data {
     return %data;
 }
 
+method get_sensei_by_name(:$family_name, :$given_name){
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+            SELECT *
+              FROM sensei
+             WHERE family_name = ?
+               AND given_name = ?
+            STATEMENT
+
+        $sth.execute($family_name.tc, $given_name.tc);
+
+        return $sth.row(:hash);
+}
 
 method get_user_data(:$user_name) {
         my %user;
@@ -266,5 +200,69 @@ method get_user_data(:$user_name) {
             %user<tree> = item %tree;
 
          return %user;
-    }
+}
 
+method is_user_linked_to_sensei (:$user_id, :$sensei_id) {
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+        SELECT 1
+          FROM users_sensei
+         WHERE user_id = ?
+           AND sensei_id = ?
+    STATEMENT
+
+    $sth.execute(
+        $user_id, $sensei_id
+    );       
+
+    my @rows = $sth.allrows();
+    if (@rows.elems) {
+        return 1;
+    }    
+
+    return 0;
+}
+
+method is_username_taken(:$user_name) {
+        my $sth = $.dbh.prepare(q:to/STATEMENT/);
+            SELECT 1
+              FROM users
+             WHERE username = ?
+           STATEMENT
+
+        $sth.execute($user_name);
+
+        my @rows = $sth.allrows();
+        if (@rows.elems) {
+            return 1;
+        }    
+
+        return 0;
+}
+
+method link_user_to_sensei (:$user_id, :$sensei_id) {
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+            INSERT INTO users_sensei
+              (user_id,sensei_id)
+              VALUES (?,?)
+            STATEMENT
+
+    $sth.execute($user_id, $sensei_id);
+}
+
+method valid_user_credentials(:$user_name, :$password) {
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+        SELECT password_hash,id
+            FROM users
+            WHERE username = ?
+    STATEMENT
+
+    $sth.execute($user_name);
+    my $row = $sth.row();
+
+    if (my $hash = $row[0]) {
+        if ( bcrypt-match($password, $hash) ) {
+            return $row[1];
+        }
+    }
+    return 0;
+}
