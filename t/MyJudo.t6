@@ -9,21 +9,35 @@ my $mj = MyJudo.new(
     dbh => DBIish.connect("SQLite", :database<db/test.db>)
 );
 
-my $sth = $mj.dbh.prepare('DELETE FROM users');
-$sth.execute;
+subtest {
+	my $sth = $mj.dbh.do('DELETE FROM users');
+	#$sth.execute;
 
-$mj.add_new_user(
-    user_name => 'test',
-    password  => 'secret',
-);
+	$mj.add_new_user(
+	    user_name => 'test',
+	    password  => 'secret',
+	);
 
-$sth = $mj.dbh.prepare('SELECT id,username from users');
-$sth.execute;
-my %user = $sth.row(:hash);
+	$sth = $mj.dbh.prepare('SELECT id,username from users');
+	$sth.execute;
+	my %user = $sth.row(:hash);
 
-is %user, {
-    id => 1,
-    username => 'test',
-}, 'New user is added';
+	is %user, {
+	    id => 1,
+	    username => 'test',
+	}, 'New user is added';
+
+	done-testing;
+}, 'add_new_user';
+
+todo '';	subtest { done-testing; }, 'add_sensei';
+todo '';	subtest { done-testing; }, 'get_admin_dashboard_data';
+todo '';	subtest { done-testing; }, 'get_sensei_by_name';
+todo '';	subtest { done-testing; }, 'get_user_data';
+todo '';	subtest { done-testing; }, 'is_user_linked_to_sensei';
+todo '';	subtest { done-testing; }, 'is_username_taken';
+todo '';	subtest { done-testing; }, 'link_user_to_sensei';
+todo '';	subtest { done-testing; }, 'valid_user_credentials';
+
 
 done-testing;
