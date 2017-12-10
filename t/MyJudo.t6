@@ -11,7 +11,6 @@ my $mj = MyJudo.new(
 
 subtest {
 	my $sth = $mj.dbh.do('DELETE FROM users');
-	#$sth.execute;
 
 	$mj.add_new_user(
 	    user_name => 'test',
@@ -30,9 +29,48 @@ subtest {
 	done-testing;
 }, 'add_new_user';
 
-todo '';	subtest { done-testing; }, 'add_sensei';
+subtest { 
+	my $sth = $mj.dbh.do('DELETE FROM sensei');
+
+	$mj.add_sensei(
+	    family_name => 'last',
+	    given_name  => 'first',
+	);
+
+	$sth = $mj.dbh.prepare('SELECT * from sensei');
+	$sth.execute;
+	my %sensei = $sth.row(:hash);
+
+	is-deeply %sensei, {
+	    family_name => 'Last',
+            given_name  => 'First',
+            id          => 1,
+            their_sensei => Any,
+	}, 'Sensei record is correct';
+	done-testing;
+}, 'add_sensei';
+
 todo '';	subtest { done-testing; }, 'get_admin_dashboard_data';
-todo '';	subtest { done-testing; }, 'get_sensei_by_name';
+
+subtest { 
+	my $sth = $mj.dbh.do('DELETE FROM sensei');
+
+	$mj.add_sensei(
+	    family_name => 'last',
+	    given_name  => 'first',
+	);
+   
+	my %sensei = $mj.get_sensei_by_name(family_name => 'last', given_name => 'first');
+	is-deeply %sensei, {
+	    family_name => 'Last',
+            given_name  => 'First',
+            id          => 1,
+            their_sensei => Any,
+	}, 'Sensei record is correct';
+
+    done-testing; 
+}, 'get_sensei_by_name';
+
 todo '';	subtest { done-testing; }, 'get_user_data';
 todo '';	subtest { done-testing; }, 'is_user_linked_to_sensei';
 todo '';	subtest { done-testing; }, 'is_username_taken';
