@@ -138,6 +138,25 @@ method get_user_data(:$user_name) {
         }
 
         $sth = $.dbh.prepare(q:to/STATEMENT/);
+        SELECT *
+            FROM sessions
+            WHERE user_id = ?
+            AND date < ?
+	    AND date >= ?
+        STATEMENT      
+
+        my $start_of_last_month = Date.today.year ~ '-' ~ Date.today.month-1 ~ '-01';
+        $sth.execute(%user<id>, $start_of_month, $start_of_last_month );
+        my @sessions_last_month = $sth.allrows(:array-of-hash);
+        my %techniques_last_month;
+        for @sessions_last_month -> %session {
+           my @techniques = %session<techniques>.split(',');
+           for @techniques -> $waza {
+               %techniques_last_month{$waza}++;
+           }
+        }
+
+        $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT *
               FROM sensei
               JOIN users_sensei ON sensei.id = users_sensei.sensei_id
@@ -190,10 +209,12 @@ method get_user_data(:$user_name) {
 
         # Temporary Data
             %user<sessions>  = @sessions.elems;
-	        %user<sessions_this_month> = @sessions_this_month.elems;
+	    %user<sessions_this_month> = @sessions_this_month.elems;
+	    %user<sessions_last_month> = @sessions_last_month.elems;
             %user<sessions_this_year> = @sessions_this_year.elems;
             %user<techniques> = item %techniques;
             %user<techniques_this_month> = item %techniques_this_month;
+            %user<techniques_last_month> = item %techniques_last_month;
             %user<techniques_this_year> = item %techniques_this_year;
             %user<user_name> = $user_name;
             %user<sensei> = item @sensei;
