@@ -71,7 +71,31 @@ subtest {
     done-testing; 
 }, 'get_sensei_by_name';
 
-todo '';	subtest { done-testing; }, 'get_user_data';
+subtest {
+	$mj.add_new_user(
+	    user_name => 'jbloggs',
+	    password  => 'secret_pasword',
+	);
+
+	my %data = $mj.get_user_data(user_name => 'jbloggs');
+
+        #say %data.perl;
+	is-deeply %data, {
+		id => 2, 
+		sensei => [],
+           	sessions => 0,
+		sessions_this_month => 0,
+ 		sessions_this_year  => 0,
+  		techniques          => {},
+    		techniques_this_month => {},
+                techniques_this_year  => {},
+		tree		      => {},
+		user_name             => 'jbloggs',
+	}, 'User data is correct';
+
+        done-testing; 
+}, 'get_user_data';
+
 todo '';	subtest { done-testing; }, 'is_user_linked_to_sensei';
 todo '';	subtest { done-testing; }, 'is_username_taken';
 todo '';	subtest { done-testing; }, 'link_user_to_sensei';
