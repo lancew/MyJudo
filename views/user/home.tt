@@ -11,6 +11,7 @@
        <p>Sessions</td>
       <td>
         This month: <%= %data<sessions_this_month> %><br />
+        Last month: <%= %data<sessions_last_month> %><br />
         This year: <%= %data<sessions_this_year> %><br />
         Total: <%= %data<sessions> %><br />
       </td>
