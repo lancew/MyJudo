@@ -43,7 +43,7 @@ method get_admin_dashboard_data {
     $sth = $.dbh.prepare(q:to/STATEMENT/);
         SELECT *
           FROM sessions
-        STATEMENT  
+        STATEMENT
     $sth.execute();
 
     @rows = $sth.allrows(:array-of-hash);
@@ -113,7 +113,7 @@ method get_user_data(:$user_name) {
             FROM sessions
             WHERE user_id = ?
             AND date >= ?
-        STATEMENT      
+        STATEMENT
 
         my $start_of_month = Date.today.year ~ '-' ~ Date.today.month ~ '-01';
         $sth.execute(%user<id>, $start_of_month);
@@ -143,7 +143,7 @@ method get_user_data(:$user_name) {
             WHERE user_id = ?
             AND date < ?
 	    AND date >= ?
-        STATEMENT      
+        STATEMENT
 
         my $start_of_last_month = Date.today.year ~ '-' ~ Date.today.month-1 ~ '-01';
         $sth.execute(%user<id>, $start_of_month, $start_of_last_month );
@@ -186,21 +186,21 @@ method get_user_data(:$user_name) {
             )
             SELECT distinct * FROM CTE;
         STATEMENT
-        
+
         my %tree;
         for @sensei -> $s {
             $sth.execute($s<sensei_id>);
             $sensei_get.execute($s<sensei_id>);
             my %child = $sensei_get.row(:hash);
-            
+
             my $child_coach = %child<given_name> ~ ' ' ~ %child<family_name>;
-            
+
             my @parents = $sth.allrows(:array);
-            
+
             for @parents -> $p {
                 $sensei_get.execute($p[0]);
                 my %data = $sensei_get.row(:hash);
-         
+
                 my $parent = %data<given_name> ~ ' ' ~ %data<family_name>;
                 %tree{$child_coach}{$parent}++;
             }
@@ -233,12 +233,12 @@ method is_user_linked_to_sensei (:$user_id, :$sensei_id) {
 
     $sth.execute(
         $user_id, $sensei_id
-    );       
+    );
 
     my @rows = $sth.allrows();
     if (@rows.elems) {
         return 1;
-    }    
+    }
 
     return 0;
 }
@@ -255,7 +255,7 @@ method is_username_taken(:$user_name) {
         my @rows = $sth.allrows();
         if (@rows.elems) {
             return 1;
-        }    
+        }
 
         return 0;
 }
@@ -269,6 +269,19 @@ method link_user_to_sensei (:$user_id, :$sensei_id) {
 
     $sth.execute($user_id, $sensei_id);
 }
+
+method training_session_exists (:$user_id, :$date) {
+        my $sth = $.dbh.prepare(q:to/STATEMENT/);
+            SELECT id
+              FROM sessions
+             WHERE user_id = ?
+               AND date = ?
+            STATEMENT
+        $sth.execute($user_id, $date);
+
+        my @rows = $sth.allrows();
+	return @rows.elems ?? True !! False;;
+};
 
 method valid_user_credentials(:$user_name, :$password) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);

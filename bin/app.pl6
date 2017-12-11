@@ -190,21 +190,14 @@ prefix '/training_session' => sub {
 
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
-        # Add logic for inserting into DB.
-
-        my $sth = $dbh.prepare(q:to/STATEMENT/);
-            SELECT id
-              FROM sessions
-             WHERE user_id = ?
-               AND date = ?
-            STATEMENT
-        $sth.execute($user_data<id>, %params<session-date>);
-
-        my @rows = $sth.allrows();
-        if (!@rows.elems) {
+	my $session_exists = $mj.training_session_exists(
+		user_id => $user_data<id>, 
+		date => %params<session-date>,
+	);
+        if ( ! $session_exists ) {
             # No matching session(s) so add one
 
-            $sth = $dbh.prepare(q:to/STATEMENT/);
+            my $sth = $dbh.prepare(q:to/STATEMENT/);
                 INSERT INTO sessions
                   (date, user_id, techniques)
                   VALUES (?,?,?)
