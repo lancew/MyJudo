@@ -190,7 +190,24 @@ subtest {
     done-testing; 
 }, 'link_user_to_sensei';
 
-todo '';	subtest { done-testing; }, 'valid_user_credentials';
+subtest { 
+	_clean_tables;
+
+	$mj.add_new_user(
+	    user_name => 'tester',
+	    password  => 'abc123',
+	);
+	nok $mj.valid_user_credentials(
+		user_name => 'tester',
+		password  => 'abcdefg',
+	), 'Incorrect password returns false as expected';
+
+	ok $mj.valid_user_credentials(
+		user_name => 'tester',
+		password  => 'abc123',
+	), 'Correct password returns false as expected';
+	done-testing; 
+}, 'valid_user_credentials';
 
 
 done-testing;
