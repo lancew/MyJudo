@@ -28,7 +28,7 @@ subtest {
 	done-testing;
 }, 'add_new_user';
 
-subtest { 
+subtest {
 	_clean_tables;
 
 	$mj.add_sensei(
@@ -51,14 +51,14 @@ subtest {
 
 todo '';	subtest { done-testing; }, 'get_admin_dashboard_data';
 
-subtest { 
+subtest {
 	_clean_tables;
 
 	$mj.add_sensei(
 	    family_name => 'last',
 	    given_name  => 'first',
 	);
-   
+
 	my %sensei = $mj.get_sensei_by_name(family_name => 'last', given_name => 'first');
 	is-deeply %sensei, {
 	    family_name => 'Last',
@@ -67,7 +67,7 @@ subtest {
             their_sensei => Any,
 	}, 'Sensei record is correct';
 
-    done-testing; 
+    done-testing;
 }, 'get_sensei_by_name';
 
 subtest {
@@ -81,7 +81,7 @@ subtest {
 
         #say %data.perl;
 	is-deeply %data, {
-		id => 1, 
+		id => 1,
 		sensei => [],
            	sessions => 0,
 		sessions_this_month => 0,
@@ -95,10 +95,10 @@ subtest {
 		user_name             => 'jbloggs',
 	}, 'User data is correct';
 
-        done-testing; 
+        done-testing;
 }, 'get_user_data';
 
-subtest { 
+subtest {
     _clean_tables;
 
 	$mj.add_new_user(
@@ -117,7 +117,7 @@ subtest {
 
         $mj.link_user_to_sensei(
 	    user_id => 1,
-            sensei_id => 1,	
+            sensei_id => 1,
 	);
 
 	ok $mj.is_user_linked_to_sensei(
@@ -125,10 +125,10 @@ subtest {
             sensei_id => 1,
 	), 'Sensei is shown as linked after being linked';
 
-    done-testing; 
+    done-testing;
 }, 'is_user_linked_to_sensei';
 
-subtest { 
+subtest {
     _clean_tables;
 
 	nok $mj.is_username_taken(user_name => 'user1'), 'Username does not exist before being inserted';
@@ -139,32 +139,32 @@ subtest {
 	);
 
 	ok $mj.is_username_taken(user_name => 'user1'), 'Username exists after being inserted';
-    done-testing; 
+    done-testing;
 }, 'is_username_taken';
 
 subtest {
     _clean_tables;
-   
+
 	$mj.add_new_user(
 	    user_name => 'jbloggs2',
 	    password  => 'secret_pasword',
 	);
 	my %user = $mj.get_user_data(user_name => 'jbloggs2');
-	
+
 	$mj.add_sensei(
 	    family_name => 'Smith',
-            given_name  => 'John',	
+            given_name  => 'John',
 	);
         my %sensei = $mj.get_sensei_by_name(family_name => 'Smith', given_name => 'John' );
 
         $mj.link_user_to_sensei(
 	    user_id => 1,
-            sensei_id => 1,	
+            sensei_id => 1,
 	);
 	my %data = $mj.get_user_data(user_name => 'jbloggs2');
 
 	is-deeply %data, {
-		id => 1, 
+		id => 1,
 		sensei => [
 		    ${
 			family_name => 'Smith',
@@ -187,10 +187,28 @@ subtest {
 		user_name             => 'jbloggs2',
 	}, 'User data is correct';
 
-    done-testing; 
+    done-testing;
 }, 'link_user_to_sensei';
 
-subtest { 
+subtest {
+    _clean_tables;
+	$mj.add_new_user(
+	    user_name => 'test_user',
+	    password  => 'secret',
+	);
+
+	$mj.dbh.do("INSERT INTO sessions
+                  (date, user_id, techniques)
+                  VALUES ('2017-01-01',1,'')");
+
+	ok $mj.training_session_exists( user_id => 1, date => '2017-01-01'), 'Return true if session is on this day for this user';
+	nok $mj.training_session_exists( user_id => 1, date => '2017-12-12'), 'Return false if session is on this day for this user';
+
+    done-testing;
+}, 'training_session_exists';
+
+
+subtest {
 	_clean_tables;
 
 	$mj.add_new_user(
@@ -206,7 +224,7 @@ subtest {
 		user_name => 'tester',
 		password  => 'abc123',
 	), 'Correct password returns false as expected';
-	done-testing; 
+	done-testing;
 }, 'valid_user_credentials';
 
 
