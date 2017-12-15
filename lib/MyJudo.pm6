@@ -270,6 +270,20 @@ method link_user_to_sensei (:$user_id, :$sensei_id) {
     $sth.execute($user_id, $sensei_id);
 }
 
+method training_session_add (:$date, :$user_id, :$techniques) {
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+                INSERT INTO sessions
+                  (date, user_id, techniques)
+                  VALUES (?,?,?)
+            STATEMENT
+
+    $sth.execute(
+        $date,
+        $user_id,
+        $techniques
+    );
+}
+
 method training_session_exists (:$user_id, :$date) {
         my $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT id

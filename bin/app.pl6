@@ -195,24 +195,16 @@ prefix '/training_session' => sub {
 		date => %params<session-date>,
 	);
         if ( ! $session_exists ) {
-            # No matching session(s) so add one
-
-            my $sth = $dbh.prepare(q:to/STATEMENT/);
-                INSERT INTO sessions
-                  (date, user_id, techniques)
-                  VALUES (?,?,?)
-            STATEMENT
-
             my @techniques;
             my $date = %params<session-date>:delete;
             for %params.kv -> $k, $v {
                 @techniques.push(lc $k);
             }
 
-            $sth.execute(
-                $date,
-                $user_data<id>,
-                @techniques.join(',')
+            $mj.training_session_add(
+                date => $date,
+                user_id => $user_data<id>,
+                techniques => @techniques.join(','),
             );
         } else {
             return 'session exists';
