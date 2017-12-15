@@ -192,6 +192,24 @@ subtest {
 
 subtest {
     _clean_tables;
+
+    $mj.training_session_add(
+        date => '2017-12-12',
+        user_id => 1,
+        techniques => 'tai-otoshi,seoi-nage',
+    );
+
+    my $sth = $mj.dbh.prepare('SELECT * FROM sessions');
+    $sth.execute;
+    my @sessions = $sth.allrows(:array);
+
+    is-deeply @sessions, [[1,"2017-12-12",1,"tai-otoshi,seoi-nage"],], 'Session is added';
+
+    done-testing;
+}, 'training_session_add';
+
+subtest {
+    _clean_tables;
 	$mj.add_new_user(
 	    user_name => 'test_user',
 	    password  => 'secret',
@@ -232,8 +250,8 @@ done-testing;
 
 sub _clean_tables {
 	$mj.dbh.do('DELETE FROM users;');
-        $mj.dbh.do('DELETE FROM sensei;');
-        $mj.dbh.do('DELETE FROM sensei_sensei;');
-        $mj.dbh.do('DELETE FROM sessions;');
-        $mj.dbh.do('DELETE FROM users_sensei;');
+    $mj.dbh.do('DELETE FROM sensei;');
+    $mj.dbh.do('DELETE FROM sensei_sensei;');
+    $mj.dbh.do('DELETE FROM sessions;');
+    $mj.dbh.do('DELETE FROM users_sensei;');
 }
