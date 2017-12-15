@@ -10,7 +10,7 @@ use DBIish;
 my $version = '0.0.1';
 
 my $mj = MyJudo.new(
-    dbh => DBIish.connect("SQLite", :database<db/myjudo.db>), 
+    dbh => DBIish.connect("SQLite", :database<db/myjudo.db>),
 );
 
 # SSL serving config
@@ -47,7 +47,7 @@ post '/login' => sub {
             user_name => %params<login>,
             password => %params<password>
         );
-        
+
         if ($user_id) {
                 my $session = session;
                 $session<user> = %params<login>;
@@ -91,7 +91,7 @@ prefix '/admin' => sub {
     get '/dashboard' => sub {
         my $session = session;
         redirect '/' unless $session<user>:exists;
-        
+
         my %dashboard_data = $mj.get_admin_dashboard_data;
         template 'admin/dashboard.tt', {
             dashboard_data => %dashboard_data,
@@ -148,17 +148,17 @@ prefix '/sensei' => sub {
                 given_name  => %params<family_name>,
             );
         }
- 
+
         if ( $sensei ) {
             my $user_is_linked_to_sensei = $mj.is_user_linked_to_sensei(
-                user_id => $session<user_id>, 
-                sensei_id => $sensei<id>, 
-            ); 
+                user_id => $session<user_id>,
+                sensei_id => $sensei<id>,
+            );
 
             if ( ! $user_is_linked_to_sensei ) {
-                $mj.link_user_to_sensei( 
-                    user_id => $session<user_id>, 
-                    sensei_id => $sensei<id> 
+                $mj.link_user_to_sensei(
+                    user_id => $session<user_id>,
+                    sensei_id => $sensei<id>
                 );
             }
         }
@@ -190,10 +190,10 @@ prefix '/training_session' => sub {
 
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
-	my $session_exists = $mj.training_session_exists(
-		user_id => $user_data<id>, 
-		date => %params<session-date>,
-	);
+    my $session_exists = $mj.training_session_exists(
+        user_id => $user_data<id>,
+        date => %params<session-date>,
+    );
         if ( ! $session_exists ) {
             my @techniques;
             my $date = %params<session-date>:delete;

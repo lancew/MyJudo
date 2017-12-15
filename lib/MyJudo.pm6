@@ -142,7 +142,7 @@ method get_user_data(:$user_name) {
             FROM sessions
             WHERE user_id = ?
             AND date < ?
-	    AND date >= ?
+        AND date >= ?
         STATEMENT
 
         my $start_of_last_month = Date.today.year ~ '-' ~ Date.today.month-1 ~ '-01';
@@ -209,8 +209,8 @@ method get_user_data(:$user_name) {
 
         # Temporary Data
             %user<sessions>  = @sessions.elems;
-	    %user<sessions_this_month> = @sessions_this_month.elems;
-	    %user<sessions_last_month> = @sessions_last_month.elems;
+        %user<sessions_this_month> = @sessions_this_month.elems;
+        %user<sessions_last_month> = @sessions_last_month.elems;
             %user<sessions_this_year> = @sessions_this_year.elems;
             %user<techniques> = item %techniques;
             %user<techniques_this_month> = item %techniques_this_month;
@@ -294,7 +294,7 @@ method training_session_exists (:$user_id, :$date) {
         $sth.execute($user_id, $date);
 
         my @rows = $sth.allrows();
-	return @rows.elems ?? True !! False;;
+    return @rows.elems ?? True !! False;;
 };
 
 method valid_user_credentials(:$user_name, :$password) {
