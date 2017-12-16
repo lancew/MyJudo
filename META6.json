@@ -11,7 +11,7 @@
     "depends" : [
         "DBIish",
         "Bailador",
-        "Crypt::Bcrypt",
+        "Crypt::Bcrypt"
     ],
     "resources" : [ ],
     "source-url" : "git://github.com/lancew/MyJudo.git"
