@@ -1,7 +1,12 @@
 # MyJudo   [![Build Status](https://travis-ci.org/lancew/MyJudo.svg?branch=master)](https://travis-ci.org/lancew/MyJudo) [![Kritika Analysis Status](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/status.svg)](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/)
 
 This is an experimental website using Rakudo (Rakudobrew) Perl6 and
-Bailador. Install needed modules with:
+Bailador. 
+
+First install `sqlite3` and make sure by running `sqlite3 --version`
+that the one you have is posterior to `3.8.3`.
+
+Then install needed modules with:
 
 ```
 zef install --deps-only .
