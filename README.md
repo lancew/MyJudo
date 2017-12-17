@@ -1,16 +1,22 @@
 # MyJudo   [![Build Status](https://travis-ci.org/lancew/MyJudo.svg?branch=master)](https://travis-ci.org/lancew/MyJudo) [![Kritika Analysis Status](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/status.svg)](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/)
 
 This is an experimental website using Rakudo (Rakudobrew) Perl6 and
-Bailador. 
+Bailador.
 
 First install `sqlite3` and make sure by running `sqlite3 --version`
-that the one you have is posterior to `3.8.3`.
+that the one you have is greater than to `3.8.3`.
 
 Then install needed modules with:
 
 ```
 zef install --deps-only .
 ```
+
+The app uses the db/myjudo.db and you may need to manually apply the latest schema.
+
+Schema's are being stored in the db directory and you can cut and paste the various
+CREATE TABLE... commands after running sqlite3 db/myjudo.db
+
 
 
 And then start the site locally with:
@@ -24,7 +30,7 @@ bailador --config=host:0.0.0.0,port=3131 easy bin/app.pl6
 ```
 
 If you want to bind it to any address and run in an alternate server
-using the `HTTP::Easy` module for serving. 
+using the `HTTP::Easy` module for serving.
 
 You can run tests with:
 ```
