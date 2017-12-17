@@ -78,7 +78,7 @@ post '/register' => sub {
         $mj.add_new_user(
             user_name => %params<usernamesignup>,
             password => %params<passwordsignup>,
-            email => %params<email>,
+            email => %params<emailsignup>,
         );
 
 
