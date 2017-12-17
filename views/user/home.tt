@@ -30,42 +30,12 @@
 <table class="table table-striped">
   <tbody>
   % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
-  % next unless $name;	
+  % next unless $name;
     <tr>
       <td><%= $name.tc %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> || %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> || %waza<katame-waza><shime-waza>{lc $name}<kanji> || %waza<katame-waza><kansetsu-waza>{lc $name}<kanji> %>)</td>
       <td><%= $number %></td>
     </tr>
   % }
   </tbody>
-</table>
-
-<h2>Kano Number</h2>
-<p>The Kano number is a representation of how far seperated you are from the founder of Judo Jigoro Kano.</p>
-<p>A number of one means you trained directly under Professor Kano, a 2 would mean you trained under some who trained with Professor Kano.</p>
-<p> Your Kano number is: .... Not yet calculated</p>
-
-<h2>Sensei/Instructors/Coaches</h2>
-<a href="/sensei/add"><i class="fa fa-plus" aria-hidden="true"></i>ADD A SENSEI</a>
-<table class="table">
-   % for @(%data<sensei>) -> %sensei {
-     <tr>
-        <td><%= %sensei<given_name> %> <%= %sensei<family_name> %></td>
-     </tr>
-   % }
-</table>
-
-<h2>Sensei in your "Family Tree"</h2>
-<table class="table">
-   % for @(%data<tree>) -> %sensei {
-     <tr>
-        <td>
-           % for @(%sensei.values) -> %coach {
-             % for @(%coach.keys) -> $coach {
-               <%= $coach %>,
-              % }
-           % }
-        </td>
-     </tr>
-   % }
 </table>
 

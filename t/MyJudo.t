@@ -84,16 +84,14 @@ subtest {
         #say %data.perl;
     is-deeply %data, {
         id => 1,
-        sensei => [],
-            sessions => 0,
+        sessions => 0,
         sessions_this_month => 0,
         sessions_last_month => 0,
         sessions_this_year  => 0,
         techniques          => {},
-            techniques_this_month => {},
-            techniques_last_month => {},
-                techniques_this_year  => {},
-        tree              => {},
+        techniques_this_month => {},
+        techniques_last_month => {},
+        techniques_this_year  => {},
         user_name             => 'jbloggs',
     }, 'User data is correct';
 
@@ -167,25 +165,14 @@ subtest {
 
     is-deeply %data, {
         id => 1,
-        sensei => [
-            ${
-            family_name => 'Smith',
-            given_name  => 'John',
-            id          => 1,
-            sensei_id   => 1,
-            their_sensei => Any,
-            user_id      => 1,
-            }
-        ],
-            sessions => 0,
+        sessions => 0,
         sessions_this_month => 0,
         sessions_last_month => 0,
         sessions_this_year  => 0,
         techniques          => {},
-            techniques_this_month => {},
-            techniques_last_month => {},
-                techniques_this_year  => {},
-        tree              => {},
+        techniques_this_month => {},
+        techniques_last_month => {},
+        techniques_this_year  => {},
         user_name             => 'jbloggs2',
     }, 'User data is correct';
 
