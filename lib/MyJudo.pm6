@@ -185,7 +185,7 @@ method get_user_data(:$user_name) {
                 ON CTE.parent_sensei_id=sensei_sensei.child_sensei_id
             )
             SELECT distinct * FROM CTE;
-        STATEMENT
+STATEMENT
 
         my %tree;
         for @sensei -> $s {
