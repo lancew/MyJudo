@@ -6,7 +6,7 @@ Bailador.
 First install `sqlite3` and make sure by running `sqlite3 --version`
 that the one you have is posterior to `3.8.3`.
 
-Install needed modules with:
+Then install needed modules with:
 
 ```
 zef install --deps-only .
