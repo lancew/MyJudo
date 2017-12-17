@@ -5,15 +5,15 @@ use DBIish;
 
 has $.dbh is rw;
 
-method add_new_user(:$user_name, :$password) {
+method add_new_user(:$user_name, :$password, :$email) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
         INSERT INTO users
-            (username,password_hash)
-            VALUES (?,?)
+            (username,password_hash,email)
+            VALUES (?,?,?)
         STATEMENT
 
     my $hash = bcrypt-hash($password);
-    $sth.execute($user_name,$hash);
+    $sth.execute($user_name,$hash,$email);
 }
 
 method add_sensei (:$family_name, :$given_name) {

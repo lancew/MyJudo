@@ -75,7 +75,11 @@ post '/register' => sub {
         my $is_username_taken = $mj.is_username_taken( user_name => %params<usernamesignup>);
         return 'Username is taken' if $is_username_taken;
 
-        $mj.add_new_user( user_name => %params<usernamesignup>, password => %params<passwordsignup> );
+        $mj.add_new_user(
+            user_name => %params<usernamesignup>,
+            password => %params<passwordsignup>,
+            email => %params<email>,
+        );
 
 
         my $session = session;

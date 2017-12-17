@@ -14,15 +14,17 @@ subtest {
     $mj.add_new_user(
         user_name => 'test',
         password  => 'secret',
+        email     => 'test@test.com',
     );
 
-    my $sth = $mj.dbh.prepare('SELECT id,username from users');
+    my $sth = $mj.dbh.prepare('SELECT id,username,email from users');
     $sth.execute;
     my %user = $sth.row(:hash);
 
-    is %user, {
+    is-deeply %user, {
         id => 1,
         username => 'test',
+        email => 'test@test.com',
     }, 'New user is added';
 
     done-testing;
