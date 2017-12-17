@@ -1,7 +1,7 @@
 # MyJudo   [![Build Status](https://travis-ci.org/lancew/MyJudo.svg?branch=master)](https://travis-ci.org/lancew/MyJudo) [![Kritika Analysis Status](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/status.svg)](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/)
 
-This is an experimental website using Rakudo (Rakudobrew) Perl6 and
-Bailador.
+This is an experimental website using Perl6 programming language and
+Bailador web framework.
 
 First install `sqlite3` and make sure by running `sqlite3 --version`
 that the one you have is greater than to `3.8.3`.
