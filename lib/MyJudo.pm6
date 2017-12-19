@@ -76,8 +76,19 @@ method get_sensei_by_name(:$family_name, :$given_name){
         return $sth.row(:hash);
 }
 
+method get_training_sessions(:$user_id){
+        my $sth = $.dbh.prepare(q:to/STATEMENT/);
+            SELECT * from sessions
+             WHERE user_id = ?
+        STATEMENT
+
+        $sth.execute($user_id);
+        my @sessions = $sth.allrows(:array-of-hash);
+        return @sessions;
+}
+
 method get_user_data(:$user_name) {
-        my %user;
+        my %techniques;
 
         my $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT id,username
@@ -88,85 +99,52 @@ method get_user_data(:$user_name) {
         $sth.execute($user_name);
         my %row = $sth.row(:hash);
 
-        %user<id> = %row<id>;
-        %user<user_name> = %row<username>;
+        my %user = (
+            id => %row<id>,
+            user_name => %row<username>,
+            sessions => 0,
+            sessions_this_month => 0,
+            sessions_last_month => 0,
+            sessions_this_year  => 0,
+        );
 
-        $sth = $.dbh.prepare(q:to/STATEMENT/);
-            SELECT *
-              FROM sessions
-             WHERE user_id = ?
-        STATEMENT
+        my $dt = Date.new(DateTime.now);
+        my @sessions = $.get_training_sessions(user_id => %user<id>);
+        for @sessions[0] -> @session {
+            for @session -> %session {
+                %user<sessions>++;
 
-        $sth.execute(%user<id>);
-        my @sessions = $sth.allrows(:array-of-hash);
+                my @techniques = %session<techniques>.split(',');
+                for @techniques -> $waza {
+                    %user<techniques>{$waza}++;
+                }
 
-        my %techniques;
-        for @sessions -> %session {
-           my @techniques = %session<techniques>.split(',');
-           for @techniques -> $waza {
-               %techniques{$waza}++;
-           }
+                my $session_dt = Date.new(%session<date>);
+
+                if $session_dt >= $dt.truncated-to('month') {
+                    %user<sessions_this_month>++;
+                    for @techniques -> $waza {
+                        %user<techniques_this_month>{$waza}++;
+                    }
+                }
+
+
+                if ( $session_dt >= $dt.truncated-to('month').earlier(month => 1)
+                 && $session_dt < $dt.truncated-to('month')  ) {
+                    %user<sessions_last_month>++;
+                    for @techniques -> $waza {
+                        %user<techniques_last_month>{$waza}++;
+                    }
+                }
+
+                if $session_dt >= $dt.truncated-to('year') {
+                    %user<sessions_this_year>++;
+                    for @techniques -> $waza {
+                        %user<techniques_this_year>{$waza}++;
+                    }
+                }
+            }
         }
-
-        $sth = $.dbh.prepare(q:to/STATEMENT/);
-        SELECT *
-            FROM sessions
-            WHERE user_id = ?
-            AND date >= ?
-        STATEMENT
-
-        my $start_of_month = Date.today.year ~ '-' ~ Date.today.month ~ '-01';
-        $sth.execute(%user<id>, $start_of_month);
-        my @sessions_this_month = $sth.allrows(:array-of-hash);
-        my %techniques_this_month;
-        for @sessions_this_month -> %session {
-           my @techniques = %session<techniques>.split(',');
-           for @techniques -> $waza {
-               %techniques_this_month{$waza}++;
-           }
-        }
-
-        my $start_of_year = Date.today.year ~ '-01-01';
-        $sth.execute(%user<id>, $start_of_year);
-        my @sessions_this_year = $sth.allrows(:array-of-hash);
-        my %techniques_this_year;
-        for @sessions_this_year -> %session {
-           my @techniques = %session<techniques>.split(',');
-           for @techniques -> $waza {
-               %techniques_this_year{$waza}++;
-           }
-        }
-
-        $sth = $.dbh.prepare(q:to/STATEMENT/);
-        SELECT *
-            FROM sessions
-            WHERE user_id = ?
-            AND date < ?
-        AND date >= ?
-        STATEMENT
-
-        my $start_of_last_month = Date.today.year ~ '-' ~ Date.today.month-1 ~ '-01';
-        $sth.execute(%user<id>, $start_of_month, $start_of_last_month );
-        my @sessions_last_month = $sth.allrows(:array-of-hash);
-        my %techniques_last_month;
-        for @sessions_last_month -> %session {
-           my @techniques = %session<techniques>.split(',');
-           for @techniques -> $waza {
-               %techniques_last_month{$waza}++;
-           }
-        }
-
-        # Temporary Data
-        %user<sessions>  = @sessions.elems;
-        %user<sessions_this_month> = @sessions_this_month.elems;
-        %user<sessions_last_month> = @sessions_last_month.elems;
-        %user<sessions_this_year> = @sessions_this_year.elems;
-        %user<techniques> = item %techniques;
-        %user<techniques_this_month> = item %techniques_this_month;
-        %user<techniques_last_month> = item %techniques_last_month;
-        %user<techniques_this_year> = item %techniques_this_year;
-        %user<user_name> = $user_name;
-
         return %user;
 }
 

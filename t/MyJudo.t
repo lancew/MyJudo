@@ -74,24 +74,75 @@ subtest {
 
 subtest {
     _clean_tables;
+
+    $mj.add_new_user(
+        user_name => 'jane_bloggs',
+        password  => 'secret',
+        email     => 'test@test.com',
+    );
+
+    my $dt = Date.new(DateTime.now);
+    my $now = $dt.Str;
+    my $month = $dt.truncated-to('month').earlier(month => 1).Str;
+    my $month2 = $dt.truncated-to('month').earlier(month => 2).Str;
+    my $month3 = $dt.truncated-to('month').earlier(month => 3).Str;
+    my $years2 = $dt.truncated-to('month').earlier(year => 2).Str;
+
+    _add_training_sessions();
+
+    my @sessions = $mj.get_training_sessions(user_id => 1);
+
+    is-deeply @sessions, [
+        {:date($now),:id(1),:techniques("tai-otoshi,seoi-nage"),:user_id(1)},
+        {:date($month),:id(2),:techniques("tai-otoshi,obi-otoshi"),:user_id(1)},
+        {:date($month2),:id(3),:techniques("tai-otoshi,uki-otoshi"),:user_id(1)},
+        {:date($month3),:id(4),:techniques("tai-otoshi,ura-gatame"),:user_id(1)},
+        {:date($years2),:id(5),:techniques("tai-otoshi,ashi-garami"),:user_id(1)},
+    ], 'Sessions returned are correct';
+
+done-testing;
+}, 'get_training_sessions';
+
+subtest {
+    _clean_tables;
     $mj.add_new_user(
         user_name => 'jbloggs',
         password  => 'secret_pasword',
     );
 
+    _add_training_sessions();
+
     my %data = $mj.get_user_data(user_name => 'jbloggs');
 
-        #say %data.perl;
     is-deeply %data, {
         id => 1,
-        sessions => 0,
-        sessions_this_month => 0,
-        sessions_last_month => 0,
-        sessions_this_year  => 0,
-        techniques          => {},
-        techniques_this_month => {},
-        techniques_last_month => {},
-        techniques_this_year  => {},
+        sessions => 5,
+        sessions_this_month => 1,
+        sessions_last_month => 1,
+        sessions_this_year  => 4,
+        techniques          => {
+            :ashi-garami(1),
+            :obi-otoshi(1),
+            :seoi-nage(1),
+            :tai-otoshi(5),
+            :uki-otoshi(1),
+            :ura-gatame(1),
+        },
+        techniques_this_month => {
+            :seoi-nage(1),
+            :tai-otoshi(1),
+        },
+        techniques_last_month => {
+            :obi-otoshi(1),
+            :tai-otoshi(1),
+        },
+        techniques_this_year  => {
+            :obi-otoshi(1),
+            :seoi-nage(1),
+            :tai-otoshi(4),
+            :uki-otoshi(1),
+            :ura-gatame(1),
+        },
         user_name             => 'jbloggs',
     }, 'User data is correct';
 
@@ -155,12 +206,13 @@ subtest {
         family_name => 'Smith',
             given_name  => 'John',
     );
-        my %sensei = $mj.get_sensei_by_name(family_name => 'Smith', given_name => 'John' );
+    my %sensei = $mj.get_sensei_by_name(family_name => 'Smith', given_name => 'John' );
 
-        $mj.link_user_to_sensei(
+    $mj.link_user_to_sensei(
         user_id => 1,
-            sensei_id => 1,
+        sensei_id => 1,
     );
+
     my %data = $mj.get_user_data(user_name => 'jbloggs2');
 
     is-deeply %data, {
@@ -169,10 +221,10 @@ subtest {
         sessions_this_month => 0,
         sessions_last_month => 0,
         sessions_this_year  => 0,
-        techniques          => {},
-        techniques_this_month => {},
-        techniques_last_month => {},
-        techniques_this_year  => {},
+    #    techniques          => {},
+    #    techniques_this_month => {},
+    #    techniques_last_month => {},
+    #    techniques_this_year  => {},
         user_name             => 'jbloggs2',
     }, 'User data is correct';
 
@@ -243,4 +295,39 @@ sub _clean_tables {
     $mj.dbh.do('DELETE FROM sensei_sensei;');
     $mj.dbh.do('DELETE FROM sessions;');
     $mj.dbh.do('DELETE FROM users_sensei;');
+}
+
+sub _add_training_sessions {
+    my $dt = Date.new(DateTime.now);
+    my $now = $dt.Str;
+    my $month = $dt.truncated-to('month').earlier(month => 1).Str;
+    my $month2 = $dt.truncated-to('month').earlier(month => 2).Str;
+    my $month3 = $dt.truncated-to('month').earlier(month => 3).Str;
+    my $years2 = $dt.truncated-to('month').earlier(year => 2).Str;
+
+    $mj.training_session_add(
+        date => $now,
+        user_id => 1,
+        techniques => 'tai-otoshi,seoi-nage',
+    );
+    $mj.training_session_add(
+        date => $month,
+        user_id => 1,
+        techniques => 'tai-otoshi,obi-otoshi',
+    );
+    $mj.training_session_add(
+        date => $month2,
+        user_id => 1,
+        techniques => 'tai-otoshi,uki-otoshi',
+    );
+    $mj.training_session_add(
+        date => $month3,
+        user_id => 1,
+        techniques => 'tai-otoshi,ura-gatame',
+    );
+    $mj.training_session_add(
+        date => $years2,
+        user_id => 1,
+        techniques => 'tai-otoshi,ashi-garami',
+    );
 }
