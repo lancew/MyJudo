@@ -43,14 +43,14 @@ post '/login' => sub {
     my %params = request.params;
     if ( %params<login> && %params<password> ) {
 
-        my $user_id = $mj.valid_user_credentials(
+        my ($user_id, $user_name) = $mj.valid_user_credentials(
             user_name => %params<login>,
             password => %params<password>
         );
 
         if ($user_id) {
                 my $session = session;
-                $session<user> = %params<login>;
+                $session<user> = $user_name;
                 $session<user_id> = $user_id;
         }
     }

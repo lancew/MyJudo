@@ -224,18 +224,21 @@ method training_session_exists (:$user_id, :$date) {
 
 method valid_user_credentials(:$user_name, :$password) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
-        SELECT password_hash,id
+        SELECT password_hash,id,username
             FROM users
             WHERE username = ?
+               OR email = ?
     STATEMENT
 
-    $sth.execute($user_name);
+    $sth.execute($user_name,$user_name);
     my $row = $sth.row();
 
     if (my $hash = $row[0]) {
         if ( bcrypt-match($password, $hash) ) {
-            return $row[1];
+            return $row[1],$row[2];
         }
     }
+
+
     return 0;
 }

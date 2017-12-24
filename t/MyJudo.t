@@ -273,7 +273,9 @@ subtest {
     $mj.add_new_user(
         user_name => 'tester',
         password  => 'abc123',
+        email     => 'test@test.com',
     );
+
     nok $mj.valid_user_credentials(
         user_name => 'tester',
         password  => 'abcdefg',
@@ -282,7 +284,13 @@ subtest {
     ok $mj.valid_user_credentials(
         user_name => 'tester',
         password  => 'abc123',
-    ), 'Correct password returns false as expected';
+    ), 'Correct password returns true as expected';
+
+    ok $mj.valid_user_credentials(
+        user_name => 'test@test.com',
+        password  => 'abc123',
+    ), 'Correct password returns true as expected';
+
     done-testing;
 }, 'valid_user_credentials';
 
