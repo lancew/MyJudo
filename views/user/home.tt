@@ -27,6 +27,30 @@
 </table>
 
 <h2>Techniques (<%= %waza<kanji> %>)</h2>
+<a href="#" onclick="myFunction()" class="fa fa-pie-chart">Show/Hide charts</a>
+
+<div id="charts" style="display:none;">
+<table>
+<tr>
+ <td>
+    <div id="piechart_month" style="width: 450px; height: 250px;"></div>
+ </td>
+ <td>
+    <div id="piechart_last_month" style="width: 450px; height: 250px;"></div>
+ </td>
+</tr>
+<tr>
+  <td>
+    <div id="piechart_this_year" style="width: 450px; height: 250px;"></div>
+  </td>
+  <td>
+    <div id="piechart_total" style="width: 450px; height: 250px;"></div>
+  </td>
+</tr>
+</table>
+</div>
+
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -61,3 +85,111 @@
   </tbody>
 </table>
 
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Techniques', 'Times done'],
+  % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+  % next unless $name;
+  % next unless %data<techniques_this_month>{lc $name};
+  ['<%= $name.tc %>', <%= %data<techniques_this_month>{lc $name}  %>],
+  % }
+        ]);
+
+        var options = {
+          title: 'Techniques this month',
+          is3D: true,
+          pieSliceText: 'none',
+          sliceVisibilityThreshold: .03,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_month'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Techniques', 'Times done'],
+  % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+  % next unless $name;
+  % next unless %data<techniques_last_month>{lc $name};
+  ['<%= $name.tc %>', <%= %data<techniques_last_month>{lc $name}  %>],
+  % }
+        ]);
+
+        var options = {
+          title: 'Techniques last month',
+          is3D: true,
+          pieSliceText: 'none',
+          sliceVisibilityThreshold: .03,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_last_month'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Techniques', 'Times done'],
+  % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+  % next unless $name;
+  % next unless %data<techniques_this_year>{lc $name};
+  ['<%= $name.tc %>', <%= %data<techniques_this_year>{lc $name}  %>],
+  % }
+        ]);
+
+        var options = {
+          title: 'Techniques this year',
+          is3D: true,
+          pieSliceText: 'none',
+          sliceVisibilityThreshold: .03,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_this_year'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Techniques', 'Times done'],
+  % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+  % next unless $name;
+  ['<%= $name.tc %>', <%= $number %>],
+  % }
+        ]);
+
+        var options = {
+          title: 'Total Techniques',
+          is3D: true,
+          pieSliceText: 'none',
+          sliceVisibilityThreshold: .03,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_total'));
+        chart.draw(data, options);
+      }
+    </script>
+    <script>
+function myFunction() {
+    var x = document.getElementById("charts");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
