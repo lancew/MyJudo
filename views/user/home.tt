@@ -29,25 +29,15 @@
 <h2>Techniques (<%= %waza<kanji> %>)</h2>
 <a href="#" onclick="myFunction()" class="fa fa-pie-chart">Show/Hide charts</a>
 
-<div id="charts" style="display:none;">
-<table>
-<tr>
- <td>
+<div id="charts" class="container-fluid" style="display:none;">
+  <div class="row">
     <div id="piechart_month" style="width: 450px; height: 250px;"></div>
- </td>
- <td>
     <div id="piechart_last_month" style="width: 450px; height: 250px;"></div>
- </td>
-</tr>
-<tr>
-  <td>
+  </div>
+  <div class="row">
     <div id="piechart_this_year" style="width: 450px; height: 250px;"></div>
-  </td>
-  <td>
     <div id="piechart_total" style="width: 450px; height: 250px;"></div>
-  </td>
-</tr>
-</table>
+  </div>
 </div>
 
 
