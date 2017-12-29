@@ -39,7 +39,7 @@
         % } else {
          <li class="nav-item">
             <a class="nav-link" href="/register">
-              <i class="fa fa-sign-out" aria-hidden="true"></i>
+              <i class="fa fa-user-plus" aria-hidden="true"></i>
               Register
             </a>
           </li>
