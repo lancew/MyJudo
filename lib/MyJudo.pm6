@@ -195,6 +195,18 @@ method link_user_to_sensei (:$user_id, :$sensei_id) {
     $sth.execute($user_id, $sensei_id);
 }
 
+method password_change (:$username, :$password) {
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+        UPDATE users
+           SET password_hash = ?
+         WHERE username = ?
+        STATEMENT
+
+    my $hash = bcrypt-hash($password);
+    $sth.execute($hash,$username);
+}
+
+
 method training_session_add (:$date, :$user_id, :$techniques) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
                 INSERT INTO sessions

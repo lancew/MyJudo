@@ -63,6 +63,35 @@ get '/logout' => sub {
     redirect '/';
 }
 
+get '/password-change' => sub {
+    my $session = session;
+    redirect '/' unless $session<user>:exists;
+    template 'password-change.tt';
+}
+
+post '/password-change' => sub {
+    my $session = session;
+    redirect '/' unless $session<user>:exists;
+
+    my %params = request.params;
+
+    if ( %params<password-new>.chars && %params<password-new> eq %params<password-repeat> ) {
+        my ($user_id, $user_name) = $mj.valid_user_credentials(
+            user_name => $session<user>,
+            password => %params<password>
+        );
+        if ( $user_id ) {
+            $mj.password_change(
+                username => $session<user>,
+                password => %params<password-new>
+            );
+            return redirect '/';
+        }
+    }
+
+    redirect '/password-change';
+}
+
 get '/register' => sub {
     template 'register.tt';
 }
