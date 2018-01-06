@@ -44,3 +44,4 @@ This app is serving as basis for my November 2017 workshop at the London Perl Wo
 http://act.yapc.eu/lpw2017/talk/7213
 
 
+[Scuttlebutt](https://www.scuttlebutt.nz/)  user?, you can also clone this repo via ssb://%MkBUFeRs7fTN2lAUXuYYaK3i9ln29vBisvJnhEcx4KA=.sha256
