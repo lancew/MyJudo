@@ -17,7 +17,7 @@ The app uses the db/myjudo.db and you may need to manually apply the latest sche
 Schema's are being stored in the db directory and you can cut and paste the various
 CREATE TABLE... commands after running sqlite3 db/myjudo.db
 
-
+For the password reset function to work you will need to add SMTP credentials
 
 And then start the site locally with:
 ```

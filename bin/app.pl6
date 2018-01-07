@@ -21,6 +21,7 @@ my $mj = MyJudo.new(
 #    private-key-file => '/root/dehydrated/certs/myjudo.net/privkey.pem',
 #);
 
+
 config.hmac-key = 'lance-key';
 
 # Serve the challenge for letsencrypt SSL:
@@ -91,6 +92,50 @@ post '/password-change' => sub {
 
     redirect '/password-change';
 }
+
+get '/password-reset' => sub {
+    template 'password-reset.tt',{};
+}
+post '/password-reset' => sub {
+    my $r = request;
+
+    my %params = request.params;
+    if ( %params<login> ) {
+        $mj.password_reset_request(
+            login => %params<login>
+        );
+    }
+    template 'password-reset.tt',{submitted => 1};
+}
+
+get '/reset-password/:code' => sub ($code){
+    my %user_data = $mj.get_user_from_reset_code( reset_code => $code );
+    return redirect '/' unless %user_data<username>:exists;
+    template 'reset-password.tt';
+}
+
+post '/reset-password/:code' => sub ($code) {
+    my %params = request.params;
+
+    my %user_data = $mj.get_user_from_reset_code( reset_code => $code );
+    return redirect '/' unless %user_data<username>:exists;
+
+    if ( %params<password-new>.chars && %params<password-new> eq %params<password-repeat> ) {
+            $mj.password_change(
+                username => %user_data<username>,
+                password => %params<password-new>
+            );
+
+            $mj.delete_reset_code(code => $code );
+
+            my $session = session;
+            $session<user> = %user_data<username>;
+            return redirect '/';
+    }
+
+    redirect '/';
+}
+
 
 get '/register' => sub {
     template 'register.tt';

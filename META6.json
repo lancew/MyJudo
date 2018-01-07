@@ -9,9 +9,12 @@
         "MyJudo" : "lib/MyJudo.pm"
     },
     "depends" : [
-        "DBIish",
         "Bailador",
-        "Crypt::Bcrypt"
+        "Crypt::Bcrypt",
+        "DBIish",
+        "Email::Simple",
+        "Net::SMTP",
+        "UUID"
     ],
     "resources" : [ ],
     "source-url" : "git://github.com/lancew/MyJudo.git"

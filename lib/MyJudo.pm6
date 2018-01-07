@@ -2,6 +2,10 @@ unit class MyJudo;
 
 use Crypt::Bcrypt;
 use DBIish;
+use Email::Simple;
+use Net::SMTP;
+use UUID;
+
 
 has $.dbh is rw;
 
@@ -27,6 +31,16 @@ method add_sensei (:$family_name, :$given_name) {
         $family_name.tc,
         $given_name.tc
     );
+}
+
+method delete_reset_code ( :$code ) {
+     my $sth = $.dbh.prepare(q:to/STATEMENT/);
+         UPDATE users
+            SET password_reset_code = ''
+          WHERE password_reset_code = ?
+     STATEMENT
+
+     $sth.execute(~$code);
 }
 
 method get_admin_dashboard_data {
@@ -85,6 +99,17 @@ method get_training_sessions(:$user_id){
         $sth.execute($user_id);
         my @sessions = $sth.allrows(:array-of-hash);
         return @sessions;
+}
+
+method get_user_from_reset_code(:$reset_code){
+        my $sth = $.dbh.prepare(q:to/STATEMENT/);
+            SELECT id,username
+              FROM users
+             WHERE password_reset_code = ?
+        STATEMENT
+        $sth.execute(~$reset_code);
+        my %row = $sth.row(:hash);
+        return %row;
 }
 
 method get_user_data(:$user_name) {
@@ -206,6 +231,63 @@ method password_change (:$username, :$password) {
     $sth.execute($hash,$username);
 }
 
+method password_reset_request ( :$login, :$host ) {
+    warn 'Email reset request made by: ', $login;
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+        SELECT id,username,email
+            FROM users
+            WHERE username = ?
+               OR email = ?
+    STATEMENT
+
+    $sth.execute($login,$login);
+    my $row = $sth.row();
+
+    warn 'Now user record found' unless $row[0];
+    return unless $row[0];
+
+    warn 'No email address: ', $row.gist unless $row[2];
+
+    # Create a code for the user.
+    my $uuid = UUID.new;
+
+    $sth = $.dbh.prepare(q:to/STATEMENT/);
+       UPDATE users
+          SET password_reset_code = ?
+        WHERE id = ?
+    STATEMENT
+
+    $sth.execute(~$uuid,$row[0]);
+
+    my $server   = '';
+    my $port     = 25;
+    my $username = '';
+    my $password = '';
+
+    my $from = "myjudo-noreply@myjudo.net";
+    my $url = "http://myjudo.net/reset-password/$uuid";
+
+    my $email = Email::Simple.create(
+        header => [
+            ['To', $row[2]],
+            ['From', $from],
+            ['Subject','MyJudo: Password reset request'],
+        ],
+        body   => "Reset your password, click at this URL: $url \n\n'
+                ~ 'A password request has been made on http://myjudo.net;'
+                ~ 'please contact the support@myjudo.net if you did not request this passowrd reset.",
+    );
+
+    my $client = Net::SMTP.new(
+        :port($port),
+        :server($server),
+        :debug,
+    );
+
+    $client.auth($username, $password);
+    my $resp = $client.send($from, $row[2], $email.Str());
+    $client.quit;
+}
 
 method training_session_add (:$date, :$user_id, :$techniques) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
