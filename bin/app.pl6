@@ -291,4 +291,17 @@ prefix '/training_session' => sub {
     }
 }
 
+get '/training-sessions' => sub {
+    my $session = session;
+    redirect '/' unless $session<user>:exists;
+
+    my %params = request.params;
+
+    my $user_data = $mj.get_user_data( user_name => $session<user> );
+    my @sessions = $mj.training-sessions( user_id => $user_data<id> );
+
+    template 'training-sessions.tt', {
+        sessions => item @sessions,
+    };
+}
 baile();

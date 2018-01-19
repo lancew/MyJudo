@@ -316,6 +316,18 @@ method training_session_exists (:$user_id, :$date) {
     return @rows.elems ?? True !! False;;
 };
 
+method training-sessions ( :$user_id ) {
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+        SELECT *
+          FROM SESSIONS
+         WHERE user_id = ?
+    STATEMENT
+    $sth.execute($user_id);
+
+    my @rows = $sth.allrows(:array-of-hash);
+    return @rows;
+};
+
 method valid_user_credentials(:$user_name, :$password) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
         SELECT password_hash,id,username

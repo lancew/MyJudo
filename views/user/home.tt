@@ -8,7 +8,7 @@
 <table class="table">
     <tr>
       <td>
-       <p>Sessions</td>
+       <p><a href="/training-sessions">Sessions <i class="fa fa-list" aria-hidden="true"></i></a></td>
       <td>
         This month: <%= %data<sessions_this_month> %><br />
         Last month: <%= %data<sessions_last_month> %><br />

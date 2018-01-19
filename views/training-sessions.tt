@@ -1,0 +1,19 @@
+% my (%h) = @_;
+% my  $sessions = %h<sessions>;
+
+<h2>Sessions: <%= $sessions.elems %></h2>
+
+<table class="table table-striped">
+  <tr>
+    <th>Date</th>
+    <th>Techniques</th>
+    <th></th>
+  </tr>
+% for $sessions.reverse.flat -> $session {
+  <tr>
+    <td><%= $session<date> %></td>
+    <td><%= $session<techniques> %></td>
+    <td></td>
+  </tr>
+% }
+</table>
