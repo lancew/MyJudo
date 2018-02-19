@@ -7,6 +7,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- HTML Meta Tags -->
+    <title>MyJudo.net - Judo Training Tracker</title>
+    <meta name="description" content="This is a tool to assist in your tracking of your Judo training.">
+
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="MyJudo.net - Judo Training Tracker">
+    <meta itemprop="description" content="This is a tool to assist in your tracking of your Judo training.">
+    <meta itemprop="image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="http://myjudo.net">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MyJudo.net - Judo Training Tracker">
+    <meta property="og:description" content="This is a tool to assist in your tracking of your Judo training.">
+    <meta property="og:image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MyJudo.net - Judo Training Tracker">
+    <meta name="twitter:description" content="This is a tool to assist in your tracking of your Judo training.">
+    <meta name="twitter:image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
+
+    <!-- Meta Tags Generated via http://heymeta.com -->
+
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
 
