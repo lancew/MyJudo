@@ -275,6 +275,12 @@ prefix '/training_session' => sub {
         if ( ! $session_exists ) {
             my @techniques;
             my $date = %params<session-date>:delete;
+            my @types = 'randori-tachi-waza','randori-ne-waza','uchi-komi','kata';
+            my @training_types;
+            for @types {
+                @training_types.push($_) if %params{$_}:delete;
+            }
+
             for %params.kv -> $k, $v {
                 @techniques.push(lc $k);
             }
@@ -283,6 +289,7 @@ prefix '/training_session' => sub {
                 date => $date,
                 user_id => $user_data<id>,
                 techniques => @techniques.join(','),
+                training_types => @training_types.join(','),
             );
         } else {
             return 'session exists';

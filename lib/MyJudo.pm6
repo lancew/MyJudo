@@ -289,17 +289,18 @@ method password_reset_request ( :$login, :$host ) {
     $client.quit;
 }
 
-method training_session_add (:$date, :$user_id, :$techniques) {
+method training_session_add (:$date, :$user_id, :$techniques, :$training_types) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
                 INSERT INTO sessions
-                  (date, user_id, techniques)
-                  VALUES (?,?,?)
+                  (date, user_id, techniques, types)
+                  VALUES (?,?,?,?)
             STATEMENT
 
     $sth.execute(
         $date,
         $user_id,
-        $techniques
+        $techniques,
+        $training_types
     );
 }
 

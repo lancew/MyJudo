@@ -8,6 +8,26 @@
         <input type="date" name ="session-date" id="session-date" value ="<%= Date.new(DateTime.now) %>">
 
 
+        <h2>Training type(s)</h2>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-box" type="checkbox" name="randori-tachi-waza" id="randori-tachi-waza">
+            Tach-Waza Randori
+          </label>
+          <label class="form-check-label">
+            <input class="form-check-box" type="checkbox" name="randori-ne-waza" id="randori-ne-waza">
+            Ne-Waza Randori
+          </label>
+          <label class="form-check-label">
+            <input class="form-check-box" type="checkbox" name="uchi-komi" id="uchi-komi">
+            Uchi-Komi
+          </label>
+          <label class="form-check-label">
+            <input class="form-check-box" type="checkbox" name="kata" id="kata">
+            Kata
+          </label>
+        </div>
+
         <h2>Nage-Waza (<%= %waza<nage-waza><kanji> %>)</h2>
           <table class="table">
           <tr>
@@ -29,12 +49,12 @@
           </td>
         % }
 
-        
+
           <table class="table">
           <tr>
            <td>
             <h2>Katame-Waza (<%= %waza<katame-waza><kanji> %>)</h2>
-           </td> 
+           </td>
           </tr>
           <tr>
         % @groups = 'osaekomi-waza', 'shime-waza', 'kansetsu-waza';
