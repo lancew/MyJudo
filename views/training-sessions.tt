@@ -6,12 +6,14 @@
 <table class="table table-striped">
   <tr>
     <th>Date</th>
+    <th>Training Type(s)</th>
     <th>Techniques</th>
     <th></th>
   </tr>
 % for $sessions.reverse.flat -> $session {
   <tr>
     <td><%= $session<date> %></td>
+    <td><%= $session<types> %></td>
     <td><%= $session<techniques> %></td>
     <td></td>
   </tr>
