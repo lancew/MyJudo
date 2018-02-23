@@ -93,11 +93,11 @@ subtest {
     my @sessions = $mj.get_training_sessions(user_id => 1);
 
     is-deeply @sessions, [
-        {:date($now),:id(1),:techniques("tai-otoshi,seoi-nage"),:user_id(1)},
-        {:date($month),:id(2),:techniques("tai-otoshi,obi-otoshi"),:user_id(1)},
-        {:date($month2),:id(3),:techniques("tai-otoshi,uki-otoshi"),:user_id(1)},
-        {:date($month3),:id(4),:techniques("tai-otoshi,ura-gatame"),:user_id(1)},
-        {:date($years2),:id(5),:techniques("tai-otoshi,ashi-garami"),:user_id(1)},
+        {:date($now),:id(1),:techniques("tai-otoshi,seoi-nage"),:types('ne-waza-randori'),:user_id(1)},
+        {:date($month),:id(2),:techniques("tai-otoshi,obi-otoshi"),:types('ne-waza-randori'),:user_id(1)},
+    #    {:date($month2),:id(3),:techniques("tai-otoshi,uki-otoshi"),:types('ne-waza-randori'),:user_id(1)},
+    #    {:date($month3),:id(4),:techniques("tai-otoshi,ura-gatame"),:types('ne-waza-randori'),:user_id(1)},
+        {:date($years2),:id(3),:techniques("tai-otoshi,ashi-garami"),:types('ne-waza-randori'),:user_id(1)},
     ], 'Sessions returned are correct';
 
 done-testing;
@@ -116,17 +116,17 @@ subtest {
 
     is-deeply %data, {
         id => 1,
-        sessions => 5,
+        sessions => 3,
         sessions_this_month => 1,
         sessions_last_month => 1,
-        sessions_this_year  => 4,
+        sessions_this_year  => 2,
         techniques          => {
             :ashi-garami(1),
             :obi-otoshi(1),
             :seoi-nage(1),
-            :tai-otoshi(5),
-            :uki-otoshi(1),
-            :ura-gatame(1),
+            :tai-otoshi(3),
+         #   :uki-otoshi(1),
+         #   :ura-gatame(1),
         },
         techniques_this_month => {
             :seoi-nage(1),
@@ -139,9 +139,9 @@ subtest {
         techniques_this_year  => {
             :obi-otoshi(1),
             :seoi-nage(1),
-            :tai-otoshi(4),
-            :uki-otoshi(1),
-            :ura-gatame(1),
+            :tai-otoshi(2),
+        #    :uki-otoshi(1),
+        #    :ura-gatame(1),
         },
         user_name             => 'jbloggs',
     }, 'User data is correct';
@@ -238,13 +238,14 @@ subtest {
         date => '2017-12-12',
         user_id => 1,
         techniques => 'tai-otoshi,seoi-nage',
+        training_types => 'ne-waza-randori',
     );
 
     my $sth = $mj.dbh.prepare('SELECT * FROM sessions');
     $sth.execute;
     my @sessions = $sth.allrows(:array);
 
-    is-deeply @sessions, [[1,"2017-12-12",1,"tai-otoshi,seoi-nage"],], 'Session is added';
+    is-deeply @sessions, [[1,"2017-12-12",1,"tai-otoshi,seoi-nage","ne-waza-randori"],], 'Session is added';
 
     done-testing;
 }, 'training_session_add';
@@ -317,25 +318,30 @@ sub _add_training_sessions {
         date => $now,
         user_id => 1,
         techniques => 'tai-otoshi,seoi-nage',
+        training_types => 'ne-waza-randori',
     );
     $mj.training_session_add(
         date => $month,
         user_id => 1,
         techniques => 'tai-otoshi,obi-otoshi',
+        training_types => 'ne-waza-randori',
     );
-    $mj.training_session_add(
-        date => $month2,
-        user_id => 1,
-        techniques => 'tai-otoshi,uki-otoshi',
-    );
-    $mj.training_session_add(
-        date => $month3,
-        user_id => 1,
-        techniques => 'tai-otoshi,ura-gatame',
-    );
+#    $mj.training_session_add(
+#        date => $month2,
+#        user_id => 1,
+#        techniques => 'tai-otoshi,uki-otoshi',
+#        training_types => 'ne-waza-randori',
+#    );
+#    $mj.training_session_add(
+#        date => $month3,
+#        user_id => 1,
+#        techniques => 'tai-otoshi,ura-gatame',
+#        training_types => 'ne-waza-randori',
+#    );
     $mj.training_session_add(
         date => $years2,
         user_id => 1,
         techniques => 'tai-otoshi,ashi-garami',
+        training_types => 'ne-waza-randori',
     );
 }
