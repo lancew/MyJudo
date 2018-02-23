@@ -3,7 +3,7 @@ use Test;
 use Bailador::Test;
 use DBIish;
 
-plan 4;
+plan 3;
 
 %*ENV<P6W_CONTAINER> = 'Bailador::Test';
 %*ENV<BAILADOR_APP_ROOT> = $*CWD.absolute;
