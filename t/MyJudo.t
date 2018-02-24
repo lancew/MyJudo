@@ -94,7 +94,7 @@ subtest {
 
     is-deeply @sessions, [
         {:date($now),:id(1),:techniques("tai-otoshi,seoi-nage"),:types('ne-waza-randori'),:user_id(1)},
-        {:date($month),:id(2),:techniques("tai-otoshi,obi-otoshi"),:types('ne-waza-randori'),:user_id(1)},
+        {:date($month),:id(2),:techniques("tai-otoshi,obi-otoshi"),:types('tachi-waza-randori'),:user_id(1)},
     #    {:date($month2),:id(3),:techniques("tai-otoshi,uki-otoshi"),:types('ne-waza-randori'),:user_id(1)},
     #    {:date($month3),:id(4),:techniques("tai-otoshi,ura-gatame"),:types('ne-waza-randori'),:user_id(1)},
         {:date($years2),:id(3),:techniques("tai-otoshi,ashi-garami"),:types('ne-waza-randori'),:user_id(1)},
@@ -127,6 +127,10 @@ subtest {
             :tai-otoshi(3),
          #   :uki-otoshi(1),
          #   :ura-gatame(1),
+        },
+        session_types => {
+            :ne-waza-randori(2),
+            :tachi-waza-randori(1),
         },
         techniques_this_month => {
             :seoi-nage(1),
@@ -324,7 +328,7 @@ sub _add_training_sessions {
         date => $month,
         user_id => 1,
         techniques => 'tai-otoshi,obi-otoshi',
-        training_types => 'ne-waza-randori',
+        training_types => 'tachi-waza-randori',
     );
 #    $mj.training_session_add(
 #        date => $month2,
