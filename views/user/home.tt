@@ -17,6 +17,15 @@
       </td>
     </tr>
     <tr>
+      <td>Session Types</td>
+      <td>
+        Kata: <%= %data<session_types><kata> || 0 %><br />
+        Ne Waza Randori: <%= %data<session_types><randori-ne-waza> || 0 %><br />
+        Tachi Waza Randori: <%= %data<session_types><randori-tachi-waza> || 0 %><br />
+        Uchi Komi: <%= %data<session_types><uchi-komi> || 0 %><br />
+      </td>
+    </tr>
+    <tr>
       <td>
        <p>
        <a href="/training_session/add"><i class="fa fa-plus" aria-hidden="true"></i> ADD A SESSION</a>

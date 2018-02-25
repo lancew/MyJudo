@@ -144,9 +144,11 @@ method get_user_data(:$user_name) {
                     %user<techniques>{$waza}++;
                 }
 
-                my @session_types = %session<types>.split(',');
-                for @session_types -> $type {
-                    %user<session_types>{$type}++;
+                if (%session<types>) {
+                    my @session_types = %session<types>.split(',');
+                    for @session_types -> $type {
+                        %user<session_types>{$type}++;
+                    }
                 }
 
                 my $session_dt = Date.new(%session<date>);
