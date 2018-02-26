@@ -9,12 +9,14 @@ perl6:
   - '2017.07'
 install:
   - rakudobrew build-zef
-  - zef install --debug DBIish --/test
-  - zef install --debug Net::SMTP --/test
-  - zef install --debug Email::Simple --/test
-  - zef install --debug UUID --/test
-  - zef install --debug Bailador --/test
-  - zef install --debug Crypt::Bcrypt --/test
+  - zef install --deps-only .
+  
+#  - zef install --debug DBIish --/test
+#  - zef install --debug Net::SMTP --/test
+#  - zef install --debug Email::Simple --/test
+#  - zef install --debug UUID --/test
+#  - zef install --debug Bailador --/test
+#  - zef install --debug Crypt::Bcrypt --/test
 
 matrix:
   allow_failures:
