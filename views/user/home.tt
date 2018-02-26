@@ -23,6 +23,7 @@
         Ne Waza Randori: <%= %data<session_types><randori-ne-waza> || 0 %><br />
         Tachi Waza Randori: <%= %data<session_types><randori-tachi-waza> || 0 %><br />
         Uchi Komi: <%= %data<session_types><uchi-komi> || 0 %><br />
+        <div id="piechart_session_types" style="width: 450px; height: 250px;"></div>
       </td>
     </tr>
     <tr>
@@ -83,6 +84,30 @@
   % }
   </tbody>
 </table>
+
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Session Types', 'Total'],
+  % for %data<session_types>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+  % next unless $name;
+  ['<%= $name.tc %>', <%= $number  %>],
+  % }
+        ]);
+
+        var options = {
+          title: 'Training Session Types',
+          is3D: true,
+          pieSliceText: 'none',
+          sliceVisibilityThreshold: .03,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_session_types'));
+        chart.draw(data, options);
+      }
+    </script>
 
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
