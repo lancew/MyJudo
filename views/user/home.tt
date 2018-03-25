@@ -23,7 +23,6 @@
         Ne Waza Randori: <%= %data<session_types><randori-ne-waza> || 0 %><br />
         Tachi Waza Randori: <%= %data<session_types><randori-tachi-waza> || 0 %><br />
         Uchi Komi: <%= %data<session_types><uchi-komi> || 0 %><br />
-        <div id="piechart_session_types" style="width: 450px; height: 250px;"></div>
       </td>
     </tr>
     <tr>
@@ -40,6 +39,9 @@
 <a href="#" onclick="myFunction()" class="fa fa-pie-chart">Show/Hide charts</a>
 
 <div id="charts" class="container-fluid" style="display:none;">
+  <div class="row">
+    <div id="piechart_session_types" style="width: 450px; height: 250px;"></div>
+  </div>
   <div class="row">
     <div id="piechart_month" style="width: 450px; height: 250px;"></div>
     <div id="piechart_last_month" style="width: 450px; height: 250px;"></div>
