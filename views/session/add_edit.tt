@@ -24,6 +24,10 @@
             Uchi-Komi
           </label>
           <label class="form-check-label">
+            <input class="form-check-box" type="checkbox" name="nage-komi" id="nage-komi" <%= (%session<types> ~ "").contains('nage-komi') ?? 'checked' !! '' %>>
+            Nage-Komi
+          </label>
+          <label class="form-check-label">
             <input class="form-check-box" type="checkbox" name="kata" id="kata" <%= (%session<types> ~ "").contains('kata') ?? 'checked' !! '' %>>
             Kata
           </label>

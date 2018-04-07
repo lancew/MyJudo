@@ -20,6 +20,7 @@
       <td>Session Types</td>
       <td>
         Kata: <%= %data<session_types><kata> || 0 %><br />
+        Nage Komi: <%= %data<session_types><nage-komi> || 0 %><br />
         Ne Waza Randori: <%= %data<session_types><randori-ne-waza> || 0 %><br />
         Tachi Waza Randori: <%= %data<session_types><randori-tachi-waza> || 0 %><br />
         Uchi Komi: <%= %data<session_types><uchi-komi> || 0 %><br />

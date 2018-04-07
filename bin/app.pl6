@@ -276,7 +276,7 @@ prefix '/training_session' => sub {
         if ( ! $session_exists ) {
             my @techniques;
             my $date = %params<session-date>:delete;
-            my @types = 'randori-tachi-waza','randori-ne-waza','uchi-komi','kata';
+            my @types = 'randori-tachi-waza','randori-ne-waza','uchi-komi','nage-komi','kata';
             my @training_types;
             for @types {
                 @training_types.push($_) if %params{$_}:delete;
@@ -324,7 +324,7 @@ prefix '/training_session' => sub {
             my %params = request.params;
             my @techniques;
             my $date = %params<session-date>:delete;
-            my @types = 'randori-tachi-waza','randori-ne-waza','uchi-komi','kata';
+            my @types = 'randori-tachi-waza','randori-ne-waza','uchi-komi','nage-komi','kata';
             my @training_types;
             for @types {
                 @training_types.push($_) if %params{$_}:delete;
