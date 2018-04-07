@@ -12,7 +12,7 @@
   </tr>
 % for $sessions.reverse.flat -> $session {
   <tr>
-    <td><%= $session<date> %></td>
+    <td><a href="/training_session/edit/<%= $session<id> %>"><%= $session<date> %></a></td>
     <td><%= $session<types> %></td>
     <td><%= $session<techniques> %></td>
     <td></td>

@@ -90,6 +90,20 @@ method get_sensei_by_name(:$family_name, :$given_name){
         return $sth.row(:hash);
 }
 
+
+method get_training_session(:$user_id, :$session_id){
+        my $sth = $.dbh.prepare(q:to/STATEMENT/);
+            SELECT *
+              FROM sessions
+             WHERE id = ?
+               AND user_id = ?
+        STATEMENT
+
+
+        $sth.execute(~$session_id, $user_id );
+        return $sth.row(:hash);
+}
+
 method get_training_sessions(:$user_id){
         my $sth = $.dbh.prepare(q:to/STATEMENT/);
             SELECT * from sessions
@@ -308,6 +322,25 @@ method training_session_add (:$date, :$user_id, :$techniques, :$training_types) 
         $user_id,
         $techniques,
         $training_types
+    );
+}
+
+method training_session_update (:$date, :$user_id, :$techniques, :$training_types, :$session_id) {
+    my $sth = $.dbh.prepare(q:to/STATEMENT/);
+                UPDATE sessions
+                   SET date = ?,
+                       user_id = ?,
+                       techniques = ?,
+                       types = ?
+                 WHERE id = ?
+            STATEMENT
+
+    $sth.execute(
+        ~$date,
+        ~$user_id,
+        ~$techniques,
+        ~$training_types,
+        ~$session_id,
     );
 }
 

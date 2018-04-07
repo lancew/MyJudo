@@ -253,7 +253,7 @@ prefix '/training_session' => sub {
         my $user_data = $mj.get_user_data( user_name => $session<user> );
         my $waza = Judo.waza();
 
-        template 'session/add.tt', {
+        template 'session/add_edit.tt', {
             user_data => $user_data,
             waza => $waza,
         };
@@ -268,10 +268,11 @@ prefix '/training_session' => sub {
 
         my $dbh = DBIish.connect("SQLite", :database<db/myjudo.db>);
 
-    my $session_exists = $mj.training_session_exists(
-        user_id => $user_data<id>,
-        date => %params<session-date>,
-    );
+        my $session_exists = $mj.training_session_exists(
+            user_id => $user_data<id>,
+            date => %params<session-date>,
+        );
+
         if ( ! $session_exists ) {
             my @techniques;
             my $date = %params<session-date>:delete;
@@ -296,6 +297,54 @@ prefix '/training_session' => sub {
         }
         redirect '/';
     }
+    get '/edit/:session_id' => sub ($session_id) {
+        my $session = session;
+        redirect '/' unless $session<user>:exists;
+
+        my $user_data = $mj.get_user_data( user_name => $session<user> );
+        my $training_session = $mj.get_training_session(
+            user_id => $user_data<id>,
+            session_id    => $session_id,
+        );
+
+        my $waza = Judo.waza();
+
+        template 'session/add_edit.tt', {
+            session => $training_session,
+            user_data => $user_data,
+            waza => $waza,
+        };
+    }
+    post '/edit/:session_id' => sub ($session_id) {
+        my $session = session;
+        redirect '/' unless $session<user>:exists;
+
+        my $user_data = $mj.get_user_data( user_name => $session<user> );
+
+            my %params = request.params;
+            my @techniques;
+            my $date = %params<session-date>:delete;
+            my @types = 'randori-tachi-waza','randori-ne-waza','uchi-komi','kata';
+            my @training_types;
+            for @types {
+                @training_types.push($_) if %params{$_}:delete;
+            }
+
+            for %params.kv -> $k, $v {
+                @techniques.push(lc $k);
+            }
+
+            $mj.training_session_update(
+                date => $date,
+                user_id => $user_data<id>,
+                techniques => @techniques.join(','),
+                training_types => @training_types.join(','),
+                session_id => $session_id,
+            );
+
+            redirect "/training-sessions";
+        };
+
 }
 
 get '/training-sessions' => sub {
