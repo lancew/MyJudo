@@ -31,6 +31,26 @@ sub routes() is export {
             );
         };
 
+        get -> 'register' {
+            my $t = Template::Mojo.from-file('views/register.tm');
+            content 'text/html', $t.render();
+        };
+        post -> 'register' {
+            request-body -> %params {
+                if (%params<passwordsignup> eq %params<passwordsignup_confirm>) {
+                    my $is_username_taken = $mj.is_username_taken( user_name => %params<usernamesignup>);
+                    content 'text/html', 'Username is taken' if $is_username_taken;
+
+                    $mj.add_new_user(
+                        user_name => %params<usernamesignup>,
+                        password => %params<passwordsignup>,
+                        email => %params<emailsignup>,
+                    );
+                    redirect :see-other, "/login";
+                 }
+            }
+        };
+
         get -> UserSession $user, 'logout' {
             $user.username = '';
             redirect :see-other, "/";
