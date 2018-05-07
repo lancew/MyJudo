@@ -8,16 +8,17 @@ use DBIish;
 
 my $version = '0.0.1';
 
-my $mj = MyJudo.new(
-    dbh => DBIish.connect("SQLite", :database<../db/myjudo.db>),
-);
 class UserSession does Cro::HTTP::Auth {
     has $.username is rw;
 
     method logged-in() {
-        defined $!username;
+        $!username.chars > 1;
     }
 }
+
+my $mj = MyJudo.new(
+    dbh => DBIish.connect("SQLite", :database<../db/myjudo.db>),
+);
 
 sub routes() is export {
     route {
@@ -30,6 +31,11 @@ sub routes() is export {
             );
         };
 
+        get -> UserSession $user, 'logout' {
+            $user.username = '';
+            redirect :see-other, "/";
+        };
+
         get -> 'login' {
             my $t = Template::Mojo.from-file('views/login.tm');
             content 'text/html', $t.render(
@@ -39,23 +45,18 @@ sub routes() is export {
         post -> UserSession $user, 'login' {
             request-body -> %params {
                 if ( %params<login> && %params<password> ) {
-warn $user.perl;
                     my ($user_id, $user_name) = $mj.valid_user_credentials(
                         user_name => %params<login>,
                         password => %params<password>
                     );
 
                     if ($user_id) {
-                            #my $session = session;
-                            #$session<user> = $user_name;
-                            #$session<user_id> = $user_id;
                             $user.username = $user_name;
                             redirect "/user/$user_name", :see-other;
                     } else {
-                        content 'text/html', 'NOPE';
+                        redirect :see-other, "/login";
                     }
                 }
-                #redirect :see-other, "/";
             }
         }
 
@@ -181,6 +182,7 @@ warn $user.perl;
             }
 
         };
+
         get -> 'favicon.ico', {static 'static/favicon.ico' };
     }
 }
