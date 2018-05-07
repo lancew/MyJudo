@@ -9,6 +9,9 @@ my Cro::Service $http = Cro::HTTP::Server.new(
         die("Missing MYJUDO_HOST in environment"),
     port => %*ENV<MYJUDO_PORT> ||
         die("Missing MYJUDO_PORT in environment"),
+    before => [
+        Cro::HTTP::Session::InMemory[UserSession].new;
+    ],
     application => routes(),
     after => [
         Cro::HTTP::Log::File.new(logs => $*OUT, errors => $*ERR)

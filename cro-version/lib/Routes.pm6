@@ -18,9 +18,11 @@ class UserSession does Cro::HTTP::Auth {
         defined $!username;
     }
 }
+
 sub routes() is export {
     route {
         subset LoggedIn of UserSession where *.logged-in;
+
         get -> {
             my $t = Template::Mojo.from-file('views/index.tm');
             content 'text/html', $t.render(
@@ -34,10 +36,10 @@ sub routes() is export {
                 {name => 'lance'}
             );
         };
-        post -> 'login' {
+        post -> UserSession $user, 'login' {
             request-body -> %params {
                 if ( %params<login> && %params<password> ) {
-
+warn $user.perl;
                     my ($user_id, $user_name) = $mj.valid_user_credentials(
                         user_name => %params<login>,
                         password => %params<password>
@@ -47,7 +49,8 @@ sub routes() is export {
                             #my $session = session;
                             #$session<user> = $user_name;
                             #$session<user_id> = $user_id;
-                            redirect :see-other, "/user/$user_name";
+                            $user.username = $user_name;
+                            redirect "/user/$user_name", :see-other;
                     } else {
                         content 'text/html', 'NOPE';
                     }
@@ -69,7 +72,7 @@ sub routes() is export {
                 } );
         };
 
-        get -> 'user', $user_name, 'training-sessions' {
+        get -> LoggedIn $user, 'user', $user_name, 'training-sessions' {
             my %user_data = $mj.get_user_data( user_name => $user_name );
             my @sessions = $mj.training-sessions( user_id => %user_data<id> );
 
@@ -81,7 +84,7 @@ sub routes() is export {
             );
         };
 
-        get -> 'user', $user_name, 'training-session', 'edit', $session_id {
+        get -> LoggedIn $user,'user', $user_name, 'training-session', 'edit', $session_id {
             my %user_data = $mj.get_user_data( user_name => $user_name );
             my $waza = Judo.waza();
 
@@ -99,7 +102,7 @@ sub routes() is export {
                 }
             );
         };
-        post -> 'user', $user_name, 'training-session', 'edit', $session_id {
+        post -> LoggedIn $user,'user', $user_name, 'training-session', 'edit', $session_id {
             my $user_data = $mj.get_user_data( user_name => $user_name );
 
             request-body -> ( *%params ) {
@@ -128,7 +131,7 @@ sub routes() is export {
             redirect :see-other, "/user/$user_name/training-sessions";
         };
 
-        get -> 'user', $user_name, 'training-session', 'add' {
+        get -> LoggedIn $user,'user', $user_name, 'training-session', 'add' {
             my %user_data = $mj.get_user_data( user_name => $user_name );
             my $waza = Judo.waza();
 
@@ -140,7 +143,7 @@ sub routes() is export {
                 }
             );
         };
-        post -> 'user', $user_name, 'training-session', 'add' {
+        post -> LoggedIn $user,'user', $user_name, 'training-session', 'add' {
             my $user_data = $mj.get_user_data( user_name => $user_name );
 
             request-body -> ( *%params ) {
