@@ -51,6 +51,32 @@ sub routes() is export {
             }
         };
 
+        get -> LoggedIn $user, 'password-change' {
+            my $t = Template::Mojo.from-file('views/password-change.tm');
+            content 'text/html', $t.render();
+        };
+        post -> LoggedIn $user, 'password-change' {
+            request-body -> %params {
+                if (    %params<password-new>.chars
+                     && %params<password-new> eq %params<password-repeat>
+                   ) {
+                       my ($user_id, $user_name) = $mj.valid_user_credentials(
+                        user_name => $user.username,
+                        password => %params<password>
+                    );
+                    if ( $user_id ) {
+                        $mj.password_change(
+                            username => $user_name,
+                            password => %params<password-new>
+                        );
+                        redirect "/user/$user_name", :see-other;
+                    }
+                }
+            }
+            content 'text/html', 'Passord change error';
+        };
+
+
         get -> UserSession $user, 'logout' {
             $user.username = '';
             redirect :see-other, "/";
