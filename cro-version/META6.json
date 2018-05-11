@@ -15,6 +15,10 @@
   "depends": [
     "Cro::HTTP",
     "Template::Mojo",
+    "Crypt::Bcrypt",
+    "Email::Simple",
+    "Net::SMTP",
+    "UUID"
   ],
   "tags": [
     ""

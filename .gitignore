@@ -1,4 +1,3 @@
 lib/.precomp
 db/myjudo.db
-cro-version/lib/.precomp
-cro-version/lib/.precomp/
+/cro-version/lib/.precomp/

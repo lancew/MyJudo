@@ -17,7 +17,7 @@ class UserSession does Cro::HTTP::Auth {
 }
 
 my $mj = MyJudo.new(
-    dbh => DBIish.connect("SQLite", :database<../db/myjudo.db>),
+    dbh => DBIish.connect("SQLite", :database<db/myjudo.db>),
 );
 
 sub routes() is export {
@@ -76,6 +76,22 @@ sub routes() is export {
             content 'text/html', 'Passord change error';
         };
 
+        get -> 'password-reset' {
+            my $t = Template::Mojo.from-file('views/password-reset.tm');
+            content 'text/html', $t.render;
+        };
+
+        post -> 'password-reset' {
+            request-body -> %params {
+                if ( %params<login> ) {
+                    $mj.password_reset_request(
+                        login => %params<login>
+                    );
+                }
+            }
+            my $t = Template::Mojo.from-file('views/password-reset.tm');
+            content 'text/html', $t.render( submitted => 1  );
+        };
 
         get -> UserSession $user, 'logout' {
             $user.username = '';
