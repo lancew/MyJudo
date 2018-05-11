@@ -13,9 +13,9 @@ my Cro::Service $http = Cro::HTTP::Server.new(
         Cro::HTTP::Session::InMemory[UserSession].new;
     ],
     tls => %(
-        private-key-file => %*ENV<ONE_TLS_KEY> ||
+        private-key-file => %*ENV<MYJUDO_TLS_KEY> ||
             %?RESOURCES<fake-tls/server-key.pem> || "resources/fake-tls/server-key.pem",
-        certificate-file => %*ENV<ONE_TLS_CERT> ||
+        certificate-file => %*ENV<MYJUDO_TLS_CERT> ||
             %?RESOURCES<fake-tls/server-crt.pem> || "resources/fake-tls/server-crt.pem",
     ),
     application => routes(),
