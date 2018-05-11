@@ -17,7 +17,7 @@ class UserSession does Cro::HTTP::Auth {
 }
 
 my $mj = MyJudo.new(
-    dbh => DBIish.connect("SQLite", :database<db/myjudo.db>),
+    dbh => DBIish.connect("SQLite", :database</db/myjudo.db>),
 );
 
 sub routes() is export {
