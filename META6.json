@@ -1,14 +1,15 @@
 {
-    "perl" : "6.c",
+    "perl" : "6.*",
     "name" : "MyJudo",
     "version" : "0.1.0",
     "description" : "Judo training tracker website",
-    "authors" : [ "Lance WIcks" ],
+    "authors" : [ "Lance Wicks" ],
     "license" : "Artistic-2.0",
     "provides" : {
         "MyJudo" : "lib/MyJudo.pm"
     },
     "depends" : [
+        "Cro::HTTP"
         "Bailador",
         "Crypt::Bcrypt",
         "DBIish",
@@ -16,6 +17,13 @@
         "Net::SMTP",
         "UUID"
     ],
-    "resources" : [ ],
+  "provides": {
+    "Routes.pm6": "lib/Routes.pm6"
+  },
+  "resources": [
+    "fake-tls/ca-crt.pem",
+    "fake-tls/server-crt.pem",
+    "fake-tls/server-key.pem"
+  ],
     "source-url" : "git://github.com/lancew/MyJudo.git"
 }
