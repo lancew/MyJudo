@@ -50,7 +50,8 @@ using the `HTTP::Easy` module for serving.
 
 You can run tests with:
 ```
- prove -lv --exec perl6 t
+ prove6 -I=lib -v t/*
+
 ```
 
 Currently running at http://myjudo.net

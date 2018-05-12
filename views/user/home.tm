@@ -149,16 +149,16 @@
   % next unless $name;
     <tr>
       <td>
-        <%= $name.tc %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> || %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> || %waza<katame-waza><shime-waza>{lc $name}<kanji> || %waza<katame-waza><kansetsu-waza>{lc $name}<kanji> %>)
+        <%= $name.tc || '' %> (<%= %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> || %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> || %waza<katame-waza><shime-waza>{lc $name}<kanji> || %waza<katame-waza><kansetsu-waza>{lc $name}<kanji> || '' %>)
       </td>
       <td>
-        <%= %data<techniques_this_month>{lc $name} %>
+        <%= %data<techniques_this_month>{lc $name} || '' %>
       </td>
       <td>
-        <%= %data<techniques_last_month>{lc $name} %>
+        <%= %data<techniques_last_month>{lc $name} || '' %>
       </td>
       <td>
-        <%= %data<techniques_this_year>{lc $name} %>
+        <%= %data<techniques_this_year>{lc $name} || '' %>
       </td>
       <td>
         <%= $number %>
@@ -248,11 +248,11 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Techniques', 'Times done'],
-  % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
-  % next unless $name;
-  % next unless %data<techniques_this_year>{lc $name};
-  ['<%= $name.tc %>', <%= %data<techniques_this_year>{lc $name}  %>],
-  % }
+  % # for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+  % #next unless $name;
+  % #next unless %data<techniques_this_year>{lc $name};
+  ['<%= $name.tc || '' %>', <%= %data<techniques_this_year>{lc $name} || '' %>],
+  % #}
         ]);
 
         var options = {
