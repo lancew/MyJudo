@@ -1,0 +1,53 @@
+% my (%h) = @_;
+
+<h2>Overview</h2>
+<p>MyJudo.net is a site to allow you to track your Judo training.</p>
+<p>
+Simply register for free and after every training session record what throws and groundwork techniques you did.
+<br />
+The site will then show you how many sessions you have attended, what techniques you have practiced and how many times.
+</p>
+
+<h2>Coming soon</h2>
+<p>
+We have started working on a feature to allow you to record you coaches/sensei. This will allow you discover your Judo "Family Tree", which is what we call the chain of Judo people between you and Jigoro Kano.
+<br />
+We are also planning more interesting reports of your training, including telling you when you are ready to grade (based on techniques and number of times you have trained them).
+</p>
+<p>
+We envision this site as a social network style site, where you and the friends in your Judo club and around the world are able to connect and encourage one another to train.<br />
+Focussing on doing Judo, this site we will be adding features like activity reports sent by email (summaries of Judo techniques done per week/month for example).
+</p>
+
+<h2>Help us grow</h2>
+<p>
+This is a small project, your participation, support and involvement is what will help us make this all happen.<br />
+We are looking for users, promoters, software developers (Perl6 preferably), designers (web, graphics, etc). We would love ideas for new features, bug reports, etc.
+</p>
+
+<h2>Pricing</h2>
+<p>
+This site is free to use, and will stay free to use.<br />
+We plan accept donations and take payment to remove adverts and to enable some advanced future features we have planned. We also plan to have affiliate schemes in place with partners so that if you choose to buy something we will take a small percentage. We will NOT give your email or personal information to third parties without informing you (in advance).
+</p>
+
+<h2>Privacy and Open Source</h2>
+<p>
+This site will respect your privacy, we will not share your personal data. We are building a site that is as secure as we can build it and built so that your data remains your data.
+<br />
+The software is build with and as open source software, so you are able to read the source code and confirm how the site works.
+</p>
+
+<h2>Links</h2>
+<p>
+<ul>
+  <li> <a href="https://myjudo.net">MyJudo.net - This Site</a>
+  <li> <a href="https://github.com/lancew/MyJudo">Github Repo - Where the source code resides</a>
+  <li> <a href="https://github.com/lancew/MyJudo/Issues">Bug Reports - Tell us what does not work</a>
+  <li> <a href="https://github.com/lancew/MyJudo/projects">Project Plan - Discover what we are planning</a>
+  <li> <a href="https://github.com/Bailador/Bailador">Bailador - The web framework we are writing the site in</a>
+  <li> <a href="https://perl6.org/">Perl6 - The programming language we are using for server side code</a>
+</ul>
+
+
+</p>

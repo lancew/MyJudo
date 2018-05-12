@@ -5,11 +5,11 @@ id: myjudo
 env:  []
 links:  []
 entrypoint: service.p6
-endpoints: 
-  - 
+endpoints:
+  -
     port-env: MYJUDO_PORT
-    name: HTTP
-    protocol: http
+    name: HTTPS
+    protocol: https
     host-env: MYJUDO_HOST
-    id: http
+    id: https
 ...

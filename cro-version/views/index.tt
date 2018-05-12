@@ -1,6 +1,0 @@
-% my (%h) = @_;
-<html>
-<body>
-<p>Hello World, <%= %h<name> %></p>
-</body>
-</html>

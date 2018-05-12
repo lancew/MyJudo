@@ -310,27 +310,25 @@ method password_reset_request ( :$login, :$host ) {
     $client.quit;
 }
 
-method training_session_add (:$date, :$dojo, :$user_id, :$techniques, :$training_types) {
+method training_session_add (:$date, :$user_id, :$techniques, :$training_types) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
                 INSERT INTO sessions
-                  (date, dojo, user_id, techniques, types)
-                  VALUES (?,?,?,?,?)
+                  (date, user_id, techniques, types)
+                  VALUES (?,?,?,?)
             STATEMENT
 
     $sth.execute(
         $date,
-        $dojo,
         $user_id,
         $techniques,
         $training_types
     );
 }
 
-method training_session_update (:$date, :$dojo, :$user_id, :$techniques, :$training_types, :$session_id) {
+method training_session_update (:$date, :$user_id, :$techniques, :$training_types, :$session_id) {
     my $sth = $.dbh.prepare(q:to/STATEMENT/);
                 UPDATE sessions
                    SET date = ?,
-                       dojo = ?,
                        user_id = ?,
                        techniques = ?,
                        types = ?
@@ -339,7 +337,6 @@ method training_session_update (:$date, :$dojo, :$user_id, :$techniques, :$train
 
     $sth.execute(
         ~$date,
-        ~$dojo,
         ~$user_id,
         ~$techniques,
         ~$training_types,
