@@ -1,8 +1,24 @@
 # MyJudo   [![Build Status](https://travis-ci.org/lancew/MyJudo.svg?branch=master)](https://travis-ci.org/lancew/MyJudo) [![Kritika Analysis Status](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/status.svg)](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/)
 
-This is an experimental website using Perl6 programming language and
-Bailador web framework.
+This is an experimental website using Perl6 programming language and cro.
 
+Now with DOCKER!
+
+Run a built image:
+```
+docker run -p 8080:10000 --mount type=bind,source="/db/myjudo.db",target="/db/myjudo.db" myjudo perl6 -Ilib service.p6
+```
+
+Build an image:
+```
+docker build -t myjudo .
+```
+
+
+
+
+
+---
 First install `sqlite3` and make sure by running `sqlite3 --version`
 that the one you have is greater than to `3.8.3`.
 
