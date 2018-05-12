@@ -1,6 +1,7 @@
 language: perl6
 perl6:
   - latest
+  - '2018.04'
   - '2018.01'
   - '2017.12'
   - '2017.11'
@@ -11,7 +12,7 @@ perl6:
 install:
   - rakudobrew build-zef
   - zef install --deps-only .
-  
+
 #  - zef install --debug DBIish --/test
 #  - zef install --debug Net::SMTP --/test
 #  - zef install --debug Email::Simple --/test
