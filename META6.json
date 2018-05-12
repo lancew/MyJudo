@@ -14,10 +14,11 @@
   "auth": "Write me!",
   "depends": [
     "Cro::HTTP",
-    "Template::Mojo",
+    "Cro::HTTP::Test",
     "Crypt::Bcrypt",
     "Email::Simple",
     "Net::SMTP",
+    "Template::Mojo",
     "UUID"
   ],
   "tags": [
