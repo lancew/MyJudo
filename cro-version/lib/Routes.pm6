@@ -171,6 +171,7 @@ sub routes() is export {
             request-body -> ( *%params ) {
                 my @techniques;
                 my $date = %params<session-date>:delete;
+                my $dojo = %params<session-dojo>:delete;
                 my @types = 'randori-tachi-waza','randori-ne-waza','uchi-komi','nage-komi','kata';
                 my @training_types;
                 for @types {
@@ -183,6 +184,7 @@ sub routes() is export {
 
                 $mj.training_session_update(
                     date => $date,
+                    dojo => $dojo,
                     user_id => $user_data<id>,
                     techniques => @techniques.join(','),
                     training_types => @training_types.join(','),
@@ -212,6 +214,7 @@ sub routes() is export {
             request-body -> ( *%params ) {
                 my @techniques;
                 my $date = %params<session-date>:delete;
+                my $dojo = %params<session-dojo>:delete;
                 my @types = 'randori-tachi-waza','randori-ne-waza','uchi-komi','nage-komi','kata';
                 my @training_types;
                 for @types {
@@ -233,6 +236,7 @@ sub routes() is export {
 
                     $mj.training_session_add(
                         date => $date,
+                        dojo => $dojo,
                         user_id => $user_data<id>,
                         techniques => @techniques.join(','),
                         training_types => @training_types.join(','),

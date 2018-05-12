@@ -87,6 +87,18 @@
       <form method="post">
         <input type="date" name ="session-date" id="session-date" value ="<%= Date.new( ~%session<date> || DateTime.now) %>">
 
+        <div class="">
+            <label>
+            Dojo
+            <input
+              type="text"
+              name="session-dojo"
+              id="session-dojo"
+              value="<%= %session<dojo> %>"
+              >
+            </label>
+        </div>
+
 
         <h2>Training type(s)</h2>
         <div class="form-check">
