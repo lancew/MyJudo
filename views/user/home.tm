@@ -248,11 +248,11 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Techniques', 'Times done'],
-  % # for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
-  % #next unless $name;
-  % #next unless %data<techniques_this_year>{lc $name};
+  %  for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+  % next unless $name;
+  % next unless %data<techniques_this_year>{lc $name};
   ['<%= $name.tc || '' %>', <%= %data<techniques_this_year>{lc $name} || '' %>],
-  % #}
+  % }
         ]);
 
         var options = {
