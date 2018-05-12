@@ -85,7 +85,7 @@
     <h1>Add a session for <%= %data<user_name> %></h1>
     <div>
       <form method="post">
-        <input type="date" name ="session-date" id="session-date" value ="<%= Date.new( ~%session<date> || DateTime.now) %>">
+        <input type="date" name ="session-date" id="session-date" value ="<%= Date.new( %session<date> || DateTime.now) %>">
 
         <div class="">
             <label>
@@ -94,7 +94,7 @@
               type="text"
               name="session-dojo"
               id="session-dojo"
-              value="<%= %session<dojo> %>"
+              value="<%= %session<dojo> || '' %>"
               >
             </label>
         </div>
@@ -103,23 +103,38 @@
         <h2>Training type(s)</h2>
         <div class="form-check">
           <label class="form-check-label">
-            <input class="form-check-box" type="checkbox" name="randori-tachi-waza" id="randori-tachi-waza" <%= (%session<types> ~ "").contains('randori-tachi-waza') ?? 'checked' !! '' %> >
+            <input class="form-check-box" type="checkbox" name="randori-tachi-waza" id="randori-tachi-waza" <%= ( %session.defined && %session<types>.defined ?? %session<types>.Str !! '' ).contains('randori-tachi-waza') ?? 'checked' !! '' %> >
             Tachi-Waza Randori
           </label>
           <label class="form-check-label">
-            <input class="form-check-box" type="checkbox" name="randori-ne-waza" id="randori-ne-waza" <%= (%session<types> ~ "").contains('randori-ne-waza') ?? 'checked' !! '' %>>
+            <input class="form-check-box"
+                   type="checkbox"
+                   name="randori-ne-waza"
+                   id="randori-ne-waza"
+                   <%= (%session.defined && %session<types>.defined ?? %session<types>.Str !! '').contains('randori-ne-waza') ?? 'checked' !! '' %>>
             Ne-Waza Randori
           </label>
           <label class="form-check-label">
-            <input class="form-check-box" type="checkbox" name="uchi-komi" id="uchi-komi" <%= (%session<types> ~ "").contains('uchi-komi') ?? 'checked' !! '' %>>
+            <input class="form-check-box"
+                   type="checkbox"
+                   name="uchi-komi"
+                   id="uchi-komi"
+                   <%= (%session.defined && %session<types>.defined ?? %session<types>.Str !! '').contains('uchi-komi') ?? 'checked' !! '' %>>
             Uchi-Komi
           </label>
           <label class="form-check-label">
-            <input class="form-check-box" type="checkbox" name="nage-komi" id="nage-komi" <%= (%session<types> ~ "").contains('nage-komi') ?? 'checked' !! '' %>>
+            <input class="form-check-box"
+                   type="checkbox"
+                   name="nage-komi"
+                   id="nage-komi"
+                   <%= (%session.defined && %session<types>.defined ?? %session<types>.Str !! ''  ).contains('nage-komi') ?? 'checked' !! '' %>>
             Nage-Komi
           </label>
           <label class="form-check-label">
-            <input class="form-check-box" type="checkbox" name="kata" id="kata" <%= (%session<types> ~ "").contains('kata') ?? 'checked' !! '' %>>
+            <input class="form-check-box"
+                   type="checkbox"
+                   name="kata"
+                   id="kata" <%= (%session.defined && %session<types>.defined ?? %session<types>.Str !! '').contains('kata') ?? 'checked' !! '' %>>
             Kata
           </label>
         </div>
@@ -136,7 +151,11 @@
                   <li class="list-group-item">
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>" <%= (~%session<techniques>).contains(%t<name>.lc) ?? 'checked' !! '' %>>
+                      <input class="form-check-input"
+                             type="checkbox"
+                             name="<%= %t<name> || '' %>"
+                             id="<%= %t<name> || '' %>"
+                             <%= ( %session.defined && %session<techniques>.defined ?? ~%session<techniques> !! '').contains(%t<name>.lc || '') ?? 'checked' !! '' %>>
                       <%= %t<name> %> (<%= %t<kanji> %>)
                     </label>
                   </div>
@@ -162,7 +181,11 @@
                   <li class="list-group-item">
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" name="<%= %t<name> %>" id="<%= %t<name> %>" <%= (~%session<techniques>).contains(%t<name>.lc) ?? 'checked' !! '' %>>
+                      <input class="form-check-input"
+                             type="checkbox"
+                             name="<%= %t<name> || '' %>"
+                             id="<%= %t<name> || '' %>"
+                             <%= ( %session.defined && %session<techniques>.defined ?? %session<techniques> !! '').contains(%t<name>.lc || '') ?? 'checked' !! '' %>>
                       <%= %t<name> %> (<%= %t<kanji> %>)
                     </label>
                   </div>
