@@ -4,7 +4,7 @@ use Cro::HTTP::Session::InMemory;
 use Routes;
 
 my Cro::Service $http = Cro::HTTP::Server.new(
-    http => <1.1>,
+    http => <1.1 2>,
     host => %*ENV<MYJUDO_HOST> ||
         die("Missing MYJUDO_HOST in environment"),
     port => %*ENV<MYJUDO_PORT> ||
