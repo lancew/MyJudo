@@ -1,14 +1,31 @@
 use Cro::HTTP::Log::File;
+use Cro::HTTP::Router;
 use Cro::HTTP::Server;
 use Cro::HTTP::Session::InMemory;
 use Routes;
 
-my Cro::Service $http = Cro::HTTP::Server.new(
-    http => <1.1 2>,
-    host => %*ENV<MYJUDO_HOST> ||
-        die("Missing MYJUDO_HOST in environment"),
-    port => %*ENV<MYJUDO_PORT> ||
-        die("Missing MYJUDO_PORT in environment"),
+$*ERR.out-buffer = $*OUT.out-buffer = False;
+
+# Redirect HTTP to HTTPS.
+my $http = Cro::HTTP::Server.new(
+    :1080port,
+    :host<0.0.0.0>,
+    application => route {
+        get -> *@path, :%headers is header {
+            my $url = "https://%headers<Host>" ~ request.path;
+
+            $url ~= '?' ~ request.query if request.query;
+
+            redirect :permanent, $url;
+        }
+    },
+);
+
+my $https = Cro::HTTP::Server.new(
+    :1443port,
+    :host<0.0.0.0>,
+    # FIXME h2 POST /register - Can not decode a utf-8 buffer as if it were ascii
+    http => <1.1>,
     before => [
         Cro::HTTP::Session::InMemory[UserSession].new;
     ],
@@ -24,12 +41,19 @@ my Cro::Service $http = Cro::HTTP::Server.new(
         Cro::HTTP::Log::File.new(logs => $*OUT, errors => $*ERR)
     ]
 );
+
 $http.start;
-say "Listening at http://%*ENV<MYJUDO_HOST>:%*ENV<MYJUDO_PORT>";
+$https.start;
+
+say 'Listening…';
+
 react {
     whenever signal(SIGINT) {
-        say "Shutting down...";
+        say 'Stopping…';
+
         $http.stop;
+        $https.stop;
+
         done;
     }
 }

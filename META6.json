@@ -16,6 +16,7 @@
     "Cro::HTTP",
     "Cro::HTTP::Test",
     "Crypt::Bcrypt",
+    "DBIish",
     "Email::Simple",
     "Net::SMTP",
     "Template::Mojo",
