@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-RUN apk add --no-cache curl gcc git libressl-dev linux-headers make musl-dev perl
+RUN apk add --no-cache curl gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
 # Install Perl 6
 RUN curl -L https://github.com/rakudo/rakudo/archive/2018.04.1.tar.gz \
@@ -35,6 +35,7 @@ COPY --from=0 /usr/lib/libmoar.so      \
               /usr/lib/libssl.*        /usr/lib/
 COPY --from=0 /usr/share/nqp           /usr/share/nqp
 COPY --from=0 /usr/share/perl6         /usr/share/perl6
+COPY --from=0 /usr/lib/libsqlite3.so.0 /usr/lib/
 
 WORKDIR /app
 
