@@ -32,10 +32,10 @@ COPY --from=0 /usr/bin/moar            \
               /usr/bin/perl6           /usr/bin/
 COPY --from=0 /usr/lib/libmoar.so      \
               /usr/lib/libcrypto.*     \
+              /usr/lib/libsqlite3.*    \
               /usr/lib/libssl.*        /usr/lib/
 COPY --from=0 /usr/share/nqp           /usr/share/nqp
 COPY --from=0 /usr/share/perl6         /usr/share/perl6
-COPY --from=0 /usr/lib/libsqlite3.so.0 /usr/lib/
 
 WORKDIR /app
 
