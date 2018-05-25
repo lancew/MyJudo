@@ -3,10 +3,10 @@ FROM alpine:3.7
 RUN apk add --no-cache curl gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
 # Install Perl 6
-RUN curl -L https://github.com/rakudo/rakudo/archive/2018.04.1.tar.gz \
-   | tar xzf -                                                        \
- && cd rakudo-2018.04.1                                               \
- && perl Configure.pl --backend=moar --gen-moar --prefix=/usr         \
+RUN curl -L https://github.com/rakudo/rakudo/archive/2018.05.tar.gz \
+   | tar xzf -                                                      \
+ && cd rakudo-2018.05                                               \
+ && perl Configure.pl --backend=moar --gen-moar --prefix=/usr       \
  && make -j`nproc` install
 
 # Install zef
