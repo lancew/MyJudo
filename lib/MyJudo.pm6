@@ -130,7 +130,7 @@ method get_user_data(:$user_name) {
         my %techniques;
 
         my $sth = $.dbh.prepare(q:to/STATEMENT/);
-            SELECT id,username
+            SELECT id,dojo,username
               FROM users
              WHERE username = ?
         STATEMENT
@@ -140,6 +140,7 @@ method get_user_data(:$user_name) {
 
         my %user = (
             id => %row<id>,
+            dojo => %row<dojo>,
             user_name => %row<username>,
             sessions => 0,
             sessions_this_month => 0,

@@ -110,12 +110,16 @@ subtest {
         password  => 'secret_pasword',
     );
 
+    # Insert dojo into DB as not yet a UI/Method to do this.
+    $mj.dbh.prepare('UPDATE users SET dojo="Southampton City Judo Club"').execute;
+
     _add_training_sessions();
 
     my %data = $mj.get_user_data(user_name => 'jbloggs');
 
     is-deeply %data, {
         id => 1,
+        dojo => 'Southampton City Judo Club',
         sessions => 3,
         sessions_this_month => 1,
         sessions_last_month => 1,
@@ -217,10 +221,14 @@ subtest {
         sensei_id => 1,
     );
 
+    # Insert dojo into DB as not yet a UI/Method to do this.
+    $mj.dbh.prepare('UPDATE users SET dojo="Southampton City Judo Club"').execute;
+
     my %data = $mj.get_user_data(user_name => 'jbloggs2');
 
     is-deeply %data, {
         id => 1,
+        dojo => 'Southampton City Judo Club',
         sessions => 0,
         sessions_this_month => 0,
         sessions_last_month => 0,

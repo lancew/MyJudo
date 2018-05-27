@@ -85,18 +85,26 @@
     <h1>Add a session for <%= %data<user_name> %></h1>
     <div>
       <form method="post">
-        <input type="date" name ="session-date" id="session-date" value ="<%= Date.new( %session<date> || DateTime.now) %>">
-
-        <div class="">
-            <label>
-            Dojo
+        <div class="form-group">
+            <label for="session-date">Session Date:</label>
             <input
+                   type = "date"
+                   class="form-control"
+                   name = "session-date"
+                   id="session-date"
+                   value ="<%= Date.new( %session<date> || DateTime.now) %>"
+                   >
+        </div>
+
+        <div class="form-group">
+            <label for="session-dojo">Dojo:</label>
+            <input
+              class="form-control"
               type="text"
               name="session-dojo"
               id="session-dojo"
-              value="<%= %session<dojo> || '' %>"
+              value="<%= %session<dojo> || %data<dojo> || '' %>"
               >
-            </label>
         </div>
 
 
