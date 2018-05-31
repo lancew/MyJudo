@@ -66,7 +66,7 @@ sub routes() is export {
                     );
                     if ( $user_id ) {
                         $mj.password_change(
-                            username => $user_name,
+                            username => $user.username,
                             password => %params<password-new>
                         );
                         redirect "/user/$user_name", :see-other;
@@ -123,7 +123,7 @@ sub routes() is export {
         }
 
         get -> LoggedIn $user, 'user', $user_name {
-            my %user_data = $mj.get_user_data( user_name => $user_name );
+            my %user_data = $mj.get_user_data( user_name => $user.username );
 
             my $waza = Judo.waza();
 
@@ -136,7 +136,7 @@ sub routes() is export {
         };
 
         get -> LoggedIn $user, 'user', $user_name, 'training-sessions' {
-            my %user_data = $mj.get_user_data( user_name => $user_name );
+            my %user_data = $mj.get_user_data( user_name => $user.username );
             my @sessions = $mj.training-sessions( user_id => %user_data<id> );
 
             my $t = Template::Mojo.from-file('views/user/training-sessions.tm');
@@ -148,7 +148,7 @@ sub routes() is export {
         };
 
         get -> LoggedIn $user,'user', $user_name, 'training-session', 'edit', $session_id {
-            my %user_data = $mj.get_user_data( user_name => $user_name );
+            my %user_data = $mj.get_user_data( user_name => $user.username );
             my $waza = Judo.waza();
 
             my $training_session = $mj.get_training_session(
@@ -166,7 +166,7 @@ sub routes() is export {
             );
         };
         post -> LoggedIn $user,'user', $user_name, 'training-session', 'edit', $session_id {
-            my $user_data = $mj.get_user_data( user_name => $user_name );
+            my $user_data = $mj.get_user_data( user_name => $user.username );
 
             request-body -> ( *%params ) {
                 my @techniques;
@@ -197,7 +197,7 @@ sub routes() is export {
         };
 
         get -> LoggedIn $user,'user', $user_name, 'training-session', 'add' {
-            my %user_data = $mj.get_user_data( user_name => $user_name );
+            my %user_data = $mj.get_user_data( user_name => $user.username );
             my $waza = Judo.waza();
 
             my $t = Template::Mojo.from-file('views/user/training-session/add_edit.tm');
@@ -209,7 +209,7 @@ sub routes() is export {
             );
         };
         post -> LoggedIn $user,'user', $user_name, 'training-session', 'add' {
-            my $user_data = $mj.get_user_data( user_name => $user_name );
+            my $user_data = $mj.get_user_data( user_name => $user.username );
 
             request-body -> ( *%params ) {
                 my @techniques;
