@@ -185,7 +185,6 @@
           title: 'Training Session Types',
           is3D: true,
           pieSliceText: 'none',
-          sliceVisibilityThreshold: .03,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart_session_types'));
@@ -210,7 +209,6 @@
           title: 'Techniques this month',
           is3D: true,
           pieSliceText: 'none',
-          sliceVisibilityThreshold: .03,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart_month'));
@@ -235,7 +233,6 @@
           title: 'Techniques last month',
           is3D: true,
           pieSliceText: 'none',
-          sliceVisibilityThreshold: .03,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart_last_month'));
@@ -260,7 +257,6 @@
           title: 'Techniques this year',
           is3D: true,
           pieSliceText: 'none',
-          sliceVisibilityThreshold: .03,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart_this_year'));
@@ -284,7 +280,6 @@
           title: 'Total Techniques',
           is3D: true,
           pieSliceText: 'none',
-          sliceVisibilityThreshold: .03,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart_total'));
