@@ -12,7 +12,7 @@ my $http = Cro::HTTP::Server.new(
     :host<0.0.0.0>,
     application => route {
         get -> *@path, :%headers is header {
-            my $url = "https://%headers<Host>" ~ request.path;
+            my $url = "https://%headers<Host>" ~ request.path ?? request.path !! '';
 
             $url ~= '?' ~ request.query if request.query;
 
