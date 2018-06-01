@@ -524,7 +524,7 @@ method waza () {
                 },
                 ashi-garami => {
                     number => 10,
-                    name => 'Ashi-garame',
+                    name => 'Ashi-garami',
                     kanji => '足緘',
                 },
             },
