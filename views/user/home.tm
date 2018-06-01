@@ -150,7 +150,7 @@
   % my $kanji = %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> ||   %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-  waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> || %waza<katame-waza><shime-waza>{lc $name}<kanji> ||   %waza<katame-waza><kansetsu-waza>{lc $name}<kanji>;
     <tr>
       <td>
-        <%= $name.tc || '' %> (<%= $kanji || '' %><a href="https://www.youtube.com/results?search_query=<%= $kanji %>"><i class="fab fa-youtube"></i></a>)
+        <%= $name.tc || '' %> (<%= $kanji || '' %> <a href="https://www.youtube.com/results?search_query=<%= $kanji %>"><i class="fa fa-youtube-play"></i></a>)
       </td>
       <td>
         <%= %data<techniques_this_month>{lc $name} || '' %>
