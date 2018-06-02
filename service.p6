@@ -37,6 +37,9 @@ class XFrameHeaders does Cro::Transform {
                     $response.append-header:
                         'X-Frame-Options',
                         'DENY';
+                    $response.append-header:
+                        'X-XSS-Protection',
+                        '1; mode=block';
                     emit $response;
                 }
             }
