@@ -19,11 +19,11 @@ class CSPolicy does Cro::Transform {
                     $response.append-header:
                         'Content-Security-Policy-Report-Only',
                         "default-src 'none';"
-                        ~ "font-src https://use.fontawesome.com;"
+                        ~ "font-src 'self';"
                         ~ "img-src 'self' data:;"
                         ~ "object-src 'none';"
-                        ~ "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://code.jquery.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com;"
-                        ~ "style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://www.gstatic.com;"
+                        ~ "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://code.jquery.com https://cdnjs.cloudflare.com;"
+                        ~ "style-src 'self' 'unsafe-inline' https://www.gstatic.com;"
                         ~ "report-uri /csp-violation/;";
                     emit $response;
                 }

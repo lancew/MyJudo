@@ -254,5 +254,9 @@ sub routes() is export {
         get -> 'js', *@path {
             static 'static/js/', @path;
         }
+
+        get -> 'css', *@path {
+            static 'static/css/', @path;
+        }
     }
 }
