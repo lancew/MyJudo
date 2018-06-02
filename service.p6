@@ -24,7 +24,7 @@ class StrictTransportSecurity does Cro::Transform {
         }
     }
 
-class XFrameHeaders does Cro::Transform {
+class XHeaders does Cro::Transform {
         method consumes() { Cro::HTTP::Response }
         method produces() { Cro::HTTP::Response }
 
@@ -40,6 +40,9 @@ class XFrameHeaders does Cro::Transform {
                     $response.append-header:
                         'X-XSS-Protection',
                         '1; mode=block';
+                    $response.append-header:
+                        'X-Content-Type-Options',
+                        'nosniff';
                     emit $response;
                 }
             }
@@ -81,7 +84,7 @@ my $https = Cro::HTTP::Server.new(
         Cro::HTTP::Log::File.new(logs => $*OUT, errors => $*ERR),
         # set max age to be one year and one day, 366 days
         StrictTransportSecurity.new(max-age => Duration.new(366 * 24 * 60 * 60)),
-        XFrameHeaders.new(),
+        XHeaders.new(),
     ]
 );
 
