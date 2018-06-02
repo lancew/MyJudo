@@ -24,6 +24,24 @@ class StrictTransportSecurity does Cro::Transform {
         }
     }
 
+class XFrameHeaders does Cro::Transform {
+        method consumes() { Cro::HTTP::Response }
+        method produces() { Cro::HTTP::Response }
+
+        method transformer(Supply $pipeline --> Supply) {
+            supply {
+                whenever $pipeline -> $response {
+                    $response.append-header:
+                        'Content-Security-Policy',
+                        "frame-ancestrors 'none'";
+                    $response.append-header:
+                        'X-Frame-Options',
+                        'DENY';
+                    emit $response;
+                }
+            }
+        }
+    }
 
 # Redirect HTTP to HTTPS.
 my $http = Cro::HTTP::Server.new(
@@ -60,6 +78,7 @@ my $https = Cro::HTTP::Server.new(
         Cro::HTTP::Log::File.new(logs => $*OUT, errors => $*ERR),
         # set max age to be one year and one day, 366 days
         StrictTransportSecurity.new(max-age => Duration.new(366 * 24 * 60 * 60)),
+        XFrameHeaders.new(),
     ]
 );
 
