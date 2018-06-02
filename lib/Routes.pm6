@@ -250,5 +250,9 @@ sub routes() is export {
         };
 
         get -> 'favicon.ico', {static 'static/favicon.ico' };
+
+        get -> 'js', *@path {
+            static 'static/js/', @path;
+        }
     }
 }

@@ -40,7 +40,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <script src="https://use.fontawesome.com/4cd30f886e.js"></script>
+    <script defer src="/js/fontawesome-all.min.js"></script>
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
@@ -54,14 +54,14 @@
         <ul class="navbar-nav mr-auto">
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs" aria-hidden="true"></i> Settings</a>
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs" aria-hidden="true"></i> Settings</a>
           <div class="dropdown-menu">
                 <a class="dropdown-item" href="/password-change">
-                  <i class="fa fa-key" aria-hidden="true"></i>
+                  <i class="fas fa-key" aria-hidden="true"></i>
                   Change Password
                 </a>
                 <a class="dropdown-item" href="/logout">
-                  <i class="fa fa-sign-out" aria-hidden="true"></i>
+                  <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
                   Logout
                 </a>
           </div>
@@ -88,7 +88,7 @@
 <table class="table">
     <tr>
       <td>
-       <p><a href="/user/<%= %data<user_name> %>/training-sessions"><i class="fa fa-list" aria-hidden="true"></i> Sessions </a></td>
+       <p><a href="/user/<%= %data<user_name> %>/training-sessions"><i class="fas fa-list" aria-hidden="true"></i> Sessions </a></td>
       <td>
         This month: <%= %data<sessions_this_month> %><br />
         Last month: <%= %data<sessions_last_month> %><br />
@@ -109,7 +109,7 @@
     <tr>
       <td>
        <p>
-       <a href="/user/<%= %data<user_name> %>/training-session/add"><i class="fa fa-plus" aria-hidden="true"></i> ADD A SESSION</a>
+       <a href="/user/<%= %data<user_name> %>/training-session/add"><i class="fas fa-plus" aria-hidden="true"></i> ADD A SESSION</a>
        </p>
        </td>
        <td></td>
@@ -117,7 +117,7 @@
 </table>
 
 <h2>Techniques (<%= %waza<kanji> %>)</h2>
-<a href="#" onclick="myFunction()" class="fa fa-pie-chart"> Show/Hide charts</a>
+<a href="#" onclick="myFunction()"><i class="fas fa-chart-pie"></i> Show/Hide charts</a>
 
 <div id="charts" class="container-fluid" style="display:none;">
   <div class="row">
@@ -150,7 +150,7 @@
   % my $kanji = %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> || %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> || %waza<katame-waza><shime-waza>{lc $name}<kanji> || %waza<katame-waza><kansetsu-waza>{lc $name}<kanji>;
     <tr>
       <td>
-        <%= $name.tc || '' %> (<%= $kanji || '' %> <a href="https://www.youtube.com/results?search_query=<%= $kanji %>"><i class="fa fa-youtube-play"></i></a>)
+        <%= $name.tc || '' %> (<%= $kanji || '' %>) <a href="https://www.youtube.com/results?search_query=<%= $kanji %>"><i class="fab fa-youtube"></i></a>
       </td>
       <td>
         <%= %data<techniques_this_month>{lc $name} || '' %>

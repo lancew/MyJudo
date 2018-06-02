@@ -36,7 +36,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <script src="https://use.fontawesome.com/4cd30f886e.js"></script>
+    <script defer src="/js/fontawesome-all.min.js"></script>
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
@@ -50,14 +50,14 @@
         <ul class="navbar-nav mr-auto">
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs" aria-hidden="true"></i> Settings</a>
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs" aria-hidden="true"></i> Settings</a>
           <div class="dropdown-menu">
                 <a class="dropdown-item" href="/password-change">
-                  <i class="fa fa-key" aria-hidden="true"></i>
+                  <i class="fas fa-key" aria-hidden="true"></i>
                   Change Password
                 </a>
                 <a class="dropdown-item" href="/logout">
-                  <i class="fa fa-sign-out" aria-hidden="true"></i>
+                  <i class="fas fa-sign-out" aria-hidden="true"></i>
                   Logout
                 </a>
           </div>

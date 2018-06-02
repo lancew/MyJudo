@@ -37,7 +37,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <script src="https://use.fontawesome.com/4cd30f886e.js"></script>
+    <script defer src="/js/fontawesome-all.min.js"></script>
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
@@ -53,14 +53,14 @@
 
          <li class="nav-item">
             <a class="nav-link" href="/register">
-              <i class="fa fa-user-plus" aria-hidden="true"></i>
+              <i class="fas fa-user-plus" aria-hidden="true"></i>
               Register
             </a>
           </li>
 
           <li class="nav-item">
             <a class="nav-link" href="/login">
-              <i class="fa fa-sign-in" aria-hidden="true"></i>
+              <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
               Login
             </a>
           </li>

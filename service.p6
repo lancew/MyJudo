@@ -22,8 +22,8 @@ class CSPolicy does Cro::Transform {
                         ~ "font-src https://use.fontawesome.com;"
                         ~ "img-src 'self' data:;"
                         ~ "object-src 'none';"
-                        ~ "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://use.fontawesome.com https://www.gstatic.com https://code.jquery.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com;"
-                        ~ "style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://www.gstatic.com https://use.fontawesome.com;"
+                        ~ "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://code.jquery.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com;"
+                        ~ "style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://www.gstatic.com;"
                         ~ "report-uri /csp-violation/;";
                     emit $response;
                 }
