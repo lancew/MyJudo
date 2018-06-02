@@ -58,7 +58,8 @@ my $https = Cro::HTTP::Server.new(
     application => routes(),
     after => [
         Cro::HTTP::Log::File.new(logs => $*OUT, errors => $*ERR),
-        StrictTransportSecurity.new(max-age => Duration.new(30 * 24 * 60 * 60)),
+        # set max age to be one year and one day, 366 days
+        StrictTransportSecurity.new(max-age => Duration.new(366 * 24 * 60 * 60)),
     ]
 );
 
