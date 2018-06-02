@@ -147,7 +147,7 @@
   <tbody>
   % for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
   % next unless $name;
-  % my $kanji = %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> ||   %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> || %waza<katame-waza><shime-waza>{lc $name}<kanji> ||   %waza<katame-waza><kansetsu-waza>{lc $name}<kanji>;
+  % my $kanji = %waza<nage-waza><te-waza>{lc $name}<kanji> || %waza<nage-waza><koshi-waza>{lc $name}<kanji> || %waza<nage-waza><ashi-waza>{lc $name}<kanji> || %waza<nage-waza><ma-sutemi-waza>{lc $name}<kanji> || %waza<nage-waza><yoko-sutemi-waza>{lc $name}<kanji> || %waza<katame-waza><osaekomi-waza>{lc $name}<kanji> || %waza<katame-waza><shime-waza>{lc $name}<kanji> || %waza<katame-waza><kansetsu-waza>{lc $name}<kanji>;
     <tr>
       <td>
         <%= $name.tc || '' %> (<%= $kanji || '' %> <a href="https://www.youtube.com/results?search_query=<%= $kanji %>"><i class="fa fa-youtube-play"></i></a>)
