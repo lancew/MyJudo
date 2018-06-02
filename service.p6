@@ -6,6 +6,31 @@ use Routes;
 
 $*ERR.out-buffer = $*OUT.out-buffer = False;
 
+class CSPolicy does Cro::Transform {
+        method consumes() { Cro::HTTP::Response }
+        method produces() { Cro::HTTP::Response }
+
+        method transformer(Supply $pipeline --> Supply) {
+            supply {
+                whenever $pipeline -> $response {
+                    $response.append-header:
+                        'Content-Security-Policy',
+                        "frame-ancestors 'none'";
+                    $response.append-header:
+                        'Content-Security-Policy-Report-Only',
+                        "default-src 'none';"
+                        ~ "font-src https://use.fontawesome.com;"
+                        ~ "img-src 'self' data:;"
+                        ~ "object-src 'none';"
+                        ~ "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://use.fontawesome.com https://www.gstatic.com https://code.jquery.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com;"
+                        ~ "style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://www.gstatic.com https://use.fontawesome.com;"
+                        ~ "report-uri /csp-violation/;";
+                    emit $response;
+                }
+            }
+        }
+    }
+
 class StrictTransportSecurity does Cro::Transform {
         has Duration:D $.max-age is required;
 
@@ -31,9 +56,6 @@ class XHeaders does Cro::Transform {
         method transformer(Supply $pipeline --> Supply) {
             supply {
                 whenever $pipeline -> $response {
-                    $response.append-header:
-                        'Content-Security-Policy',
-                        "frame-ancestrors 'none'";
                     $response.append-header:
                         'X-Frame-Options',
                         'DENY';
@@ -85,6 +107,7 @@ my $https = Cro::HTTP::Server.new(
         # set max age to be one year and one day, 366 days
         StrictTransportSecurity.new(max-age => Duration.new(366 * 24 * 60 * 60)),
         XHeaders.new(),
+        CSPolicy.new(),
     ]
 );
 
