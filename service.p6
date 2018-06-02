@@ -6,6 +6,25 @@ use Routes;
 
 $*ERR.out-buffer = $*OUT.out-buffer = False;
 
+class StrictTransportSecurity does Cro::Transform {
+        has Duration:D $.max-age is required;
+
+        method consumes() { Cro::HTTP::Response }
+        method produces() { Cro::HTTP::Response }
+
+        method transformer(Supply $pipeline --> Supply) {
+            supply {
+                whenever $pipeline -> $response {
+                    $response.append-header:
+                        'Strict-Transport-Security',
+                        "max-age=$!max-age; includeSubDomains; preload";
+                    emit $response;
+                }
+            }
+        }
+    }
+
+
 # Redirect HTTP to HTTPS.
 my $http = Cro::HTTP::Server.new(
     :1080port,
@@ -38,7 +57,8 @@ my $https = Cro::HTTP::Server.new(
     ),
     application => routes(),
     after => [
-        Cro::HTTP::Log::File.new(logs => $*OUT, errors => $*ERR)
+        Cro::HTTP::Log::File.new(logs => $*OUT, errors => $*ERR),
+        StrictTransportSecurity.new(max-age => Duration.new(30 * 24 * 60 * 60)),
     ]
 );
 
