@@ -8,24 +8,25 @@
 
     <!-- HTML Meta Tags -->
     <title>MyJudo.net - Judo Training Tracker</title>
-    <meta name="description" content="This is a tool to assist in your tracking of your Judo training.">
+    <meta name="description" content="Judo training application, record your sessions and techniques">
+    <meta name="keywords" content="tudo,training,application,software">
 
     <!-- Google / Search Engine Tags -->
     <meta itemprop="name" content="MyJudo.net - Judo Training Tracker">
-    <meta itemprop="description" content="This is a tool to assist in your tracking of your Judo training.">
+    <meta itemprop="description" content="Judo training application, record your sessions and techniques">
     <meta itemprop="image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
 
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="http://myjudo.net">
     <meta property="og:type" content="website">
     <meta property="og:title" content="MyJudo.net - Judo Training Tracker">
-    <meta property="og:description" content="This is a tool to assist in your tracking of your Judo training.">
+    <meta property="og:description" content="Judo training application, record your sessions and techniques">
     <meta property="og:image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MyJudo.net - Judo Training Tracker">
-    <meta name="twitter:description" content="This is a tool to assist in your tracking of your Judo training.">
+    <meta name="twitter:description" content="Judo training application, record your sessions and techniques">
     <meta name="twitter:image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
 
     <!-- Meta Tags Generated via http://heymeta.com -->
@@ -84,16 +85,31 @@ Simply register for free and after every training session record what throws and
 The site will then show you how many sessions you have attended, what techniques you have practiced and how many times.
 </p>
 
-<h2>Coming soon</h2>
 <p>
-We have started working on a feature to allow you to record you coaches/sensei. This will allow you discover your Judo "Family Tree", which is what we call the chain of Judo people between you and Jigoro Kano.
-<br />
-We are also planning more interesting reports of your training, including telling you when you are ready to grade (based on techniques and number of times you have trained them).
+<img src="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500" class="img-fluid">
 </p>
-<p>
-We envision this site as a social network style site, where you and the friends in your Judo club and around the world are able to connect and encourage one another to train.<br />
-Focussing on doing Judo, this site we will be adding features like activity reports sent by email (summaries of Judo techniques done per week/month for example).
-</p>
+
+<h2>Features</h2>
+<p>Currently MyJudo allows you to record each session you attend along with which Judo techniques you practised. We then calculate statistics for you. We also provide links to the best training video for each technique.</p>
+
+<h3>Training Session Statistics:</h3>
+<ul>
+  <li>Training session this week
+  <li>Training sessions this month
+  <li>Training sessions last month
+  <li>Training sessions this year
+  <li>Training sessions total
+</ul>
+
+<h3>Technique Statistics:</h3>
+<ul>
+  <li>Techniques this week
+  <li>Techniquess this month
+  <li>Techniquess last month
+  <li>Techniquess this year
+  <li>Techniquess total
+</ul>
+
 
 <h2>Help us grow</h2>
 <p>
@@ -106,6 +122,10 @@ We are looking for users, promoters, software developers (Perl6 preferably), des
 This site is free to use, and will stay free to use.<br />
 We plan accept donations and take payment to remove adverts and to enable some advanced future features we have planned. We also plan to have affiliate schemes in place with partners so that if you choose to buy something we will take a small percentage. We will NOT give your email or personal information to third parties without informing you (in advance).
 </p>
+<p>
+If you would like to have a hosted version for your club or association, please contact lw@judocoach.com to discuss setting this up and how you might financially support this
+</p>
+
 
 <h2>Privacy and Open Source</h2>
 <p>
