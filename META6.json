@@ -20,6 +20,7 @@
     "Email::Simple",
     "Net::SMTP",
     "Template::Mojo",
+    "Template::Mustache",
     "UUID"
   ],
   "tags": [

@@ -1,5 +1,6 @@
 use Cro::HTTP::Router;
 use Template::Mojo;
+use Template::Mustache;
 
 use Judo;
 use MyJudo;
@@ -20,17 +21,14 @@ my $mj = MyJudo.new(
     dbh => DBIish.connect("SQLite", :database<db/myjudo.db>),
 );
 
+my $stache = Template::Mustache.new: :from<views>;
+
 sub routes() is export {
     route {
         subset LoggedIn of UserSession where *.logged-in;
 
-        get -> {
-            my $t = Template::Mojo.from-file('views/index.tm');
-            content 'text/html', $t.render(
-                {name => 'lance'}
-            );
-        };
-
+        get -> { content 'text/html', $stache.render('index', {}) };
+        
         get -> 'register' {
             my $t = Template::Mojo.from-file('views/register.tm');
             content 'text/html', $t.render();
@@ -257,6 +255,10 @@ sub routes() is export {
 
         get -> 'css', *@path {
             static 'static/css/', @path;
+        }
+        
+        get -> 'img', *@path {
+            static 'static/img/', @path;
         }
     }
 }
