@@ -21,7 +21,7 @@ my $mj = MyJudo.new(
     dbh => DBIish.connect("SQLite", :database<db/myjudo.db>),
 );
 
-my $stache = Template::Mustache.new: :from<views>;
+my $stache = Template::Mustache.new: :from('views'.IO.absolute);
 
 sub routes() is export {
     route {
