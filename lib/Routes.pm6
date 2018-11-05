@@ -241,7 +241,7 @@ sub routes() is export {
                     );
 
                     # "see-other" generates a 303, causing a GET
-                    redirect :see-other, "/user/$user_name/training-sessions";
+                    redirect :see-other, "/user/$user_name";
                 }
             }
 
