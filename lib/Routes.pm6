@@ -30,8 +30,7 @@ sub routes() is export {
         get -> { content 'text/html', $stache.render('index', {}) };
         
         get -> 'register' {
-            my $t = Template::Mojo.from-file('views/register.tm');
-            content 'text/html', $t.render();
+            content 'text/html', $stache.render('register', {});
         };
         post -> 'register' {
             request-body -> %params {
