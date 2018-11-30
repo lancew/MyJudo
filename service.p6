@@ -89,8 +89,7 @@ my $http = Cro::HTTP::Server.new(
 my $https = Cro::HTTP::Server.new(
     :1443port,
     :host<0.0.0.0>,
-    # FIXME h2 POST /register - Can not decode a utf-8 buffer as if it were ascii
-    http => <1.1>,
+    http => <1.1 2>,
     before => [
         Cro::HTTP::Session::InMemory[UserSession].new;
     ],
