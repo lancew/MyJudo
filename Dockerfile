@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.8 AS dev
 
 RUN apk add --no-cache curl gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
@@ -18,6 +18,8 @@ WORKDIR /app
 COPY META6.json .
 
 RUN /usr/share/perl6/site/bin/zef install --deps-only --/test .
+
+FROM dev
 
 # Avoid having "binaries" in the final image
 RUN rm -r /usr/share/perl6/site/bin

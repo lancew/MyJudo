@@ -1,0 +1,16 @@
+version: '2.3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    command:
+      - perl6
+      - -Ilib
+      - service.p6
+    ports:
+      - 80:1080
+      - 443:1443
+    volumes:
+      - .:/app

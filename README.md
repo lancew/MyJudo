@@ -2,16 +2,10 @@
 
 This is an experimental website using the Perl 6 programming language and Cro.
 
-## Building
+## Building & Running
 
 ```
-docker build -t myjudo .
-```
-
-## Running
-
-```
-docker run -p 80:1080 -p 443:1443 -u "`id -u`:`id -g`" -v $PWD/db/myjudo.db:/app/db/myjudo.db myjudo
+docker-compose up --build
 ```
 
 Add resources/fake-tls/ca-crt.pem to your browser to avoid scary self signed
