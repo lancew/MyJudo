@@ -89,7 +89,8 @@ my $http = Cro::HTTP::Server.new(
 my $https = Cro::HTTP::Server.new(
     :1443port,
     :host<0.0.0.0>,
-    http => <1.1 2>,
+    # FIXME POST /login doesnt't work with h2.
+    http => <1.1>,
     before => [
         Cro::HTTP::Session::InMemory[UserSession].new;
     ],
