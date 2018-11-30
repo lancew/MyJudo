@@ -12,9 +12,7 @@ my $version = '0.0.1';
 class UserSession does Cro::HTTP::Auth {
     has $.username is rw;
 
-    method logged-in() {
-        $!username.chars > 1;
-    }
+    method logged-in() { defined $!username }
 }
 
 my $mj = MyJudo.new(
@@ -91,7 +89,7 @@ sub routes() is export {
         };
 
         get -> UserSession $user, 'logout' {
-            $user.username = '';
+            $user.username = Nil;
             redirect :see-other, "/";
         };
 
