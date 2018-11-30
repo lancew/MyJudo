@@ -47,8 +47,7 @@ sub routes() is export {
         };
 
         get -> LoggedIn $user, 'password-change' {
-            my $t = Template::Mojo.from-file('views/password-change.tm');
-            content 'text/html', $t.render();
+            content 'text/html', $stache.render('password-change', {});
         };
         post -> LoggedIn $user, 'password-change' {
             request-body -> %params {
