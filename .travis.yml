@@ -1,18 +1,10 @@
 language: perl6
 perl6:
-  - latest
-  - '2018.05'
-  - '2018.04'
-  - '2018.01'
+  - '2018.11'
+  - 'latest'
 install:
   - rakudobrew build-zef
-  - zef install --debug Cro::HTTP::Test --/test
-  - zef install --debug Crypt::Bcrypt --/test
-  - zef install --debug DBIish --/test
-  - zef install --debug Email::Simple --/test
-  - zef install --debug Net::SMTP --/test
-  - zef install --debug UUID --/test
   - zef install --deps-only --/test .
 matrix:
   allow_failures:
-  - perl6: latest
+    - perl6: latest
