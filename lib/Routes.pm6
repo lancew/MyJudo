@@ -94,10 +94,7 @@ sub routes() is export {
         };
 
         get -> 'login' {
-            my $t = Template::Mojo.from-file('views/login.tm');
-            content 'text/html', $t.render(
-                {name => 'lance'}
-            );
+            content 'text/html', $stache.render('login', {});
         };
         post -> UserSession $user, 'login' {
             request-body -> %params {
