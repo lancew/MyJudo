@@ -71,8 +71,7 @@ sub routes() is export {
         };
 
         get -> 'password-reset' {
-            my $t = Template::Mojo.from-file('views/password-reset.tm');
-            content 'text/html', $t.render;
+            content 'text/html', $stache.render('password-reset', {});
         };
 
         post -> 'password-reset' {
@@ -83,8 +82,7 @@ sub routes() is export {
                     );
                 }
             }
-            my $t = Template::Mojo.from-file('views/password-reset.tm');
-            content 'text/html', $t.render( submitted => 1  );
+            content 'text/html', $stache.render('password-reset', { submitted => 1});
         };
 
         get -> UserSession $user, 'logout' {
