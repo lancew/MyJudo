@@ -1,47 +1,47 @@
-{{> header-logged-out}}
+{{> header}}
 
 <main class=container>
-    <h1>Home Page for {{ user.user_name }}</h1>
+    <h1>Home Page for {{ data.user_name }}</h1>
 
     <h2>Statistics</h2>
 
     <table class=table>
         <tr>
             <td>
-                <a href="/user/{{ user.user_name }}/training-sessions">
+                <a href="/user/{{ data.user_name }}/training-sessions">
                     <i class="fa fa-list"></i>
                     Sessions
                 </a>
             <td>
-                This month: {{ user.sessions_this_month }}<br>
-                Last month: {{ user.sessions_last_month }}<br>
-                This year:  {{ user.sessions_this_year  }}<br>
-                Total:      {{ user.sessions            }}<br>
+                This month: {{ data.sessions_this_month }}<br>
+                Last month: {{ data.sessions_last_month }}<br>
+                This year:  {{ data.sessions_this_year  }}<br>
+                Total:      {{ data.sessions            }}<br>
         <tr>
             <td>Session Types
             <td>
                 Kata:
-                {{ user.session_types.kata }}
-                {{^user.session_types.kata }}0{{/user.session_types.kata}}
+                {{ data.session_types.kata }}
+                {{^data.session_types.kata }}0{{/data.session_types.kata}}
                 <br>
                 Nage Komi:
-                {{ user.session_types.nage_komi }}
-                {{^user.session_types.nage_komi }}0{{/user.session_types.nage_komi}}
+                {{ data.session_types.nage_komi }}
+                {{^data.session_types.nage_komi }}0{{/data.session_types.nage_komi}}
                 <br>
                 Ne Waza Randori:
-                {{ user.session_types.randori_ne_waza }}
-                {{^user.session_types.randori_ne_waza }}0{{/user.session_types.randori_ne_waza}}
+                {{ data.session_types.randori_ne_waza }}
+                {{^data.session_types.randori_ne_waza }}0{{/data.session_types.randori_ne_waza}}
                 <br>
                 Tachi Waza Randori:
-                {{ user.session_types.randori_tachi_waza }}
-                {{^user.session_types.randori_tachi_waza }}0{{/user.session_types.randori_tachi_waza}}
+                {{ data.session_types.randori_tachi_waza }}
+                {{^data.session_types.randori_tachi_waza }}0{{/data.session_types.randori_tachi_waza}}
                 <br>
                 Uchi Komi:
-                {{ user.session_types.uchi_komi }}
-                {{^user.session_types.uchi_komi }}0{{/user.session_types.uchi_komi}}
+                {{ data.session_types.uchi_komi }}
+                {{^data.session_types.uchi_komi }}0{{/data.session_types.uchi_komi}}
         <tr>
             <td>
-                <a href="/user/{{ user.user_name }}/training-session/add">
+                <a href="/user/{{ data.user_name }}/training-session/add">
                     <i class="fa fa-plus"></i>
                     ADD A SESSION
                 </a>

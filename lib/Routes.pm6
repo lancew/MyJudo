@@ -112,18 +112,18 @@ sub routes() is export {
         }
 
         get -> LoggedIn $user, 'user', $user_name {
-            my %user = $mj.get_user_data( user_name => $user.username );
+            my %data = $mj.get_user_data( user_name => $user.username );
             my %waza = Judo.waza();
 
             my @sessions;
 
-            for %user<session_types>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+            for %data<session_types>.sort(*.value).reverse>>.kv.flat -> $name, $number {
                 @sessions.push: { name => $name.tc, :$number };
             }
 
             my @techniques;
 
-            for %user<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+            for %data<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
                 # FIXME This is horrible.
                 my $kanji = %waza<nage-waza><te-waza>{$name}<kanji>
                          || %waza<nage-waza><koshi-waza>{$name}<kanji>
@@ -138,14 +138,16 @@ sub routes() is export {
                     :$kanji,
                     :$number,
                     name => $name.tc,
-                    techniques_this_month => %user<techniques_this_month>{$name},
-                    techniques_last_month => %user<techniques_last_month>{$name},
-                    techniques_this_year  => %user<techniques_this_year>{$name},
+                    techniques_this_month => %data<techniques_this_month>{$name},
+                    techniques_last_month => %data<techniques_last_month>{$name},
+                    techniques_this_year  => %data<techniques_this_year>{$name},
                 };
             }
 
-            content 'text/html',
-                $stache.render('user/home', { :@sessions, :@techniques, :%user, :%waza });
+            content 'text/html', $stache.render(
+                'user/home',
+                { :%data, :@sessions, :@techniques, :$user, :%waza },
+            );
         };
 
         get -> LoggedIn $user, 'user', $user_name, 'training-sessions' {
