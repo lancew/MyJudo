@@ -1,0 +1,163 @@
+{{> header-logged-out}}
+
+<main class=container>
+    <h1>Home Page for {{ user.user_name }}</h1>
+
+    <h2>Statistics</h2>
+
+    <table class=table>
+        <tr>
+            <td>
+                <a href="/user/{{ user.user_name }}/training-sessions">
+                    <i class="fa fa-list"></i>
+                    Sessions
+                </a>
+            <td>
+                This month: {{ user.sessions_this_month }}<br>
+                Last month: {{ user.sessions_last_month }}<br>
+                This year:  {{ user.sessions_this_year  }}<br>
+                Total:      {{ user.sessions            }}<br>
+        <tr>
+            <td>Session Types
+            <td>
+                Kata:
+                {{ user.session_types.kata }}
+                {{^user.session_types.kata }}0{{/user.session_types.kata}}
+                <br>
+                Nage Komi:
+                {{ user.session_types.nage_komi }}
+                {{^user.session_types.nage_komi }}0{{/user.session_types.nage_komi}}
+                <br>
+                Ne Waza Randori:
+                {{ user.session_types.randori_ne_waza }}
+                {{^user.session_types.randori_ne_waza }}0{{/user.session_types.randori_ne_waza}}
+                <br>
+                Tachi Waza Randori:
+                {{ user.session_types.randori_tachi_waza }}
+                {{^user.session_types.randori_tachi_waza }}0{{/user.session_types.randori_tachi_waza}}
+                <br>
+                Uchi Komi:
+                {{ user.session_types.uchi_komi }}
+                {{^user.session_types.uchi_komi }}0{{/user.session_types.uchi_komi}}
+        <tr>
+            <td>
+                <a href="/user/{{ user.user_name }}/training-session/add">
+                    <i class="fa fa-plus"></i>
+                    ADD A SESSION
+                </a>
+            <td>
+    </table>
+
+    <h2>Techniques ({{ waza.kanji }})</h2>
+
+    <a href="#" onclick="this.nextElementSibling.classList.toggle('d-none')">
+        <i class="fa fa-chart-pie"></i> Show/Hide charts
+    </a>
+
+    <div class="container-fluid d-none">
+        <div class=row>
+            <div id=piechart_session_types style="width: 450px; height: 250px;"></div>
+        </div>
+        <div class=row>
+            <div id=piechart_month style="width: 450px; height: 250px;"></div>
+            <div id=piechart_last_month style="width: 450px; height: 250px;"></div>
+        </div>
+        <div class=row>
+            <div id=piechart_this_year style="width: 450px; height: 250px;"></div>
+            <div id=piechart_total style="width: 450px; height: 250px;"></div>
+        </div>
+    </div>
+
+    <script>
+    google.charts.load('current', {packages:['corechart']});
+
+    google.charts.setOnLoadCallback( () => {
+        const options = { is3D: true, pieSliceText: 'none' };
+
+        new google.visualization.PieChart(
+            document.getElementById('piechart_session_types'),
+        ).draw(
+            google.visualization.arrayToDataTable([
+                ['Session Types', 'Total'],
+                {{#sessions}}['{{ name }}', {{ number }}],{{/sessions}}
+            ]),
+            { ...options, title: 'Training Session Types' },
+        );
+
+        new google.visualization.PieChart(
+            document.getElementById('piechart_month'),
+        ).draw(
+            google.visualization.arrayToDataTable([
+                ['Techniques', 'Times Done'],
+                {{#techniques}}
+                    {{#techniques_this_month}}
+                        ['{{ name }}', {{ techniques_this_month }}],
+                    {{/techniques_this_month}}
+                {{/techniques}}
+            ]),
+            { ...options, title: 'Techniques This Month' },
+        );
+
+        new google.visualization.PieChart(
+            document.getElementById('piechart_last_month'),
+        ).draw(
+            google.visualization.arrayToDataTable([
+                ['Techniques', 'Times Done'],
+                {{#techniques}}
+                    {{#techniques_last_month}}
+                        ['{{ name }}', {{ techniques_last_month }}],
+                    {{/techniques_last_month}}
+                {{/techniques}}
+            ]),
+            { ...options, title: 'Techniques Last Month' },
+        );
+
+        new google.visualization.PieChart(
+            document.getElementById('piechart_this_year'),
+        ).draw(
+            google.visualization.arrayToDataTable([
+                ['Techniques', 'Times Done'],
+                {{#techniques}}
+                    {{#techniques_this_year}}
+                        ['{{ name }}', {{ techniques_this_year }}],
+                    {{/techniques_this_year}}
+                {{/techniques}}
+            ]),
+            { ...options, title: 'Techniques This Year' },
+        );
+
+        new google.visualization.PieChart(
+            document.getElementById('piechart_total'),
+        ).draw(
+            google.visualization.arrayToDataTable([
+                ['Techniques', 'Times Done'],
+                {{#techniques}}['{{ name }}', {{ number }}],{{/techniques}}
+            ]),
+            { ...options, title: 'Total Techniques' },
+        );
+    });
+    </script>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                <th>Total (This Month)
+                <th>Total (Last Month)
+                <th>Total (This Year)
+                <th>Total (All time)
+        <tbody>
+        {{#techniques}}
+            <tr>
+                <td>
+                    {{ name }} ({{ kanji }})
+                    <a href="//www.youtube.com/results?search_query={{ kanji }}"><i class="fab fa-youtube"></i></a>
+                <td>{{ techniques_this_month }}
+                <td>{{ techniques_last_month }}
+                <td>{{ techniques_this_year  }}
+                <td>{{ number }}
+        {{/techniques}}
+    </table>
+</main>
+
+{{> footer}}

@@ -112,16 +112,40 @@ sub routes() is export {
         }
 
         get -> LoggedIn $user, 'user', $user_name {
-            my %user_data = $mj.get_user_data( user_name => $user.username );
+            my %user = $mj.get_user_data( user_name => $user.username );
+            my %waza = Judo.waza();
 
-            my $waza = Judo.waza();
+            my @sessions;
 
-            my $t = Template::Mojo.from-file('views/user/home.tm');
+            for %user<session_types>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+                @sessions.push: { name => $name.tc, :$number };
+            }
 
-            content 'text/html', $t.render( {
-                user_data => $(%user_data),
-                waza => $waza,
-                } );
+            my @techniques;
+
+            for %user<techniques>.sort(*.value).reverse>>.kv.flat -> $name, $number {
+                # FIXME This is horrible.
+                my $kanji = %waza<nage-waza><te-waza>{$name}<kanji>
+                         || %waza<nage-waza><koshi-waza>{$name}<kanji>
+                         || %waza<nage-waza><ashi-waza>{$name}<kanji>
+                         || %waza<nage-waza><ma-sutemi-waza>{$name}<kanji>
+                         || %waza<nage-waza><yoko-sutemi-waza>{$name}<kanji>
+                         || %waza<katame-waza><osaekomi-waza>{$name}<kanji>
+                         || %waza<katame-waza><shime-waza>{$name}<kanji>
+                         || %waza<katame-waza><kansetsu-waza>{$name}<kanji>;
+
+                @techniques.push: {
+                    :$kanji,
+                    :$number,
+                    name => $name.tc,
+                    techniques_this_month => %user<techniques_this_month>{$name},
+                    techniques_last_month => %user<techniques_last_month>{$name},
+                    techniques_this_year  => %user<techniques_this_year>{$name},
+                };
+            }
+
+            content 'text/html',
+                $stache.render('user/home', { :@sessions, :@techniques, :%user, :%waza });
         };
 
         get -> LoggedIn $user, 'user', $user_name, 'training-sessions' {
