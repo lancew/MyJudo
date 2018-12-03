@@ -366,6 +366,7 @@ method training-sessions ( :$user_id ) {
         SELECT *
           FROM SESSIONS
          WHERE user_id = ?
+      ORDER BY date DESC
     STATEMENT
     $sth.execute($user_id);
 

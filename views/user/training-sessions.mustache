@@ -1,0 +1,22 @@
+
+{{> header}}
+
+<main class=container>
+    <h1>Sessions: {{ total }}</h1>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Date
+            <th>Training Type(s)
+            <th>Techniques
+    {{#sessions}}
+        <tr>
+            <td>
+                <a href="/user/{{ data.user_name }}/training-session/edit/{{ id }}">
+                    {{ date }}
+                </a>
+            <td>{{ types }}
+            <td>{{ techniques }}
+    {{/sessions}}
+    </table>
+</main>

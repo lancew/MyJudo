@@ -151,14 +151,12 @@ sub routes() is export {
         };
 
         get -> LoggedIn $user, 'user', $user_name, 'training-sessions' {
-            my %user_data = $mj.get_user_data( user_name => $user.username );
-            my @sessions = $mj.training-sessions( user_id => %user_data<id> );
+            my %data = $mj.get_user_data( user_name => $user.username );
+            my @sessions = $mj.training-sessions( user_id => %data<id> );
 
-            my $t = Template::Mojo.from-file('views/user/training-sessions.tm');
-            content 'text/html', $t.render( {
-                user_data => $(%user_data),
-                sessions => item @sessions,
-                }
+            content 'text/html', $stache.render(
+                'user/training-sessions',
+                { :%data, :@sessions, total => @sessions.elems, :$user },
             );
         };
 
