@@ -348,17 +348,13 @@ method training_session_update (:$date, :$dojo, :$user_id, :$techniques, :$train
     );
 }
 
-method training_session_exists (:$user_id, :$date) {
-        my $sth = $.dbh.prepare(q:to/STATEMENT/);
-            SELECT id
-              FROM sessions
-             WHERE user_id = ?
-               AND date = ?
-            STATEMENT
-        $sth.execute($user_id, $date);
+method training_session_exists(:$user_id, :$date) returns Bool {
+    my $sth = $.dbh.prepare(
+        'SELECT 1 FROM sessions WHERE user_id = ? AND date = ?');
 
-        my @rows = $sth.allrows();
-    return @rows.elems ?? True !! False;;
+    $sth.execute($user_id, $date);
+
+    return $sth.row.Bool;
 };
 
 method training-sessions ( :$user_id ) {
