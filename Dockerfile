@@ -3,8 +3,8 @@ FROM alpine:3.8 AS dev
 RUN apk add --no-cache curl gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
 # Install Perl 6
-RUN curl -L https://github.com/rakudo/rakudo/archive/2018.12.tar.gz | tar xzf -                   \
- && cd rakudo-2018.12                                                                             \
+RUN curl -L https://github.com/rakudo/rakudo/archive/2019.03.tar.gz | tar xzf -                   \
+ && cd rakudo-2019.03                                                                             \
  && CFLAGS=-flto ./Configure.pl --backend=moar --gen-moar --moar-option=--ar=gcc-ar --prefix=/usr \
  && make -j`nproc` install
 
