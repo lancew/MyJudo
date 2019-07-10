@@ -1,4 +1,4 @@
-FROM alpine:3.8 AS dev
+FROM alpine:3.10 AS dev
 
 RUN apk add --no-cache curl gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
