@@ -1,0 +1,59 @@
+{{>header}}
+
+<form class=container method=post>
+    <h1>Add a session for {{ data.user_name }}</h1>
+
+    <div class="form-group">
+        <label for="session-date">Session Date:</label>
+        <input
+                type = "date"
+                class="form-control"
+                name = "session-date"
+                id="session-date"
+                value ="<%= Date.new( %session<date> || DateTime.now) %>"
+                >
+    </div>
+
+    <div class="form-group">
+        <label for="session-dojo">Dojo:</label>
+        <input
+            class="form-control"
+            type="text"
+            name="session-dojo"
+            id="session-dojo"
+            value="<%= %session<dojo> || %data<dojo> || '' %>"
+            >
+    </div>
+
+    <h2>Training types</h2>
+    <div class=form-check>
+    {{#training_types}}
+        <label class=form-check-label>
+            <input class=form-check-box name="{{ name }}" type=checkbox {{#checked}}checked{{/checked}}>
+            {{ title }}
+        </label>
+    {{/training_types}}
+    </div>
+
+{{#techniques}}
+    <h2>{{ name }} ({{ kanji }})</h2>
+
+    <table class=table>
+        <tr>
+        {{#waza}}
+            <td>
+                <h3>{{ name }}</h3>
+                <ul class=list-group>
+                {{#waza}}
+                    <li class=list-group-item>
+                        <label>
+                            <input type=checkbox>
+                            {{ name }}
+                        </label>
+                {{/waza}}
+        {{/waza}}
+    </table>
+{{/techniques}}
+
+    <input class="btn btn-primary" type=submit value=Add>
+</form>

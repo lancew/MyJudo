@@ -22,7 +22,7 @@ class CSPolicy does Cro::Transform {
                         ~ "font-src 'self';"
                         ~ "img-src 'self' data:;"
                         ~ "object-src 'none';"
-                        ~ "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://code.jquery.com https://cdnjs.cloudflare.com;"
+                        ~ "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdnjs.cloudflare.com;"
                         ~ "style-src 'self' 'unsafe-inline' https://www.gstatic.com;"
                         ~ "report-uri /csp-violation/;";
                     emit $response;

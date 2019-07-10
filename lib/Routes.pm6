@@ -1,5 +1,4 @@
 use Cro::HTTP::Router;
-use Template::Mojo;
 use Template::Mustache;
 
 use Judo;
@@ -161,21 +160,17 @@ sub routes() is export {
         };
 
         get -> LoggedIn $user,'user', $user_name, 'training-session', 'edit', $session_id {
-            my %user_data = $mj.get_user_data( user_name => $user.username );
+            my %data = $mj.get_user_data( user_name => $user.username );
             my $waza = Judo.waza();
 
             my $training_session = $mj.get_training_session(
-                user_id => %user_data<id>,
-                session_id    => $session_id,
+                user_id    => %data<id>,
+                session_id => $session_id,
             );
 
-            my $t = Template::Mojo.from-file('views/user/training-session/add_edit.tm');
-            content 'text/html', $t.render(
-                {
-                    session => $training_session,
-                    user_data => %user_data,
-                    waza => $waza,
-                }
+            content 'text/html', $stache.render(
+                'user/training-session/add_edit',
+                { :%data, :$user, :$waza },
             );
         };
         post -> LoggedIn $user,'user', $user_name, 'training-session', 'edit', $session_id {
@@ -210,15 +205,43 @@ sub routes() is export {
         };
 
         get -> LoggedIn $user,'user', $user_name, 'training-session', 'add' {
-            my %user_data = $mj.get_user_data( user_name => $user.username );
-            my $waza = Judo.waza();
+            my %data = $mj.get_user_data( user_name => $user.username );
+            my %waza = Judo.waza;
 
-            my $t = Template::Mojo.from-file('views/user/training-session/add_edit.tm');
-            content 'text/html', $t.render(
-                {
-                    user_data => %user_data,
-                    waza => $waza,
+            my %groups = (
+                nage-waza   => qw/te-waza koshi-waza ashi-waza ma-sutemi-waza yoko-sutemi-waza/,
+                katame-waza => qw/osaekomi-waza shime-waza kansetsu-waza/,
+            );
+
+            my @techniques;
+
+            for qw/nage-waza katame-waza/.kv -> $i, $sub-waza {
+                @techniques[$i] = {
+                    kanji => %waza{$sub-waza}<kanji>,
+                    name  => $sub-waza,
+                    waza  => [],
+                };
+
+                for %groups{$sub-waza}.kv -> $j, $sub-sub-waza {
+                    @techniques[$i]<waza>[$j] = { name  => $sub-sub-waza, waza  => [] };
+
+                    for %waza{$sub-waza}{$sub-sub-waza}.values.sort(*.<number>) {
+                        @techniques[$i]<waza>[$j]<waza>.push($_);
+                    }
                 }
+            }
+
+            my @training_types = (
+                { name => 'randori-tachi-waza', title => 'Tachi-Waza Randori' },
+                { name => 'randori-ne-waza',    title => 'Ne-Waza Randori' },
+                { name => 'uchi-komi',          title => 'Uchi-Komi' },
+                { name => 'nage-komi',          title => 'Nage-Komi' },
+                { name => 'kata',               title => 'Kata' },
+            );
+
+            content 'text/html', $stache.render(
+                'user/training-session/add_edit',
+                { :%data, :@techniques, :@training_types, :$user },
             );
         };
         post -> LoggedIn $user,'user', $user_name, 'training-session', 'add' {
