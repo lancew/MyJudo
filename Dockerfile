@@ -31,7 +31,6 @@ RUN rm -r /usr/share/perl6/site/bin
 
 FROM scratch
 
-COPY --from=0 /bin/sh                  /bin/
 COPY --from=0 /lib/ld-musl-x86_64.so.1 \
               /lib/libz.*              /lib/
 COPY --from=0 /usr/bin/perl6           /usr/bin/
