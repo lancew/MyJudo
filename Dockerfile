@@ -5,9 +5,9 @@ RUN apk add --no-cache gcc git libressl-dev linux-headers make musl-dev perl sql
 # Install Perl 6
 RUN git clone git://github.com/rakudo/rakudo \
  && cd rakudo                                \
- && git checkout 2019.07                     \
+ && git checkout 2019.07.1                   \
  && CFLAGS=-flto ./Configure.pl              \
-    --gen-moar=f1b26bb                       \
+    --gen-moar                               \
     --moar-option=--ar=gcc-ar                \
     --prefix=/usr                            \
  && make -j`nproc` install                   \
