@@ -41,7 +41,6 @@ COPY --from=0 /usr/lib/libmoar.so      \
               /usr/lib/libssl.*        /usr/lib/
 COPY --from=0 /usr/share/nqp           /usr/share/nqp
 COPY --from=0 /usr/share/perl6         /usr/share/perl6
-COPY --from=0 /usr/share/rakudo        /usr/share/rakudo
 
 
 WORKDIR /app
