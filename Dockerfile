@@ -5,7 +5,7 @@ RUN apk add --no-cache gcc git libressl-dev linux-headers make musl-dev perl sql
 # Install Perl 6
 RUN git clone git://github.com/rakudo/rakudo \
  && cd rakudo                                \
- && git checkout 2020.09                   \
+ && git checkout 2020.10                     \
  && CFLAGS=-flto ./Configure.pl              \
     --gen-moar                               \
     --moar-option=--ar=gcc-ar                \
