@@ -156,7 +156,7 @@ method get_user_data(:$user_name) {
 
                 my @techniques = %session<techniques>.split(',');
                 for @techniques -> $waza {
-                    %user<techniques>{$waza}++;
+                    %user<techniques>{$waza}++ if $waza;
                 }
 
                 if (%session<types>) {
@@ -171,7 +171,7 @@ method get_user_data(:$user_name) {
                 if $session_dt >= $dt.truncated-to('month') {
                     %user<sessions_this_month>++;
                     for @techniques -> $waza {
-                        %user<techniques_this_month>{$waza}++;
+                        %user<techniques_this_month>{$waza}++ if $waza;
                     }
                 }
 
@@ -180,14 +180,14 @@ method get_user_data(:$user_name) {
                  && $session_dt < $dt.truncated-to('month')  ) {
                     %user<sessions_last_month>++;
                     for @techniques -> $waza {
-                        %user<techniques_last_month>{$waza}++;
+                        %user<techniques_last_month>{$waza}++ if $waza;
                     }
                 }
 
                 if $session_dt >= $dt.truncated-to('year') {
                     %user<sessions_this_year>++;
                     for @techniques -> $waza {
-                        %user<techniques_this_year>{$waza}++;
+                        %user<techniques_this_year>{$waza}++ if $waza;
                     }
                 }
             }
