@@ -34,7 +34,8 @@ FROM scratch
 COPY --from=0 /lib/ld-musl-x86_64.so.1 \
               /lib/libz.*              /lib/
 COPY --from=0 /usr/bin/perl6           /usr/bin/
-COPY --from=0 /usr/bin/rakudo           /usr/bin/
+COPY --from=0 /usr/bin/rakudo          /usr/bin/
+COPY --from=0 /usr/bin/rakudo-m        /usr/bin/ 
 COPY --from=0 /usr/lib/libmoar.so      \
               /usr/lib/libcrypto.*     \
               /usr/lib/libsqlite3.*    \
