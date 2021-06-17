@@ -136,11 +136,11 @@ sub routes() is export {
 
                 @techniques.push: {
                     :$kanji,
-                    :$number,
+                    :$number || 0,
                     name => $name.tc,
-                    techniques_this_month => %data<techniques_this_month>{$name},
-                    techniques_last_month => %data<techniques_last_month>{$name},
-                    techniques_this_year  => %data<techniques_this_year>{$name},
+                    techniques_this_month => %data<techniques_this_month>{$name} || 0,
+                    techniques_last_month => %data<techniques_last_month>{$name} || 0,
+                    techniques_this_year  => %data<techniques_this_year>{$name} || 0,
                 };
             }
 
