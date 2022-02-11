@@ -1,11 +1,11 @@
-FROM alpine:3.13 AS dev
+FROM alpine:3.15 AS dev
 
 RUN apk add --no-cache gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
 # Install Perl 6
 RUN git clone git://github.com/rakudo/rakudo \
  && cd rakudo                                \
- && git checkout 2021.05                     \
+ && git checkout 2021.12                     \
  && CFLAGS=-flto ./Configure.pl              \
     --gen-moar                               \
     --moar-option=--ar=gcc-ar                \
