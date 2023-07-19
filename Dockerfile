@@ -1,21 +1,21 @@
-FROM alpine:3.16 AS dev
+FROM alpine:3.18.2 AS dev
 
 RUN apk add --no-cache gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
 # Install Perl 6
 RUN git clone https://github.com/rakudo/rakudo.git \
- && cd rakudo                                      \
- && git checkout 2022.07                           \
- && CFLAGS=-flto ./Configure.pl                    \
-    --gen-moar                                     \
-    --moar-option=--ar=gcc-ar                      \
-    --prefix=/usr                                  \
- && make -j`nproc` install                         \
+ && cd rakudo                                \
+ && git checkout 2023.06                     \
+ && CFLAGS=-flto ./Configure.pl              \
+    --gen-moar                               \
+    --moar-option=--ar=gcc-ar                \
+    --prefix=/usr                            \
+ && make -j`nproc` install                   \
  && strip /usr/bin/perl6
 
 # Install zef
 RUN git clone https://github.com/ugexe/zef.git \
- && cd zef                                     \
+ && cd zef                               \
  && perl6 -Ilib bin/zef install --/test .
 
 WORKDIR /app
