@@ -16,6 +16,7 @@
                 This month: {{ data.sessions_this_month }}<br>
                 Last month: {{ data.sessions_last_month }}<br>
                 This year:  {{ data.sessions_this_year  }}<br>
+                Last year:  {{ data.sessions_last_year  }}<br>
                 Total:      {{ data.sessions            }}<br>
         <tr>
             <td>Session Types
@@ -45,7 +46,6 @@
                     <i class="fa fa-plus"></i>
                     ADD A SESSION
                 </a>
-            <td>
     </table>
 
     <h2>Techniques ({{ waza.kanji }})</h2>
@@ -159,3 +159,5 @@
         {{/techniques}}
     </table>
 </main>
+
+{{> footer}}

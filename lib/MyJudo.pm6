@@ -146,6 +146,13 @@ method get_user_data(:$user_name) {
             sessions_this_month => 0,
             sessions_last_month => 0,
             sessions_this_year  => 0,
+            sessions_last_year => 0,
+            session_types => {},
+            techniques => {},
+            techniques_this_month => {},
+            techniques_last_month => {},
+            techniques_this_year => {},
+            techniques_last_year => {},
         );
 
         my $dt = Date.new(DateTime.now);
@@ -188,6 +195,14 @@ method get_user_data(:$user_name) {
                     %user<sessions_this_year>++;
                     for @techniques -> $waza {
                         %user<techniques_this_year>{$waza}++ if $waza;
+                    }
+                }
+                
+                if $session_dt >= $dt.truncated-to('year').earlier(year => 1) 
+                  && $session_dt < $dt.truncated-to('year') {
+                    %user<sessions_last_year>++;
+                    for @techniques -> $waza {
+                        %user<techniques_last_year>{$waza}++ if $waza;
                     }
                 }
             }
