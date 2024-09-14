@@ -1,4 +1,6 @@
-# MyJudo   [![Build Status](https://travis-ci.org/lancew/MyJudo.svg?branch=master)](https://travis-ci.org/lancew/MyJudo) [![Kritika Analysis Status](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/status.svg)](https://kritika.io/users/lancew/repos/1285814063416590/heads/master/) [![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/lancew/myjudo/builds/) [![Docker Repository on Quay](https://quay.io/repository/lancew/myjudo/status "Docker Repository on Quay")](https://quay.io/repository/lancew/myjudo)
+# MyJudo
+
+ [![Docker Repository on Quay](https://quay.io/repository/lancew/myjudo/status "Docker Repository on Quay")](https://quay.io/repository/lancew/myjudo)
 
 This is an experimental website using the Perl 6 programming language and Cro.
 
