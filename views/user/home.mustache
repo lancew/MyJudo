@@ -19,35 +19,36 @@
                 Last year:  {{ data.sessions_last_year  }}<br>
                 Total:      {{ data.sessions            }}<br>
         <tr>
-            <td>Session Types
+
+          <td>Session Types
             <td>
                 Kata:
-                {{ data.session_types.kata }}
-                {{^data.session_types.kata }}0{{/data.session_types.kata}}
+                    {{ data.session_types.kata }}
+                    {{^data.session_types.kata }}0{{/data.session_types.kata}}
                 <br>
                 Nage Komi:
-                {{ data.session_types.nage_komi }}
-                {{^data.session_types.nage_komi }}0{{/data.session_types.nage_komi}}
+                    {{ data.session_types.nage-komi }}
+                {{^data.session_types.nage-komi }}0{{/data.session_types.nage-komi}}
                 <br>
                 Ne Waza Randori:
-                {{ data.session_types.randori_ne_waza }}
-                {{^data.session_types.randori_ne_waza }}0{{/data.session_types.randori_ne_waza}}
+                    {{ data.session_types.randori-ne-waza }}
+                    {{^data.session_types.randori-ne-waza }}0{{/data.session_types.randori-ne-waza}}
                 <br>
                 Tachi Waza Randori:
-                {{ data.session_types.randori_tachi_waza }}
-                {{^data.session_types.randori_tachi_waza }}0{{/data.session_types.randori_tachi_waza}}
+                    {{ data.session_types.randori-tachi-waza }}
+                    {{^data.session_types.randori-tachi-waza }}0{{/data.session_types.randori-tachi-waza}}
                 <br>
                 Uchi Komi:
-                {{ data.session_types.uchi_komi }}
-                {{^data.session_types.uchi_komi }}0{{/data.session_types.uchi_komi}}
+                    {{ data.session_types.uchi-komi }}
+                    {{^data.session_types.uchi-komi }}0{{/data.session_types.uchi-komi}}
         <tr>
+          
             <td>
                 <a href="/user/{{ data.user_name }}/training-session/add">
                     <i class="fa fa-plus"></i>
                     ADD A SESSION
                 </a>
     </table>
-
     <h2>Techniques ({{ waza.kanji }})</h2>
 
     <a href="#" onclick="this.nextElementSibling.classList.toggle('d-none')">
@@ -158,6 +159,8 @@
                 <td>{{ number }}
         {{/techniques}}
     </table>
+
+          
 </main>
 
 {{> footer}}

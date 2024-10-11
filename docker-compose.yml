@@ -13,3 +13,5 @@ services:
       - 443:1443
     volumes:
       - .:/app
+    #environment:
+     # - TEMPLATE_MUSTACHE_LOGLEVEL=Debug

@@ -3,26 +3,16 @@ FROM alpine:3.20.3 AS dev
 RUN apk add --no-cache gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
 # Install Perl 6
-RUN git clone https://github.com/rakudo/rakudo.git \
- && cd rakudo                                \
- && git checkout 2024.08                     \
- && CFLAGS=-flto ./Configure.pl              \
-    --gen-moar                               \
-    --moar-option=--ar=gcc-ar                \
-    --prefix=/usr                            \
- && make -j`nproc` install                   \
- && strip /usr/bin/perl6
+RUN apk add --no-cache rakudo
 
 # Install zef
-RUN git clone https://github.com/ugexe/zef.git \
- && cd zef                               \
- && perl6 -Ilib bin/zef install --/test .
+RUN apk add --no-cache zef
 
 WORKDIR /app
 
 COPY META6.json .
 
-RUN /usr/share/perl6/site/bin/zef install --deps-only --/test .
+RUN zef -v install --deps-only --/test .
 
 FROM dev
 
