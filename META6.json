@@ -28,7 +28,7 @@
   ],
   "license": "Artistic-2.0",
   "test-depends": [
-
+    "App::Prove6"
   ],
   "provides": {
     "Routes.pm6": "lib/Routes.pm6"
