@@ -4,7 +4,7 @@ cro: 1
 id: myjudo
 env:  []
 links:  []
-entrypoint: service.p6
+entrypoint: service.raku
 endpoints:
   -
     port-env: MYJUDO_PORT

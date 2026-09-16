@@ -5,9 +5,9 @@ services:
       dockerfile: Dockerfile
       target: dev
     command:
-      - perl6
+      - raku
       - -Ilib
-      - service.p6
+      - service.raku
     ports:
       - 80:1080
       - 443:1443

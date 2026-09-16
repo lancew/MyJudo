@@ -2,15 +2,14 @@
   "name": "myjudo",
   "source-url": "https://github.com/lancew/MyJudo",
   "support": {
-    "source": null
+    "source": "https://github.com/lancew/MyJudo"
   },
-  "perl": "6.c",
+  "perl": "6.e",
   "resources": [
-
+    "fake-tls/server-key.pem",
+    "fake-tls/server-crt.pem"
   ],
-  "build-depends": [
-
-  ],
+  "build-depends": [],
   "auth": "github:lancew",
   "depends": [
     "Cro::HTTP",
@@ -24,16 +23,21 @@
     "UUID"
   ],
   "tags": [
-    ""
+    "judo",
+    "training",
+    "cro",
+    "web"
   ],
   "license": "Artistic-2.0",
   "test-depends": [
     "App::Prove6"
   ],
   "provides": {
-    "Routes.pm6": "lib/Routes.pm6"
+    "Judo": "lib/Judo.raku",
+    "MyJudo": "lib/MyJudo.raku",
+    "Routes": "lib/Routes.raku"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "meta-version": "0",
   "authors": [
     "Lance Wicks"

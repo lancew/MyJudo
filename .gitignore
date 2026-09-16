@@ -1,4 +1,4 @@
 .vstags
-bailador-version/lib/.precomp/
+.precomp/
 db/myjudo.db
-lib/.precomp
+db/test.db
