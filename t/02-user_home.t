@@ -1,6 +1,7 @@
 use Cro::HTTP::Test;
 use Cro::HTTP::Auth;
 
+use lib q{.};
 use Routes;
 
 test-service routes(), fake-auth => UserSession.new(:username('asdf')), {

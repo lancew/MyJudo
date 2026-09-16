@@ -1,4 +1,5 @@
 use Cro::HTTP::Test;
+use lib q{.};
 use Routes;
 
 test-service routes(), {

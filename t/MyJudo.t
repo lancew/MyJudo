@@ -1,7 +1,5 @@
-use v6.c;
 use Test;
-
-use lib 'lib';
+use lib q{.};
 use DBIish;
 use MyJudo;
 
@@ -22,9 +20,9 @@ subtest {
     my %user = $sth.row(:hash);
 
     is-deeply %user, {
-        id => 1,
+        id       => 1,
         username => 'test',
-        email => 'test@test.com',
+        email    => 'test@test.com',
     }, 'New user is added';
 
     done-testing;
@@ -43,15 +41,49 @@ subtest {
     my %sensei = $sth.row(:hash);
 
     is-deeply %sensei, {
-        family_name => 'Last',
-            given_name  => 'First',
-            id          => 1,
-            their_sensei => Any,
+        family_name  => 'Last',
+        given_name   => 'First',
+        id           => 1,
+        their_sensei => Any,
     }, 'Sensei record is correct';
     done-testing;
 }, 'add_sensei';
 
-todo '';    subtest { done-testing; }, 'get_admin_dashboard_data';
+subtest {
+    _clean_tables;
+
+    $mj.add_new_user(
+        user_name => 'admin_test',
+        password  => 'secret',
+        email     => 'test@test.com',
+    );
+    $mj.training_session_add(
+        date           => '2017-12-12',
+        dojo           => 'Test Club',
+        user_id        => 1,
+        techniques     => 'tai-otoshi,seoi-nage',
+        training_types => 'randori-tachi-waza',
+    );
+    $mj.training_session_add(
+        date           => '2017-12-13',
+        dojo           => 'Test Club',
+        user_id        => 1,
+        techniques     => 'tai-otoshi',
+        training_types => 'randori-ne-waza',
+    );
+
+    my %data = $mj.get_admin_dashboard_data;
+
+    is %data<total_users>, 1, 'total_users is correct';
+    is %data<total_sessions>, 2, 'total_sessions is correct';
+    is %data<total_techniques>, 3, 'total_techniques is correct';
+    is-deeply %data<techniques>, {
+        tai-otoshi => 2,
+        seoi-nage  => 1,
+    }, 'techniques breakdown is correct';
+
+    done-testing;
+}, 'get_admin_dashboard_data';
 
 subtest {
     _clean_tables;
@@ -63,10 +95,10 @@ subtest {
 
     my %sensei = $mj.get_sensei_by_name(family_name => 'last', given_name => 'first');
     is-deeply %sensei, {
-        family_name => 'Last',
-            given_name  => 'First',
-            id          => 1,
-            their_sensei => Any,
+        family_name  => 'Last',
+        given_name   => 'First',
+        id           => 1,
+        their_sensei => Any,
     }, 'Sensei record is correct';
 
     done-testing;
@@ -95,12 +127,10 @@ subtest {
     is-deeply @sessions, [
         {:date($now),:dojo('Test Club'),:id(1),:techniques("tai-otoshi,seoi-nage"),:types('ne-waza-randori'),:user_id(1)},
         {:date($month),:dojo('Test Club'),:id(2),:techniques("tai-otoshi,obi-otoshi"),:types('tachi-waza-randori'),:user_id(1)},
-    #    {:date($month2),:dojo('Test Club'),:id(3),:techniques("tai-otoshi,uki-otoshi"),:types('ne-waza-randori'),:user_id(1)},
-    #    {:date($month3),:dojo('Test Club'),:id(4),:techniques("tai-otoshi,ura-gatame"),:types('ne-waza-randori'),:user_id(1)},
         {:date($years2),:dojo('Test Club'),:id(3),:techniques("tai-otoshi,ashi-garami"),:types('ne-waza-randori'),:user_id(1)},
-    ], 'Sessions returned are correct';
+    ], 'Sessions returned are correct (ordered by date desc)';
 
-done-testing;
+    done-testing;
 }, 'get_training_sessions';
 
 subtest {
@@ -110,7 +140,6 @@ subtest {
         password  => 'secret_pasword',
     );
 
-    # Insert dojo into DB as not yet a UI/Method to do this.
     $mj.dbh.prepare('UPDATE users SET dojo="Southampton City Judo Club"').execute;
 
     _add_training_sessions();
@@ -118,20 +147,18 @@ subtest {
     my %data = $mj.get_user_data(user_name => 'jbloggs');
 
     is-deeply %data, {
-        id => 1,
-        dojo => 'Southampton City Judo Club',
-        sessions => 3,
-        sessions_this_month => 1,
-        sessions_last_month => 1,
-        sessions_this_year  => 2,
-        sessions_last_year  => 0,
-        techniques          => {
+        id                      => 1,
+        dojo                    => 'Southampton City Judo Club',
+        sessions                => 3,
+        sessions_this_month     => 1,
+        sessions_last_month     => 1,
+        sessions_this_year      => 2,
+        sessions_last_year      => 0,
+        techniques              => {
             :ashi-garami(1),
             :obi-otoshi(1),
             :seoi-nage(1),
             :tai-otoshi(3),
-         #   :uki-otoshi(1),
-         #   :ura-gatame(1),
         },
         session_types => {
             :ne-waza-randori(2),
@@ -149,14 +176,12 @@ subtest {
             :obi-otoshi(1),
             :seoi-nage(1),
             :tai-otoshi(2),
-        #    :uki-otoshi(1),
-        #    :ura-gatame(1),
         },
         techniques_last_year  => {},
         user_name             => 'jbloggs',
     }, 'User data is correct';
 
-        done-testing;
+    done-testing;
 }, 'get_user_data';
 
 subtest {
@@ -172,18 +197,18 @@ subtest {
     );
 
     nok $mj.is_user_linked_to_sensei(
-        user_id => 1,
-            sensei_id => 1,
+        user_id   => 1,
+        sensei_id => 1,
     ), 'Sensei not shown as linked';
 
-        $mj.link_user_to_sensei(
-        user_id => 1,
-            sensei_id => 1,
+    $mj.link_user_to_sensei(
+        user_id   => 1,
+        sensei_id => 1,
     );
 
     ok $mj.is_user_linked_to_sensei(
-        user_id => 1,
-            sensei_id => 1,
+        user_id   => 1,
+        sensei_id => 1,
     ), 'Sensei is shown as linked after being linked';
 
     done-testing;
@@ -214,35 +239,34 @@ subtest {
 
     $mj.add_sensei(
         family_name => 'Smith',
-            given_name  => 'John',
+        given_name  => 'John',
     );
-    my %sensei = $mj.get_sensei_by_name(family_name => 'Smith', given_name => 'John' );
+    my %sensei = $mj.get_sensei_by_name(family_name => 'Smith', given_name => 'John');
 
     $mj.link_user_to_sensei(
-        user_id => 1,
+        user_id   => 1,
         sensei_id => 1,
     );
 
-    # Insert dojo into DB as not yet a UI/Method to do this.
     $mj.dbh.prepare('UPDATE users SET dojo="Southampton City Judo Club"').execute;
 
     my %data = $mj.get_user_data(user_name => 'jbloggs2');
 
     is-deeply %data, {
-        id => 1,
-        dojo => 'Southampton City Judo Club',
+        id                      => 1,
+        dojo                    => 'Southampton City Judo Club',
         session_types           => {},
-        sessions => 0,
-        sessions_this_month => 0,
-        sessions_last_month => 0,
-        sessions_this_year  => 0,
-        sessions_last_year  => 0,
-        techniques           => {},
-        techniques_this_month => {},
-        techniques_last_month => {},
-        techniques_this_year  => {},
-        techniques_last_year  => {},
-        user_name             => 'jbloggs2',
+        sessions                => 0,
+        sessions_this_month     => 0,
+        sessions_last_month     => 0,
+        sessions_this_year      => 0,
+        sessions_last_year      => 0,
+        techniques              => {},
+        techniques_this_month   => {},
+        techniques_last_month   => {},
+        techniques_this_year    => {},
+        techniques_last_year    => {},
+        user_name               => 'jbloggs2',
     }, 'User data is correct';
 
     done-testing;
@@ -252,10 +276,10 @@ subtest {
     _clean_tables;
 
     $mj.training_session_add(
-        date => '2017-12-12',
-        dojo => 'Test Club',
-        user_id => 1,
-        techniques => 'tai-otoshi,seoi-nage',
+        date           => '2017-12-12',
+        dojo           => 'Test Club',
+        user_id        => 1,
+        techniques     => 'tai-otoshi,seoi-nage',
         training_types => 'ne-waza-randori',
     );
 
@@ -263,7 +287,8 @@ subtest {
     $sth.execute;
     my @sessions = $sth.allrows(:array);
 
-    is-deeply @sessions, [[1,"2017-12-12",1,"tai-otoshi,seoi-nage","ne-waza-randori",'Test Club'],], 'Session is added';
+    is-deeply @sessions, [[1, '2017-12-12', 1, 'tai-otoshi,seoi-nage', 'ne-waza-randori', 'Test Club'],],
+        'Session is added';
 
     done-testing;
 }, 'training_session_add';
@@ -279,12 +304,11 @@ subtest {
                   (date, user_id, techniques)
                   VALUES ('2017-01-01',1,'')");
 
-    ok $mj.training_session_exists( user_id => 1, date => '2017-01-01'), 'Return true if session is on this day for this user';
-    nok $mj.training_session_exists( user_id => 1, date => '2017-12-12'), 'Return false if session is on this day for this user';
+    ok $mj.training_session_exists(user_id => 1, date => '2017-01-01'), 'Return true if session is on this day for this user';
+    nok $mj.training_session_exists(user_id => 1, date => '2017-12-12'), 'Return false if session is on this day for this user';
 
     done-testing;
 }, 'training_session_exists';
-
 
 subtest {
     _clean_tables;
@@ -313,7 +337,6 @@ subtest {
     done-testing;
 }, 'valid_user_credentials';
 
-
 done-testing;
 
 sub _clean_tables {
@@ -333,24 +356,24 @@ sub _add_training_sessions {
     my $years2 = $dt.truncated-to('month').earlier(year => 2).Str;
 
     $mj.training_session_add(
-        date => $now,
-        dojo => 'Test Club',
-        user_id => 1,
-        techniques => 'tai-otoshi,seoi-nage',
+        date           => $now,
+        dojo           => 'Test Club',
+        user_id        => 1,
+        techniques     => 'tai-otoshi,seoi-nage',
         training_types => 'ne-waza-randori',
     );
     $mj.training_session_add(
-        date => $month,
-        dojo => 'Test Club',
-        user_id => 1,
-        techniques => 'tai-otoshi,obi-otoshi',
+        date           => $month,
+        dojo           => 'Test Club',
+        user_id        => 1,
+        techniques     => 'tai-otoshi,obi-otoshi',
         training_types => 'tachi-waza-randori',
     );
     $mj.training_session_add(
-        date => $years2,
-        dojo => 'Test Club',
-        user_id => 1,
-        techniques => 'tai-otoshi,ashi-garami',
+        date           => $years2,
+        dojo           => 'Test Club',
+        user_id        => 1,
+        techniques     => 'tai-otoshi,ashi-garami',
         training_types => 'ne-waza-randori',
     );
 }
