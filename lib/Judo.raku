@@ -1,5 +1,9 @@
 unit class Judo;
 
+#| Complete Kodokan Judo waza (technique) classification.
+#| Contains nage-waza (throwing techniques) and katame-waza (grappling techniques).
+#| Each technique has a number, romanised name, and kanji representation.
+
 BEGIN my %waza = (
     kanji => '技',
     nage-waza => {
@@ -63,7 +67,7 @@ BEGIN my %waza = (
             morote-gari => {
                 number => 12,
                 name => 'Morote-gari',
-                kanji => '双手刈'
+                kanji => '双手刈',
             },
             kuchiki-taoshi => {
                 number => 13,
@@ -83,59 +87,59 @@ BEGIN my %waza = (
             ko-uchi-gaeshi => {
                 number => 16,
                 name => 'Ko-uchi-gaeshi',
-                kanji => '小内返'
+                kanji => '小内返',
             },
         },
         koshi-waza => {
             uki-goshi => {
                 number => 1,
-                name => "Uki-goshi",
-                kanji =>"浮腰",
+                name => 'Uki-goshi',
+                kanji => '浮腰',
             },
             o-goshi => {
                 number => 2,
-                name => "O-goshi",
-                kanji =>"大腰",
+                name => 'O-goshi',
+                kanji => '大腰',
             },
             koshi-guruma => {
                 number => 3,
-                name => "Koshi-guruma",
-                kanji =>"腰車",
+                name => 'Koshi-guruma',
+                kanji => '腰車',
             },
             tsurikomi-goshi => {
                 number => 4,
-                name => "Tsurikomi-goshi",
-                kanji =>"釣込腰",
+                name => 'Tsurikomi-goshi',
+                kanji => '釣込腰',
             },
             sode-tsurikomi-goshi => {
                 number => 5,
-                name => "Sode-tsurikomi-goshi",
-                kanji =>"袖釣込腰",
+                name => 'Sode-tsurikomi-goshi',
+                kanji => '袖釣込腰',
             },
             harai-goshi => {
                 number => 6,
-                name => "Harai-goshi",
-                kanji =>"払腰",
+                name => 'Harai-goshi',
+                kanji => '払腰',
             },
             tsuri-goshi => {
                 number => 7,
-                name => "Tsuri-goshi",
-                kanji =>"釣腰",
+                name => 'Tsuri-goshi',
+                kanji => '釣腰',
             },
             hane-goshi => {
                 number => 8,
-                name => "Hane-goshi",
-                kanji =>"跳腰",
+                name => 'Hane-goshi',
+                kanji => '跳腰',
             },
             utsuri-goshi => {
                 number => 9,
-                name => "Utsuri-goshi",
-                kanji =>"移腰",
+                name => 'Utsuri-goshi',
+                kanji => '移腰',
             },
             ushiro-goshi => {
                 number => 10,
-                name => "Ushiro-goshi",
-                kanji =>"後腰",
+                name => 'Ushiro-goshi',
+                kanji => '後腰',
             },
         },
         ashi-waza => {
@@ -272,7 +276,7 @@ BEGIN my %waza = (
                 kanji => '裏投',
             },
         },
-        yoko-sutemi-waza =>{
+        yoko-sutemi-waza => {
             yoko-otoshi => {
                 number => 1,
                 name => 'Yoko-otoshi',
@@ -357,56 +361,56 @@ BEGIN my %waza = (
     },
     katame-waza => {
         kanji => '固技',
-        osaekomi-waza =>{
+        osaekomi-waza => {
             kesa-gatame => {
-                   number => 1,
-                    name => 'Kesa-gatame',
-                    kanji => '袈裟固',
+                number => 1,
+                name => 'Kesa-gatame',
+                kanji => '袈裟固',
             },
             kuzure-kesa-gatame => {
-                   number => 2,
-                    name => 'Kuzure-kesa-gatame',
-                    kanji => '崩袈裟固',
+                number => 2,
+                name => 'Kuzure-kesa-gatame',
+                kanji => '崩袈裟固',
             },
             ushiro-kesa-gatame => {
-                   number => 3,
-                    name => 'Ushiro-kesa-gatame',
-                    kanji => '後袈裟固',
+                number => 3,
+                name => 'Ushiro-kesa-gatame',
+                kanji => '後袈裟固',
             },
             kata-gatame => {
-                   number => 4,
-                    name => 'Kata-gatame',
-                    kanji => '肩固',
+                number => 4,
+                name => 'Kata-gatame',
+                kanji => '肩固',
             },
             kami-shiho-gatame => {
-                   number => 5,
-                    name => 'Kami-shiho-gatame',
-                    kanji => '上四方固',
+                number => 5,
+                name => 'Kami-shiho-gatame',
+                kanji => '上四方固',
             },
             kuzure-kami-shiho-gatame => {
-                   number => 6,
-                    name => 'Kuzure-kami-shiho-gatame',
-                    kanji => '崩上四方固',
+                number => 6,
+                name => 'Kuzure-kami-shiho-gatame',
+                kanji => '崩上四方固',
             },
             yoko-shiho-gatame => {
-                   number => 7,
-                    name => 'Yoko-shiho-gatame',
-                    kanji => '横四方固',
+                number => 7,
+                name => 'Yoko-shiho-gatame',
+                kanji => '横四方固',
             },
             tate-shiho-gatame => {
-                   number => 8,
-                    name => 'Tate-shiho-gatame',
-                    kanji => '縦四方固',
+                number => 8,
+                name => 'Tate-shiho-gatame',
+                kanji => '縦四方固',
             },
             uki-gatame => {
-                   number => 9,
-                    name => 'Uki-gatame',
-                    kanji => '浮固',
+                number => 9,
+                name => 'Uki-gatame',
+                kanji => '浮固',
             },
             ura-gatame => {
-                   number => 10,
-                    name => 'Ura-gatame',
-                    kanji => '裏固',
+                number => 10,
+                name => 'Ura-gatame',
+                kanji => '裏固',
             },
         },
         shime-waza => {
@@ -414,7 +418,6 @@ BEGIN my %waza = (
                 number => 1,
                 name => 'Nami-juji-jime',
                 kanji => '並十字絞',
-
             },
             gyaku-juji-jime => {
                 number => 2,
@@ -505,7 +508,7 @@ BEGIN my %waza = (
             },
             ude-hishigi-ashi-gatame => {
                 number => 7,
-                name => 'Ude-hishigi-hara-gatame',
+                name => 'Ude-hishigi-ashi-gatame',
                 kanji => '腕挫脚固',
             },
             ude-hishigi-te-gatame => {
@@ -527,4 +530,34 @@ BEGIN my %waza = (
     },
 );
 
+#| Returns the full nested waza data structure.
 method waza() { %waza }
+
+#| Returns a flat Hash mapping technique name (e.g. 'seoi-nage') to its data.
+#| Provides O(1) lookup instead of nested hash traversal.
+method flattened_waza() {
+    my %flat;
+    for %waza<nage-waza>.kv -> $category, $data {
+        next if $category eq 'kanji';
+        for $data.kv -> $technique, $info {
+            %flat{$technique} = $info;
+        }
+    }
+    for %waza<katame-waza>.kv -> $category, $data {
+        next if $category eq 'kanji';
+        for $data.kv -> $technique, $info {
+            %flat{$technique} = $info;
+        }
+    }
+    %flat
+}
+
+#| Returns the kanji for a given technique name, or an empty string if not found.
+method kanji_for(Str $technique-name) {
+    self.flattened_waza{$technique-name}<kanji> // ''
+}
+
+#| Returns all training session type identifiers.
+method training_types() {
+    ('randori-tachi-waza', 'randori-ne-waza', 'uchi-komi', 'nage-komi', 'kata')
+}
