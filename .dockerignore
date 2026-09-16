@@ -1,0 +1,8 @@
+.git
+.gitignore
+.travis.yml
+.dockerignore
+lib/.precomp
+db/*.db
+backup_myjudo.sh
+README.md

@@ -3,7 +3,7 @@
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- HTML Meta Tags -->
     <title>MyJudo.net - Judo Training Tracker</title>
@@ -34,21 +34,21 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <script defer src="/js/bootstrap-native.min.js"></script>
+    <script defer src="/js/bootstrap.bundle.min.js"></script>
     <script defer src="/js/fontawesome-all.min.js"></script>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="/">MyJudo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav me-auto">
             {{#user}}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs" aria-hidden="true"></i> Settings</a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs" aria-hidden="true"></i> Settings</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/password-change">
                             <i class="fas fa-key" aria-hidden="true"></i>

@@ -302,7 +302,7 @@ method password_reset_request ( :$login, :$host ) {
     my $password = '';
 
     my $from = "myjudo-noreply@myjudo.net";
-    my $url = "http://myjudo.net/reset-password/$uuid";
+    my $url = "https://myjudo.net/reset-password/$uuid";
 
     my $email = Email::Simple.create(
         header => [
@@ -310,9 +310,12 @@ method password_reset_request ( :$login, :$host ) {
             ['From', $from],
             ['Subject','MyJudo: Password reset request'],
         ],
-        body   => "Reset your password, click at this URL: $url \n\n'
-                ~ 'A password request has been made on http://myjudo.net;'
-                ~ 'please contact the support@myjudo.net if you did not request this passowrd reset.",
+        body   => qq:to/EMAIL/,
+            Reset your password by clicking this URL: $url
+
+            A password reset request has been made on https://myjudo.net;
+            please contact support@myjudo.net if you did not request this password reset.
+            EMAIL
     );
 
     my $client = Net::SMTP.new(

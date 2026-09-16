@@ -3,7 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- HTML Meta Tags -->
     <title>MyJudo.net - Judo Training Tracker</title>
@@ -15,7 +15,7 @@
     <meta itemprop="image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
 
     <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="http://myjudo.net">
+    <meta property="og:url" content="https://myjudo.net">
     <meta property="og:type" content="website">
     <meta property="og:title" content="MyJudo.net - Judo Training Tracker">
     <meta property="og:description" content="This is a tool to assist in your tracking of your Judo training.">
@@ -42,15 +42,15 @@
   <body>
       <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="/">MyJudo</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav me-auto">
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs" aria-hidden="true"></i> Settings</a>
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs" aria-hidden="true"></i> Settings</a>
           <div class="dropdown-menu">
                 <a class="dropdown-item" href="/password-change">
                   <i class="fas fa-key" aria-hidden="true"></i>
@@ -111,11 +111,11 @@
         <h2>Training type(s)</h2>
         <div class="form-check">
           <label class="form-check-label">
-            <input class="form-check-box" type="checkbox" name="randori-tachi-waza" id="randori-tachi-waza" <%= ( %session.defined && %session<types>.defined ?? %session<types>.Str !! '' ).contains('randori-tachi-waza') ?? 'checked' !! '' %> >
+            <input class="form-check-input" type="checkbox" name="randori-tachi-waza" id="randori-tachi-waza" <%= ( %session.defined && %session<types>.defined ?? %session<types>.Str !! '' ).contains('randori-tachi-waza') ?? 'checked' !! '' %> >
             Tachi-Waza Randori
           </label>
           <label class="form-check-label">
-            <input class="form-check-box"
+            <input class="form-check-input"
                    type="checkbox"
                    name="randori-ne-waza"
                    id="randori-ne-waza"
@@ -123,7 +123,7 @@
             Ne-Waza Randori
           </label>
           <label class="form-check-label">
-            <input class="form-check-box"
+            <input class="form-check-input"
                    type="checkbox"
                    name="uchi-komi"
                    id="uchi-komi"
@@ -131,7 +131,7 @@
             Uchi-Komi
           </label>
           <label class="form-check-label">
-            <input class="form-check-box"
+            <input class="form-check-input"
                    type="checkbox"
                    name="nage-komi"
                    id="nage-komi"
@@ -139,7 +139,7 @@
             Nage-Komi
           </label>
           <label class="form-check-label">
-            <input class="form-check-box"
+            <input class="form-check-input"
                    type="checkbox"
                    name="kata"
                    id="kata" <%= (%session.defined && %session<types>.defined ?? %session<types>.Str !! '').contains('kata') ?? 'checked' !! '' %>>
@@ -215,11 +215,7 @@
       </div>
 
     </div><!-- /.container -->
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
 

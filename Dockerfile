@@ -1,8 +1,8 @@
-FROM alpine:3.20.3 AS dev
+FROM alpine:3.24 AS dev
 
 RUN apk add --no-cache gcc git libressl-dev linux-headers make musl-dev perl sqlite-libs
 
-# Install Perl 6
+# Install Raku
 RUN apk add --no-cache rakudo
 
 # Install zef

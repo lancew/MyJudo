@@ -124,6 +124,7 @@ subtest {
         sessions_this_month => 1,
         sessions_last_month => 1,
         sessions_this_year  => 2,
+        sessions_last_year  => 0,
         techniques          => {
             :ashi-garami(1),
             :obi-otoshi(1),
@@ -151,6 +152,7 @@ subtest {
         #    :uki-otoshi(1),
         #    :ura-gatame(1),
         },
+        techniques_last_year  => {},
         user_name             => 'jbloggs',
     }, 'User data is correct';
 
@@ -229,14 +231,17 @@ subtest {
     is-deeply %data, {
         id => 1,
         dojo => 'Southampton City Judo Club',
+        session_types           => {},
         sessions => 0,
         sessions_this_month => 0,
         sessions_last_month => 0,
         sessions_this_year  => 0,
-    #    techniques          => {},
-    #    techniques_this_month => {},
-    #    techniques_last_month => {},
-    #    techniques_this_year  => {},
+        sessions_last_year  => 0,
+        techniques           => {},
+        techniques_this_month => {},
+        techniques_last_month => {},
+        techniques_this_year  => {},
+        techniques_last_year  => {},
         user_name             => 'jbloggs2',
     }, 'User data is correct';
 
