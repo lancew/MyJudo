@@ -6,7 +6,7 @@ services:
       target: dev
     command:
       - raku
-      - -Ilib
+      - -I.
       - service.raku
     ports:
       - 80:1080

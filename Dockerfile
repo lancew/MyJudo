@@ -24,4 +24,4 @@ WORKDIR /app
 
 COPY . /app
 
-CMD ["raku", "-Ilib", "service.raku"]
+CMD ["raku", "-I.", "service.raku"]
