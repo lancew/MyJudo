@@ -24,6 +24,14 @@ WORKDIR /app
 
 COPY . /app
 
+# Overwrite the installed Cro::HTTP2::ConnectionState with our HTTP/2 fix.
+# zef precompiles Cro into /usr/share/rakudo/site, and that precompiled copy
+# takes precedence over the vendored file under /app at load time.
+RUN for f in $(grep -rl 'remote-window-consume-queue' /usr/share/rakudo/site/sources 2>/dev/null); do \
+        cp /app/Cro/HTTP2/ConnectionState.rakumod "$f"; \
+    done \
+    && rm -rf /usr/share/rakudo/site/precomp
+
 ARG GIT_HASH=dev
 RUN sh -c 'echo "$GIT_HASH" > /app/.git-hash'
 
