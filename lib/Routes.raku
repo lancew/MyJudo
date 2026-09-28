@@ -10,7 +10,40 @@ use DBIish;
 #| HTTP route definitions for the MyJudo web application.
 #| Handles authentication, user management, and training session CRUD.
 
-my $version = '0.0.1';
+#| Version string shown in the page footer. Resolved from, in order:
+#| the MYJUDO_VERSION env var, a git hash stamped at image build time
+#| (.git-hash), a live git checkout, or a fallback marker.
+my $version = sub {
+    my $env = %*ENV<MYJUDO_VERSION>;
+    return "$env" if $env;
+
+    my $file = try $*CWD.add('.git-hash').slurp.trim;
+    return "$file" if $file;
+
+    if $*CWD.add('.git').d {
+        my $proc = run('git', 'rev-parse', '--short', 'HEAD', :out, :err);
+        my $git  = $proc.out.slurp.trim;
+        return "$git" if $git;
+    }
+
+    'dev-build';
+}();
+
+#| Common view data merged into every template render.
+my sub view(Hash $data) {
+    $data<version> //= $version;
+    $data<year>    //= Date.today.year;
+    $data
+}
+
+#| Merge per-page SEO metadata (page title, description, canonical path)
+#| into the view data for the shared header.
+my sub meta(Hash $data, Str :$title!, Str :$description, Str :$canonical) {
+    $data<title>       = $title;
+    $data<description> = $description // 'Judo training application, record your sessions and techniques';
+    $data<canonical>   = $canonical // '/';
+    view($data)
+}
 
 class UserSession does Cro::HTTP::Auth {
     has $.username is rw;
@@ -51,12 +84,12 @@ sub routes() is export {
 
         # Home page
         get -> {
-            content 'text/html', $stache.render('index', {});
+            content 'text/html', $stache.render('index', meta(%(), title => 'MyJudo.net - Judo Training Tracker', description => 'Track your Judo training sessions and techniques.'));
         }
 
         # Registration
         get -> 'register' {
-            content 'text/html', $stache.render('register', {});
+            content 'text/html', $stache.render('register', meta(%(), title => 'Register | MyJudo.net - Judo Training Tracker', canonical => '/register'));
         }
 
         post -> 'register' {
@@ -79,7 +112,7 @@ sub routes() is export {
 
         # Password change
         get -> LoggedIn $user, 'password-change' {
-            content 'text/html', $stache.render('password-change', {});
+            content 'text/html', $stache.render('password-change', meta(%(), title => 'Change Password | MyJudo.net - Judo Training Tracker', canonical => '/password-change'));
         }
 
         post -> LoggedIn $user, 'password-change' {
@@ -104,7 +137,7 @@ sub routes() is export {
 
         # Password reset
         get -> 'password-reset' {
-            content 'text/html', $stache.render('password-reset', {});
+            content 'text/html', $stache.render('password-reset', meta(%(), title => 'Password Reset | MyJudo.net - Judo Training Tracker', canonical => '/password-reset'));
         }
 
         post -> 'password-reset' {
@@ -115,7 +148,7 @@ sub routes() is export {
                     );
                 }
             }
-            content 'text/html', $stache.render('password-reset', { submitted => 1 });
+            content 'text/html', $stache.render('password-reset', meta(%( :submitted(1) ), title => 'Password Reset | MyJudo.net - Judo Training Tracker', canonical => '/password-reset'));
         }
 
         # Logout
@@ -126,7 +159,7 @@ sub routes() is export {
 
         # Login
         get -> 'login' {
-            content 'text/html', $stache.render('login', {});
+            content 'text/html', $stache.render('login', meta(%( :nav-login(1) ), title => 'Login | MyJudo.net - Judo Training Tracker', canonical => '/login'));
         }
 
         post -> UserSession $user, 'login' {
@@ -172,8 +205,9 @@ sub routes() is export {
 
             content 'text/html', $stache.render(
                 'user/home',
-                { :%data, :@sessions, :@techniques, :$user, :%waza },
-            );
+                meta(%( :%data, :@sessions, :@techniques, :$user, :%waza ),
+                    title => 'My Jüdo Home | MyJudo.net - Judo Training Tracker',
+                    canonical => "/user/$user_name"));
         }
 
         # Training sessions list
@@ -183,8 +217,9 @@ sub routes() is export {
 
             content 'text/html', $stache.render(
                 'user/training-sessions',
-                { :%data, :@sessions, total => @sessions.elems, :$user },
-            );
+                meta(%( :%data, :@sessions, total => @sessions.elems, :$user ),
+                    title => "Training Sessions for $user_name | MyJudo.net",
+                    canonical => "/user/$user_name/training-sessions"));
         }
 
         # Edit training session
@@ -198,11 +233,12 @@ sub routes() is export {
             );
 
             my $t = Template::Mojo.from-file('views/user/training-session/add_edit.tm');
-            content 'text/html', $t.render({
+            content 'text/html', $t.render(|meta(%{
                 session    => $training_session,
                 user_data  => %user_data,
                 waza       => $waza,
-            });
+            }, title => "Edit Session | MyJudo.net",
+                canonical => "/user/$user_name/training-session/edit/$session_id").pairs);
         }
 
         post -> LoggedIn $user, 'user', $user_name, 'training-session', 'edit', $session_id {

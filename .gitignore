@@ -1,4 +1,5 @@
 .vstags
 .precomp/
+.git-hash
 db/myjudo.db
 db/test.db

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+% my (%h) = @_;
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -6,32 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- HTML Meta Tags -->
-    <title>MyJudo.net - Judo Training Tracker</title>
-    <meta name="description" content="This is a tool to assist in your tracking of your Judo training.">
-
-    <!-- Google / Search Engine Tags -->
-    <meta itemprop="name" content="MyJudo.net - Judo Training Tracker">
-    <meta itemprop="description" content="This is a tool to assist in your tracking of your Judo training.">
-    <meta itemprop="image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
-
-    <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="https://myjudo.net">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="MyJudo.net - Judo Training Tracker">
-    <meta property="og:description" content="This is a tool to assist in your tracking of your Judo training.">
-    <meta property="og:image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
-
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MyJudo.net - Judo Training Tracker">
-    <meta name="twitter:description" content="This is a tool to assist in your tracking of your Judo training.">
-    <meta name="twitter:image" content="https://pbs.twimg.com/profile_banners/73963/1517656187/1500x500">
-
-    <!-- Meta Tags Generated via http://heymeta.com -->
-
+    <title><%= %h<title> %></title>
+    <meta name="description" content="<%= %h<description> %>">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/common.css">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -77,12 +58,11 @@
 
 
 
-% my (%h) = @_;
 % my %data = %h<user_data>;
 % my %waza = %h<waza>;
 % my %session = %h<session> || {};
 
-    <h1>Add a session for <%= %data<user_name> %></h1>
+    <h1><%= %session.defined ?? 'Edit session for' !! 'Add a session for' %> <%= %data<user_name> %></h1>
     <div>
       <form method="post">
         <div class="form-group">
@@ -205,7 +185,7 @@
 
           </tr>
           </table>
-        <input type="submit" value="Add" class="btn btn-primary">
+        <input type="submit" value="<%= %session.defined ?? 'Update' !! 'Add' %>" class="btn btn-primary">
       </form>
     </div>
 
@@ -215,6 +195,13 @@
       </div>
 
     </div><!-- /.container -->
+    <hr>
+    <footer>
+      <p class="text-muted container">
+        (C) 2017 - <%= %h<year> %>, Lance Wicks.
+        <span class="float-md-end">Version <span class="font-monospace"><%= %h<version> %></span></span>
+      </p>
+    </footer>
     <script src="/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- HTML Meta Tags -->
-    <title>MyJudo.net - Judo Training Tracker</title>
-    <meta name="description" content="Judo training application, record your sessions and techniques">
+    <title>{{#title}}{{ title }}{{/title}}{{^title}}MyJudo.net - Judo Training Tracker{{/title}}</title>
+    <meta name="description" content="{{#description}}{{ description }}{{/description}}{{^description}}Judo training application, record your sessions and techniques{{/description}}">
     <meta name="keywords" content="judo,training,application,software">
+    <meta name="theme-color" content="#343a40">
+    <link rel="canonical" href="https://myjudo.net{{#canonical}}{{ canonical }}{{/canonical}}">
 
     <!-- Google / Search Engine Tags -->
     <meta itemprop="name" content="MyJudo.net - Judo Training Tracker">
@@ -16,8 +18,9 @@
     <meta itemprop="image" content="https://myjudo.net/img/myjudo_charts.jpg">
 
     <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="https://myjudo.net">
+    <meta property="og:url" content="https://myjudo.net{{#canonical}}{{ canonical }}{{/canonical}}">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MyJudo.net">
     <meta property="og:title" content="MyJudo.net - Judo Training Tracker">
     <meta property="og:description" content="Judo training application, record your sessions and techniques">
     <meta property="og:image" content="https://myjudo.net/img/myjudo_charts.jpg">
@@ -33,6 +36,7 @@
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/img/myjudo_charts.jpg">
 
     <script defer src="/js/bootstrap.bundle.min.js"></script>
     <script defer src="/js/fontawesome-all.min.js"></script>
@@ -62,12 +66,12 @@
             {{/user}}
             {{^user}}
                 <li class="nav-item">
-                    <a class="nav-link" href="/register">
+                    <a class="nav-link" href="/register" {{#nav-register}}aria-current="page"{{/nav-register}}>
                         <i class="fas fa-user-plus" aria-hidden="true"></i>
                         Register
                     </a>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">
+                    <a class="nav-link" href="/login" {{#nav-login}}aria-current="page"{{/nav-login}}>
                         <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
                         Login
                     </a>

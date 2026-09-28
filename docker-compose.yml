@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: dev
+      args:
+        GIT_HASH: ${GIT_HASH:-dev}
     command:
       - raku
       - -I.

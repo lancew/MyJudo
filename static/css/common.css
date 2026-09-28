@@ -1,3 +1,16 @@
 body {
     padding-top: 4.5rem;
 }
+
+/* Responsive Google chart boxes. The chart container needs a fixed
+   height for Google Charts to render; width flows to the row. */
+.chart-box {
+    width: 100%;
+    max-width: 450px;
+    height: 250px;
+    margin-bottom: 1rem;
+}
+
+footer p {
+    margin-bottom: 0;
+}

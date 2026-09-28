@@ -24,4 +24,7 @@ WORKDIR /app
 
 COPY . /app
 
+ARG GIT_HASH=dev
+RUN sh -c 'echo "$GIT_HASH" > /app/.git-hash'
+
 CMD ["raku", "-I.", "service.raku"]
